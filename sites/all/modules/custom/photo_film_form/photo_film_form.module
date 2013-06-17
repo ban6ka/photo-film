@@ -1,15 +1,32 @@
 <?php
+module_load_include('inc', 'photo_film_form', 'includes/photo_film_themes_step');
+
+/**
+ * Implementation of hook_theme
+ */
+function photo_film_form_theme($existing, $type, $theme, $path) {
+  return array(
+    'photo_film_form_choose_theme_step_theme' => array(
+      'render element' => 'form',
+      'path' => drupal_get_path('module', 'photo_film_form'),
+      'file' => '/includes/photo_film_themes_step.inc'
+    ),
+
+  );
+}
 
 /**
  * Implements hook_menu().
  */
 function photo_film_form_menu() {
-  $items['example/%ctools_js/form'] = array(
-    'title' => 'Example form',
-    'page callback' => 'photo_film_form',
-    'page arguments' => array(1),
+  $items['admin/config/user-interface/photo-film'] = array(
+    'title' => t('Photo film settings form'),
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('photo_film_form_settings_form'),
     'access callback' => TRUE,
-    'type' => MENU_CALLBACK,
+    'type' => MENU_NORMAL_ITEM,
+    'file path' => drupal_get_path('module', 'photo_film_form'),
+    'file' => 'photo_film_form.admin.inc'
   );
 
   return $items;
@@ -21,121 +38,6 @@ function photo_film_form_menu() {
 function photo_film_form_ctools_plugin_directory($module, $plugin) {
   if ($module == 'ctools' && !empty($plugin)) {
     return 'plugins/' . $plugin;
-  }
-}
-
-/**
- * Page callback: Handles multistep precessing.
- *
- * @return string
- *   Multistep wizard output.
- *
- * @see photo_film_form_menu()
- */
-function photo_film_form($js = NULL, $step = NULL) {
-  if ($js) {
-    ctools_include('modal');
-    ctools_include('ajax');
-  }
-
-  // Define array for ctools multistep wizard.
-  $form_info = array(
-    'id' => 'photo_film_form',
-    'path' => "example/" . ($js ? 'ajax' : 'nojs') . "/form/%step",
-    'show trail' => TRUE,
-    'show back' => TRUE,
-    'show cancel' => TRUE,
-    'show return' => FALSE,
-    'next callback' => 'photo_film_form_wizard_next',
-    'finish callback' => 'photo_film_form_wizard_finish',
-    'cancel callback' => 'photo_film_form_wizard_cancel',
-    // Define forms order.
-    'order' => array(
-      'start' => t('Enter your info'),
-      'second' => t('What do you know?'),
-      'third' => t('What do think about drupal?'),
-      'fourth' => t('Do you like cookies?'),
-    ),
-    // Define forms
-    'forms' => array(
-      'start' => array(
-        'form id' => 'photo_film_form_start'
-      ),
-      'second' => array(
-        'form id' => 'photo_film_form_second'
-      ),
-      'third' => array(
-        'form id' => 'photo_film_form_third'
-      ),
-      'fourth' => array(
-        'form id' => 'photo_film_form_fourth'
-      ),
-    ),
-  );
-  // TODO do it in normal way
-
-  // We're not using any real storage here, so we're going to set our
-  // object_id to 1. When using wizard forms, id management turns
-  // out to be one of the hardest parts. Editing an object with an id
-  // is easy, but new objects don't usually have ids until somewhere
-  // in creation.
-  //
-  // We skip all this here by just using an id of 1.
-  $object_id = 1;
-
-  if (empty($step)) {
-
-    // We reset the form when $step is NULL because that means they have
-    // for whatever reason started over.
-    photo_film_form_cache_clear($object_id);
-    $step = 'start';
-  }
-
-  // This automatically gets defaults if there wasn't anything saved.
-  $object = photo_film_form_cache_get($object_id);
-  krumo($js);
-  // live $form_state changes.
-  $form_state = array(
-    'ajax' => $js,
-    // Put our object and ID into the form state cache so we can easily find it.
-    'object_id' => $object_id,
-    'object' => &$object,
-  );
-
-  // Send this all off to our form. This is like drupal_get_form only wizardy.
-  ctools_include('wizard');
-  $form = ctools_wizard_multistep_form($form_info, $step, $form_state);
-  $output = drupal_render($form);
-  if ($js) {
-
-    // If javascript is active, we have to use a render array.
-    $commands = array();
-    if ($output === FALSE || !empty($form_state['complete'])) {
-      // Dismiss the modal.
-      $commands[] = ajax_command_html('#ctools-sample', render(photo_film_form_get_result($object)));
-      $commands[] = ctools_modal_command_dismiss();
-    }
-    elseif (!empty($form_state['cancel'])) {
-
-      // If cancelling, return to the activity.
-      $commands[] = ctools_modal_command_dismiss();
-    }
-    else {
-      $commands = ctools_modal_form_render($form_state, $output);
-    }
-    print ajax_render($commands);
-  }
-  else {
-    if ($output === FALSE || !empty($form_state['complete'])) {
-
-      return render(photo_film_form_get_result($object)) . "\n\r" . l(t('Back'), 'example-link');
-    }
-    elseif (!empty($form_state['cancel'])) {
-      drupal_goto('example-link');
-    }
-    else {
-      return $output;
-    }
   }
 }
 
@@ -209,32 +111,11 @@ function photo_film_form_wizard_cancel(&$form_state) {
   $form_state['cancel'] = TRUE;
 }
 
-/**
- * Generates first form.
- *
- * @ingroup forms
- */
-function photo_film_form_start($form, &$form_state) {
-  $form['name'] = array(
-    '#type' => 'textfield',
-    '#title' => t('First name'),
-    '#default_value' => isset($form_state['object']->name) ? $form_state['object']->name : '',
-    '#required' => TRUE,
-  );
-  $form['surname'] = array(
-    '#type' => 'textfield',
-    '#title' => t('Last name'),
-    '#default_value' => isset($form_state['object']->surname) ? $form_state['object']->surname : '',
-    '#required' => TRUE,
-  );
-
-  return $form;
-}
 
 /**
  * Handles submit of first form.
  */
-function photo_film_form_start_submit($form, &$form_state) {
+function photo_film_form_start_styles($form, &$form_state) {
   $form_state['object']->name = $form_state['values']['name'];
   $form_state['object']->surname = $form_state['values']['surname'];
 }
@@ -319,6 +200,7 @@ function photo_film_form_fourth_submit(&$form, &$form_state) {
  */
 function photo_film_form_get_result($object) {
   $out = array();
+
   $out[] = t('Your name: @name', array('@name' => $object->name));
   $out[] = t('Your surname: @surname', array('@surname' => $object->surname));
   $known = array_filter($object->know);
