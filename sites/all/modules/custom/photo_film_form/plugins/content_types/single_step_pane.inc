@@ -26,7 +26,6 @@ function photo_film_form_single_step_pane_render($subtype, $conf, $args, $contex
   $block = new stdClass();
   $block->title = t('Single step of the photo_film_form form');
   $block->content = '';
-  module_load_include('inc', 'photo_film_form', 'photo_film_form.form');
 
   // Define array for ctools multistep wizard.
   $form_info = array(
@@ -41,7 +40,7 @@ function photo_film_form_single_step_pane_render($subtype, $conf, $args, $contex
     'cancel callback' => 'photo_film_form_wizard_cancel',
     // Define forms order.
     'order' => array(
-      'start' => t('Enter your info'),
+      'themes' => t('Enter your info'),
       'second' => t('What do you know?'),
       'third' => t('What do think about drupal?'),
       'fourth' => t('Do you like cookies?'),
@@ -50,7 +49,7 @@ function photo_film_form_single_step_pane_render($subtype, $conf, $args, $contex
     'forms' => array(
       'themes' => array(
         'form id' => 'photo_film_form_choose_theme_step',
-        'include' => drupal_get_path('module','photo_film_form') .  '/includes/photo_film_themes_step.inc',
+        'include' => drupal_get_path('module', 'photo_film_form') . '/includes/photo_film_themes_step.inc',
       ),
       'styles' => array(
         'form id' => 'photo_film_form_styles'
@@ -63,7 +62,7 @@ function photo_film_form_single_step_pane_render($subtype, $conf, $args, $contex
       ),
     ),
   );
-  // TODO do it in normal way
+  // TODO do it in normal way this is really ugly
 
   // We're not using any real storage here, so we're going to set our
   // object_id to 1. When using wizard forms, id management turns
@@ -73,7 +72,6 @@ function photo_film_form_single_step_pane_render($subtype, $conf, $args, $contex
   //
   // We skip all this here by just using an id of 1.
   $object_id = 1;
-
   if (!empty($args)) {
     $step = array_pop($args);
   }
@@ -94,7 +92,6 @@ function photo_film_form_single_step_pane_render($subtype, $conf, $args, $contex
     'object_id' => $object_id,
     'object' => &$object,
   );
-
   // Send this all off to our form. This is like drupal_get_form only wizardly.
   ctools_include('wizard');
   $form = ctools_wizard_multistep_form($form_info, $step, $form_state);

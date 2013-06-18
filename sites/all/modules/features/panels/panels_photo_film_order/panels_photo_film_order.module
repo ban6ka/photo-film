@@ -1,0 +1,7 @@
+<?php
+/**
+ * @file
+ * Code for the Panels photo film order feature.
+ */
+
+include_once 'panels_photo_film_order.features.inc';

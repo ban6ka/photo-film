@@ -1,5 +1,4 @@
 <?php
-module_load_include('inc', 'photo_film_form', 'includes/photo_film_themes_step');
 
 /**
  * Implementation of hook_theme
@@ -199,24 +198,6 @@ function photo_film_form_fourth_submit(&$form, &$form_state) {
  *   returns renderable array for multistep form result output.
  */
 function photo_film_form_get_result($object) {
-  $out = array();
 
-  $out[] = t('Your name: @name', array('@name' => $object->name));
-  $out[] = t('Your surname: @surname', array('@surname' => $object->surname));
-  $known = array_filter($object->know);
-  if (count($known)) {
-    $out[] = t('Your know: !know', array('!know' => implode(', ', $known)));
-  }
-  else {
-    $out[] = t("You don't know anything");
-  }
-  $out[] = t('You think drupal is !mind', array('!mind' => $object->drupal));
-  if ($object->work == 'yes') {
-    $out[] = t('You like cookies :)');
-  }
-  else {
-    $out[] = t("You don't like cookies :(");
-  }
-
-  return array('#theme' => 'item_list', '#items' => $out, '#title' => t('Results:'));
+  return t('Results:');
 }
