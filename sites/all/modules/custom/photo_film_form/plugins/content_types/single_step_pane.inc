@@ -56,7 +56,7 @@ function photo_film_form_single_step_pane_render($subtype, $conf, $args, $contex
       ),
       'user_music_upload' => array(
         'form id' => 'photo_film_form_user_music_upload_step',
-        'include' => drupal_get_path('module', 'photo_film_form') . '/includes/photo-film_user_music_upload_step.inc',
+        'include' => drupal_get_path('module', 'photo_film_form') . '/includes/photo_film_user_music_upload_step.inc',
       ),
       'fourth' => array(
         'form id' => 'photo_film_form_fourth'
