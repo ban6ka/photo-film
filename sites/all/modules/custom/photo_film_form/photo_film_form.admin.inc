@@ -46,12 +46,26 @@ function photo_film_form_settings_form($form_state) {
     '#default_value' => variable_get('photo_film_form_style_vid', FALSE),
     '#required' => TRUE,
   );
+
   $form['second_step']['photo_film_form_style_form_title'] = array(
     '#title' => t('Enter the title of the first step, which will be displayed to user'),
     '#type' => 'textarea',
     '#default_value' => variable_get('photo_film_form_style_form_title', ''),
     '#required' => FALSE,
   );
+
   return system_settings_form($form);
 }
 
+/**
+ * page callback for admin/photo-film/save-file/%file_stream
+ */
+function photo_film_save_file($file_stream) {
+  $file_id = FALSE;
+  // try to save a file, if not return false
+  if ($file_loaded = file_save_upload($file_stream, array(), "public://", $replace = FILE_EXISTS_RENAME)) {
+    $file_id = $file_loaded->fid;
+  }
+
+  return drupal_json_output($file_id);
+}

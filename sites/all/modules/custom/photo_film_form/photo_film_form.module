@@ -8,7 +8,7 @@ function photo_film_form_theme($existing, $type, $theme, $path) {
     'photo_film_form_choose_theme_step_theme' => array(
       'render element' => 'form',
       'path' => drupal_get_path('module', 'photo_film_form'),
-      'file' => '/includes/photo_film_theme_step.inc'
+      'file' => '/includes/photo_film_choose_theme_step.inc'
     ),
     'photo_film_form_choose_style_step_theme' => array(
       'render element' => 'form',
@@ -26,8 +26,19 @@ function photo_film_form_menu() {
     'title' => t('Photo film settings form'),
     'page callback' => 'drupal_get_form',
     'page arguments' => array('photo_film_form_settings_form'),
+    // todo add permission
     'access callback' => TRUE,
     'type' => MENU_NORMAL_ITEM,
+    'file path' => drupal_get_path('module', 'photo_film_form'),
+    'file' => 'photo_film_form.admin.inc'
+  );
+
+  $items['admin/photo-film/save-file/%'] = array(
+    'title' => t('Saves file stream'),
+    'page callback' => 'photo_film_save_file',
+    'page arguments' => array(3),
+    'access callback' => TRUE,
+    'type' => MENU_CALLBACK,
     'file path' => drupal_get_path('module', 'photo_film_form'),
     'file' => 'photo_film_form.admin.inc'
   );

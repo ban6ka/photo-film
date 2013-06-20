@@ -48,7 +48,7 @@ function photo_film_form_single_step_pane_render($subtype, $conf, $args, $contex
     'forms' => array(
       'themes' => array(
         'form id' => 'photo_film_form_choose_theme_step',
-        'include' => drupal_get_path('module', 'photo_film_form') . '/includes/photo_film_theme_step.inc',
+        'include' => drupal_get_path('module', 'photo_film_form') . '/includes/photo_film_choose_theme_step.inc',
       ),
       'styles' => array(
         'form id' => 'photo_film_form_choose_style_step',
