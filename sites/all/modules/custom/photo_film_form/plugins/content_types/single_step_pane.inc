@@ -38,14 +38,13 @@ function photo_film_form_single_step_pane_render($subtype, $conf, $args, $contex
     'next callback' => 'photo_film_form_wizard_next',
     'finish callback' => 'photo_film_form_wizard_finish',
     'cancel callback' => 'photo_film_form_wizard_cancel',
-    // Define forms order.
+    // we need to override this
     'order' => array(
       'themes' => t('Enter your info'),
       'styles' => t('What do you know?'),
-      'third' => t('What do think about drupal?'),
+      'user_music_upload' => t('What do think about drupal?'),
       'fourth' => t('Do you like cookies?'),
     ),
-    // Define forms
     'forms' => array(
       'themes' => array(
         'form id' => 'photo_film_form_choose_theme_step',
@@ -53,9 +52,11 @@ function photo_film_form_single_step_pane_render($subtype, $conf, $args, $contex
       ),
       'styles' => array(
         'form id' => 'photo_film_form_choose_style_step',
-        'include' => drupal_get_path('module', 'photo_film_form') . '/includes/photo_film_style_step.inc',      ),
-      'third' => array(
-        'form id' => 'photo_film_form_third'
+        'include' => drupal_get_path('module', 'photo_film_form') . '/includes/photo_film_style_step.inc',
+      ),
+      'user_music_upload' => array(
+        'form id' => 'photo_film_form_user_music_upload_step',
+        'include' => drupal_get_path('module', 'photo_film_form') . '/includes/photo-film_user_music_upload_step.inc',
       ),
       'fourth' => array(
         'form id' => 'photo_film_form_fourth'
