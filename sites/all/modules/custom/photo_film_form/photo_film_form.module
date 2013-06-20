@@ -8,9 +8,13 @@ function photo_film_form_theme($existing, $type, $theme, $path) {
     'photo_film_form_choose_theme_step_theme' => array(
       'render element' => 'form',
       'path' => drupal_get_path('module', 'photo_film_form'),
-      'file' => '/includes/photo_film_themes_step.inc'
+      'file' => '/includes/photo_film_theme_step.inc'
     ),
-
+    'photo_film_form_choose_style_step_theme' => array(
+      'render element' => 'form',
+      'path' => drupal_get_path('module', 'photo_film_form'),
+      'file' => '/includes/photo_film_style_step.inc'
+    ),
   );
 }
 

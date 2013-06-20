@@ -1,3 +1,8 @@
 .radios-theme-step{
+}
+.not-picked{
     display:none;
+}
+form .video-src{
+    display: none;
 }

@@ -19,29 +19,39 @@ function photo_film_form_settings_form($form_state) {
     '#title' => t('Select taxonomy per step'),
   );
 
-  $form['first_step']['photo_film_form_themes_vid'] = array(
+  $form['first_step']['photo_film_form_theme_vid'] = array(
     '#title' => t('Themes vocabulary'),
     '#type' => 'select',
     '#options' => $options,
-    '#default_value' => variable_get('photo_film_form_themes_vid', FALSE),
+    '#default_value' => variable_get('photo_film_form_theme_vid', FALSE),
     '#required' => TRUE,
   );
 
-  $form['first_step']['photo_film_form_styles_vid'] = array(
-    '#title' => t('Styles vocabulary'),
-    '#type' => 'select',
-    '#options' => $options,
-    '#default_value' => variable_get('photo_film_form_styles_vid', FALSE),
-    '#required' => TRUE,
-  );
-
-  $form['first_step']['photo_film_form_themes_form_title'] = array(
+  $form['first_step']['photo_film_form_theme_form_title'] = array(
     '#title' => t('Enter the title of the first step, which will be displayed to user'),
     '#type' => 'textarea',
-    '#default_value' => variable_get('photo_film_form_themes_form_title', ''),
+    '#default_value' => variable_get('photo_film_form_theme_form_title', ''),
     '#required' => FALSE,
   );
 
+  $form['second_step'] = array(
+    '#type' => 'fieldset',
+    '#title' => t('Select taxonomy for second step'),
+  );
+
+  $form['second_step']['photo_film_form_style_vid'] = array(
+    '#title' => t('Styles vocabulary'),
+    '#type' => 'select',
+    '#options' => $options,
+    '#default_value' => variable_get('photo_film_form_style_vid', FALSE),
+    '#required' => TRUE,
+  );
+  $form['second_step']['photo_film_form_style_form_title'] = array(
+    '#title' => t('Enter the title of the first step, which will be displayed to user'),
+    '#type' => 'textarea',
+    '#default_value' => variable_get('photo_film_form_style_form_title', ''),
+    '#required' => FALSE,
+  );
   return system_settings_form($form);
 }
 

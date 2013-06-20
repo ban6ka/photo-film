@@ -41,7 +41,7 @@ function photo_film_form_single_step_pane_render($subtype, $conf, $args, $contex
     // Define forms order.
     'order' => array(
       'themes' => t('Enter your info'),
-      'second' => t('What do you know?'),
+      'styles' => t('What do you know?'),
       'third' => t('What do think about drupal?'),
       'fourth' => t('Do you like cookies?'),
     ),
@@ -49,11 +49,11 @@ function photo_film_form_single_step_pane_render($subtype, $conf, $args, $contex
     'forms' => array(
       'themes' => array(
         'form id' => 'photo_film_form_choose_theme_step',
-        'include' => drupal_get_path('module', 'photo_film_form') . '/includes/photo_film_themes_step.inc',
+        'include' => drupal_get_path('module', 'photo_film_form') . '/includes/photo_film_theme_step.inc',
       ),
       'styles' => array(
-        'form id' => 'photo_film_form_styles'
-      ),
+        'form id' => 'photo_film_form_choose_style_step',
+        'include' => drupal_get_path('module', 'photo_film_form') . '/includes/photo_film_style_step.inc',      ),
       'third' => array(
         'form id' => 'photo_film_form_third'
       ),
