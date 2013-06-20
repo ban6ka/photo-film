@@ -83,7 +83,6 @@ function photo_film_form_choose_theme_step_validate(&$form, &$form_state) {
 function theme_photo_film_form_choose_theme_step_theme($variables) {
   $form = reset($variables);
   $output = '';
-
   // check if we have term ids in the form
   if (!empty($form['terms']['term_ids']['#options']) && $term_ids = $form['terms']['term_ids']['#options']) {
     // render title of the first step form
