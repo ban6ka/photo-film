@@ -60,10 +60,10 @@ function photo_film_form_settings_form($form_state) {
 /**
  * page callback for admin/photo-film/save-file/%file_stream
  */
-function photo_film_save_file($file_stream) {
+function photo_film_save_file() {
   $file_id = FALSE;
   // try to save a file, if not return false
-  if ($file_loaded = file_save_upload($file_stream, array(), "public://", $replace = FILE_EXISTS_RENAME)) {
+  if ($file_loaded = file_save_upload($_FILES[0], array(), "public://", $replace = FILE_EXISTS_RENAME)) {
     $file_id = $file_loaded->fid;
   }
 

@@ -33,7 +33,7 @@ function photo_film_form_menu() {
     'file' => 'photo_film_form.admin.inc'
   );
 
-  $items['admin/photo-film/save-file/%'] = array(
+  $items['admin/photo-film/save-file'] = array(
     'title' => t('Saves file stream'),
     'page callback' => 'photo_film_save_file',
     'page arguments' => array(3),
