@@ -10,15 +10,17 @@ function photo_film_form_theme($existing, $type, $theme, $path) {
       'path' => drupal_get_path('module', 'photo_film_form'),
       'file' => '/includes/photo_film_choose_theme_step.inc'
     ),
+
     'photo_film_form_choose_style_step_theme' => array(
       'render element' => 'form',
       'path' => drupal_get_path('module', 'photo_film_form'),
       'file' => '/includes/photo_film_style_step.inc'
     ),
-    'photo_film_select_picture_step' => array(
+
+    'photo_film_select_picture_step_theme' => array(
       'render element' => 'form',
       'path' => drupal_get_path('module', 'photo_film_form'),
-      'file' => '/includes/photo_film_select_picture_step.inc'
+      'file' => '/includes/photo_film_user_music_upload_step.inc'
     ),
   );
 }
@@ -173,84 +175,6 @@ function photo_film_form_wizard_finish(&$form_state) {
  */
 function photo_film_form_wizard_cancel(&$form_state) {
   $form_state['cancel'] = TRUE;
-}
-
-
-/**
- * Handles submit of first form.
- */
-function photo_film_form_start_styles($form, &$form_state) {
-  $form_state['object']->name = $form_state['values']['name'];
-  $form_state['object']->surname = $form_state['values']['surname'];
-}
-
-/**
- * Generates second form.
- *
- * @ingroup forms
- */
-function photo_film_form_second($form, &$form_state) {
-  $form['know'] = array(
-    '#type' => 'checkboxes',
-    '#options' => array('php' => t('PHP'), 'css' => t('CSS'), 'jquery' => t('Jquery'), 'unix' => t('Unix')),
-    '#default_value' => isset($form_state['object']->know) ? $form_state['object']->know : array(),
-  );
-
-  return $form;
-}
-
-/**
- * Handles submit for second form.
- */
-function photo_film_form_second_submit($form, &$form_state) {
-  $form_state['object']->know = $form_state['values']['know'];
-}
-
-/**
- * Generates third form.
- *
- * @ingroup forms
- */
-function photo_film_form_third($form, &$form_state) {
-  $form['drupal'] = array(
-    '#type' => 'radios',
-    '#options' => array('awesome' => t('Awesome'), 'awful' => t('Awful')),
-    '#default_value' => isset($form_state['object']->drupal) ? $form_state['object']->drupal : '',
-    '#default_value' => 'awesome',
-    '#required' => TRUE,
-  );
-
-  return $form;
-}
-
-/**
- * Handles submit for third form.
- */
-function photo_film_form_third_submit(&$form, &$form_state) {
-  $form_state['object']->drupal = $form_state['values']['drupal'];
-}
-
-/**
- * Generates fourth form.
- *
- * @ingroup forms
- */
-function photo_film_form_fourth($form, &$form_state) {
-  $form['work'] = array(
-    '#type' => 'radios',
-    '#options' => array('yes' => t('Yes'), 'no' => t('No')),
-    '#default_value' => 'yes',
-    '#required' => TRUE,
-  );
-
-  return $form;
-}
-
-/**
- * Handles submit for fourth form.
- */
-function photo_film_form_fourth_submit(&$form, &$form_state) {
-  $form_state['object']->work = $form_state['values']['work'];
 }
 
 /**
