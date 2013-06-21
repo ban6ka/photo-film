@@ -33,10 +33,10 @@ function photo_film_select_picture_step($form, &$form_state) {
     '#type' => 'markup',
     '#markup' => '<div class="user-file-upload">' .
       '<div class="file-uploader-holder" style="width: 300px; height: 100px; border: 1px dotted #ccc;">' .
-      '<div class="user-track-info"></div>' .
+      '<div class="user-photos-info"></div>' .
       '</div>' .
       // todo remove this check "music select" step
-      '<input id="track-upload" type="file" name="track-file" />' .
+      '<input id="photos-upload" type="file" name="photos-file[]" />' .
       '</div>',
   );
 
