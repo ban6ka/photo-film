@@ -31,7 +31,7 @@ function photo_film_form_choose_style_step($form, &$form_state) {
         // storing options, so in future we can fetch theme
         $options[$value->tid] = $value->tid;
         $image = field_get_items('taxonomy_term', $term, 'field_image');
-        $video = field_get_items('taxonomy_term', $term, 'field_video_url');
+        $video = field_get_items('taxonomy_term', $term, 'field_embed_video');
 
         $form['image_' . $value->tid] = array(
           '#type' => 'value',
