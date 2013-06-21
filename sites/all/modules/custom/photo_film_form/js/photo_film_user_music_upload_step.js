@@ -7,8 +7,9 @@
     }
 
     Drupal.initTrackUploader = function () {
+        // todo all constant in to backend!
         $("#track-upload").fileupload({
-            url: '/admin/photo-film/save-file',
+            url: '/admin/photo-film/music/save/file',
             dataType: 'json',
             autoUpload: true,
             acceptFileTypes: /(\.|\/)(gif|jpe?g|png)$/i,

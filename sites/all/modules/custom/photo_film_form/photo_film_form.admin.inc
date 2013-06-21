@@ -14,6 +14,27 @@ function photo_film_form_settings_form($form_state) {
 
   $form = array();
 
+  $form['basic'] = array(
+    '#type' => 'fieldset',
+    '#title' => t('Basic settings of the photo film multi step form'),
+  );
+
+  $form['basic']['photo_film_form_music_upload_destination'] = array(
+    '#title' => t('Music upload destination'),
+    '#description' => t('Drupal relative path'),
+    '#type' => 'textfield',
+    '#default_value' => variable_get('photo_film_form_music_upload_destination', ''),
+    '#required' => TRUE,
+  );
+
+  $form['basic']['photo_film_form_picture_upload_destination'] = array(
+    '#title' => t('Pictures upload destination'),
+    '#description' => t('Drupal relative path'),
+    '#type' => 'textfield',
+    '#default_value' => variable_get('photo_film_form_picture_upload_destination', ''),
+    '#required' => TRUE,
+  );
+
   $form['first_step'] = array(
     '#type' => 'fieldset',
     '#title' => t('Select taxonomy per step'),
@@ -55,17 +76,4 @@ function photo_film_form_settings_form($form_state) {
   );
 
   return system_settings_form($form);
-}
-
-/**
- * page callback for admin/photo-film/save-file/%file_stream
- */
-function photo_film_save_file() {
-  $file_id = FALSE;
-  // try to save a file, if not return false
-  if ($file_loaded = file_save_upload($_FILES[0], array(), "public://", $replace = FILE_EXISTS_RENAME)) {
-    $file_id = $file_loaded->fid;
-  }
-
-  return drupal_json_output($file_id);
 }

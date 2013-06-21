@@ -33,17 +33,62 @@ function photo_film_form_menu() {
     'file' => 'photo_film_form.admin.inc'
   );
 
-  $items['admin/photo-film/save-file'] = array(
+  $items['admin/photo-film/music'] = array(
     'title' => t('Saves file stream'),
-    'page callback' => 'photo_film_save_file',
+    'page callback' => 'photo_film_music_save_file',
     'page arguments' => array(3),
     'access callback' => TRUE,
     'type' => MENU_CALLBACK,
-    'file path' => drupal_get_path('module', 'photo_film_form'),
-    'file' => 'photo_film_form.admin.inc'
   );
 
   return $items;
+}
+
+/**
+ * Page callback for admin/photo-film/music/save
+ * Stores user files
+ */
+function photo_film_music_save_file() {
+  $file_id = array();
+
+  if (!empty($_FILES)) {
+    // get the user which try to download file on the server
+    global $user;
+
+    foreach ($_FILES as $user_file) {
+      if (!empty($_FILES['track-file']['tmp_name']) && $file_name = basename($user_file['name'])) {
+        // we need this to se whether file with this name is already exists if does that we will add _0 or _1
+        $uri = file_build_uri(variable_get('photo_film_form_music_upload_destination', '')) . '/';
+        $future_file_name = file_destination($uri . $file_name, FILE_EXISTS_RENAME);
+        $future_file_name = explode('/', $future_file_name);
+        $future_file_name = array_pop($future_file_name);
+
+        // get the path of drupal file folder
+        $file_path = variable_get('file_public_path', 'sites/default/files') . '/';
+
+        // get the path where admin want to store a file
+        $file_path .= variable_get('photo_film_form_music_upload_destination', '') . '/' . $future_file_name;
+        // try to save a file and add it to db, if not return false
+        if ($file_loaded = drupal_move_uploaded_file($user_file['tmp_name'], getcwd() . '/' . $file_path)) {
+          // creating a file object, which will be saved in to the db
+          $file = new stdClass();
+
+          $file->uid = $user->uid;
+          $file->name = $future_file_name;
+          $file->uri = $uri . $future_file_name;
+          $file->filemime = file_get_mimetype($file_name);
+          $file->filesize = $user_file['size'];
+          $uploaded_file = file_save($file);
+          // add file id to the result
+          $file_id[] = $uploaded_file->fid;
+        }
+      }
+    }
+  }
+
+  // output json for js
+  drupal_json_output($file_id);
+  exit;
 }
 
 /**
