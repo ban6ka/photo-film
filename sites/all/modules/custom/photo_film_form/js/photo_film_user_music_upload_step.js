@@ -8,36 +8,45 @@
 
     Drupal.initTrackUploader = function () {
         // todo all constant in to backend!
-        var maxFiles = 1;
+        var maxFiles = 1,
+            uploadedFilesNumber = 0;
         $("#track-upload").fileupload({
             url: '/admin/photo-film/music/save/file',
             dataType: 'json',
             autoUpload: true,
-            singleFileUploads: false,
+            singleFileUploads: true,
             acceptFileTypes: /(\.|\/)(gif|jpe?g|png)$/i,
             maxNumberOfFiles: maxFiles,
             maxFileSize: 5000000, // 5 MB
-            disableValidation: false,
             disableAudioPreview: true,
 
             dropZone: $('div.file-uploader-holder')
         })
-        .bind('fileuploadadd', function (e, data) {
-                debugger;
-            var fileCount = data.files.length;
-            if (fileCount > maxFiles) {
-                alert("The max number of files is "+maxFiles);
+        .bind('fileuploadsend', function (e, data) {
+            var fileCount = data.files.length,
+                maxAllowed = maxFiles - uploadedFilesNumber;
+
+            if (maxAllowed <= 0)
                 return false;
+
+            if (fileCount > maxAllowed) {
+                data.files = data.files.splice(0, fileCount - maxAllowed + 1);
             }
+            uploadedFilesNumber += data.files.length;
         })
-        .bind('fileuploadsubmit', function (e, data) { console.log('Processing started...'); })
-        .bind('fileuploadsend', function (e, data) {/* ... */})
+        //.bind('fileuploadsend', function (e, data) {/* ... */})
         .bind('fileuploaddone', Drupal.renderTrackFile)
         .bind('fileuploadfail', function (e, data) { console.log('Processing ' + data.files[0].name + ' fail.'); });
 
 
     }
 
+    // RESPONSE should be in next format:
+    // {
+    //   Success: bool TRUE|FALSE
+    //   ErrorMessage: string for Success = FALSE
+    //   Result: array of IDs
+    // }
     Drupal.renderTrackFile = function (e, data) {
         console.log('Processing ' + data.files[0].name + ' done.');
         var uploadFilesBox = $("div.user-track-info");
