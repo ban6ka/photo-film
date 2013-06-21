@@ -43,7 +43,7 @@ function photo_film_form_single_step_pane_render($subtype, $conf, $args, $contex
       'themes' => t('Enter your info'),
       'styles' => t('What do you know?'),
       'user_music_upload' => t('What do think about drupal?'),
-      'fourth' => t('Do you like cookies?'),
+      'photo_film_select_picture_step' => t('Do you like cookies?'),
     ),
     'forms' => array(
       'themes' => array(
@@ -58,8 +58,10 @@ function photo_film_form_single_step_pane_render($subtype, $conf, $args, $contex
         'form id' => 'photo_film_form_user_music_upload_step',
         'include' => drupal_get_path('module', 'photo_film_form') . '/includes/photo_film_user_music_upload_step.inc',
       ),
-      'fourth' => array(
-        'form id' => 'photo_film_form_fourth'
+      'photo_film_select_picture_step' => array(
+        'form id' => 'photo_film_select_picture_step',
+        'include' => drupal_get_path('module', 'photo_film_form') . '/includes/photo_film_select_picture_step.inc',
+
       ),
     ),
   );
