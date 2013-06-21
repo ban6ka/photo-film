@@ -33,8 +33,8 @@ function photo_film_form_user_music_upload_step($form, &$form_state) {
     '#type' => 'markup',
     '#markup' => '<div class="user-file-upload">' .
                    '<div class="file-uploader-holder" style="width: 300px; height: 100px; border: 1px dotted #ccc;">' .
-                     '<div class="user-track-info"></div>' .
                    '</div>' .
+                   '<div class="user-track-info">test</div>' .
                    '<input id="track-upload" type="file" name="track-file" />' .
                  '</div>',
   );
