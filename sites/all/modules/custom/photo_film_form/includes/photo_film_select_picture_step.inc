@@ -36,7 +36,7 @@ function photo_film_select_picture_step($form, &$form_state) {
       '<div class="user-photos-info"></div>' .
       '</div>' .
       // todo remove this check "music select" step
-      '<input id="photos-upload" type="file" name="photos-file[]" />' .
+      '<input id="photos-upload" type="file" name="photos-file[]" multiple />' .
       '</div>',
   );
 
