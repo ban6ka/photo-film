@@ -21,15 +21,19 @@ body {
     background: url(../images/main-bg.png) repeat 0 0;
 }
 
+/* Layout */
+.block-content {
+    background: url(../images/header-bg.png) repeat-x 0 0;
+}
+.layout {
+    width: 940px;
+    margin: 0 auto;
+}
+
 /* Header */
 .header-wrap {
     height: 115px;
-    background: url(../images/header-bg.png) repeat-x 0 0;
-    padding: 30px 0 20px 0;
-}
-.header-wrap .panel-display {
-    width: 940px;
-    margin: 0 auto;
+    padding: 42px 0 20px 0;
 }
 .header-wrap .logo {
     float: left;
@@ -49,3 +53,19 @@ body {
 }
 
 /* Footer */
+
+
+/* Content */
+.content-wrap {
+    padding: 20px 0;
+}
+
+/* Form Navigation */
+.photo-film-breadcrumb {
+    font-family: 'PT Sans', sans-serif;
+    font-weight: 700;
+    font-size: 24px;
+    color: #a6a6a6;
+    line-height: 25px;
+    text-transform: uppercase;
+}

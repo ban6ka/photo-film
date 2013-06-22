@@ -294,7 +294,7 @@ function theme_photo_film_form_breadcrumb($variables) {
       }
       $links[] = l(t($step), 'photo-film-form/nojs/' . $key, $attributes);
     }
-    $output .= implode('=>', $links);
+    $output .= implode('', $links);
   }
 
   $output .= '</div>';

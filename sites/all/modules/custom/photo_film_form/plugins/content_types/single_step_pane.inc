@@ -40,10 +40,10 @@ function photo_film_form_single_step_pane_render($subtype, $conf, $args, $contex
     'cancel callback' => 'photo_film_form_wizard_cancel',
     // we need to override this
     'order' => array(
-      'themes' => t('Select theme'),
-      'styles' => t('Select style'),
+      'themes' => t('Select theme for your video'),
+      'styles' => t('Select style for your video'),
       'user_music_upload' => t('Select music for your video'),
-      'photo_film_select_picture_step' => t('Select pictures for your video'),
+      'photo_film_select_picture_step' => t('Select photos for your video'),
     ),
     'forms' => array(
       'themes' => array(
