@@ -109,8 +109,23 @@ function photo_film_form_single_step_pane_render($subtype, $conf, $args, $contex
     $output = render($results) . "\n\r" . l(t('Back'), 'example-link');
   }
 
+  $steps = array();
+  foreach ($form_info['order'] as $key => $single_step) {
+    $attributes = array();
+
+    if ($key == $step) {
+      $next = next($form_info['order']);
+    }
+    // add next class to the next step
+    if (!empty($next) && $next == $single_step) {
+      $attributes = array('attributes' => array('class' => array('next')));
+    }
+    $steps[] = array('title' => $single_step, 'href' => 'photo-film-form/nojs/' . $key, 'attributes' => $attributes);
+  }
+
+
   $block->content = theme('photo_film_form_breadcrumb', array(
-    'steps' => $form_info['order'],
+    'steps' => $steps,
     'current' => $step,
 
   ));
