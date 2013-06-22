@@ -1,0 +1,11 @@
+name = Mini panel header
+core = 7.x
+package = Mini panels
+php = 5.2.4
+version = 7.x-1.0
+project = mini_panel_header
+dependencies[] = ctools
+dependencies[] = panels_mini
+features[ctools][] = panels_mini:panels_default:1
+features[features_api][] = api:2
+features[panels_mini][] = header_mini_panel
