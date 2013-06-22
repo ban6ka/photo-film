@@ -1,0 +1,51 @@
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, font, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+dl, dt, dd, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    font-size: 100%;
+    font-family: inherit;
+    vertical-align: baseline;
+}
+
+body {
+    font-family: 'Open Sans', sans-serif;
+    font-size: 12px;
+    color: #3b3b3b;
+    background: url(../images/main-bg.png) repeat 0 0;
+}
+
+/* Header */
+.header-wrap {
+    height: 115px;
+    background: url(../images/header-bg.png) repeat-x 0 0;
+    padding: 30px 0 20px 0;
+}
+.header-wrap .panel-display {
+    width: 940px;
+    margin: 0 auto;
+}
+.header-wrap .logo {
+    float: left;
+    width: 220px;
+}
+.header-wrap .slogan {
+    float: left;
+    width: 460px;
+    padding: 10px 18px 0 102px;
+    line-height: 20px;
+    text-shadow: 1px 1px #FFF;
+}
+.header-wrap .help-mail {
+    float: right;
+    width: 128px;
+    padding: 3px 0 0 0;
+}
+
+/* Footer */
