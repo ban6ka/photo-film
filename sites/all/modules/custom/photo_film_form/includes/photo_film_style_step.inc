@@ -11,7 +11,7 @@ function photo_film_form_choose_style_step($form, &$form_state) {
   if ($themes_vocabulary_vid = variable_get('photo_film_form_style_vid', FALSE)) {
     if ($vocabulary_terms = taxonomy_get_tree($themes_vocabulary_vid)) {
       // adding our theme to the first step form
-      $form['#theme'] = array('photo_film_form_choose_style_step_theme');
+      $form['#theme'] = array('photo_film_form_select_style_wrapper');
       // Attach the CSS and JS to the form
       $form['#attached'] = array(
         'css' => array(
@@ -31,7 +31,7 @@ function photo_film_form_choose_style_step($form, &$form_state) {
         // storing options, so in future we can fetch theme
         $options[$value->tid] = $value->tid;
         $image = field_get_items('taxonomy_term', $term, 'field_image');
-        $video = field_get_items('taxonomy_term', $term, 'field_embed_video');
+        $video = field_get_items('taxonomy_term', $term, 'field_video_url');
 
         $form['image_' . $value->tid] = array(
           '#type' => 'value',
@@ -87,48 +87,35 @@ function photo_film_form_choose_style_step_validate(&$form, &$form_state) {
 /**
  *  Theme function for the photo_film_form_choose_theme_step form
  */
-function theme_photo_film_form_choose_style_step_theme($variables) {
+function theme_photo_film_form_select_style_wrapper($variables) {
   $form = reset($variables);
+
   // check if we have term ids in the form
   if (!empty($form['terms']['term_ids']['#options']) && $term_ids = $form['terms']['term_ids']['#options']) {
     $output = '';
-    // render title of the first step form
-    if ($title = variable_get('photo_film_form_style_form_title', '')) {
-      $output .= '<h4>' . $title . '</h4>';
-    }
-    // render base structure for a slider
-    $output .= '<div class="not-picked">';
-    $output .= '<div class="to-the-left"></div>';
-    $output .= '<div class="iframe"><iframe src="http://player.vimeo.com/video/68596504" width="500" height="281" frameborder="0" webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe> <p><a href="http://vimeo.com/68596504">Unified</a> from <a href="http://vimeo.com/richnosworthy">rich nosworthy</a> on <a href="http://vimeo.com">Vimeo</a>.</p></div>';
-    $output .= '<div class="to-the-right"></div>';
-    $output .= '</div>';
-    // adding form action attribute, so it looks like a normal form
-    $form['#attributes']['action'] = $form['#action'];
-    $output .= '<form' . drupal_attributes($form['#attributes']) . '><ul class="style-list">';
+
     // loop through all terms that given in the form and add them to our output
+    $items = array();
     foreach ($term_ids as $id) {
       if (!empty($form['title_' . $id]['#value']) && !empty($form['image_' . $id]['#value'])) {
-        if (!empty($form['video_' . $id]['#value'])) {
-          $output .= '<li><div class="single-style-info">';
-          // output an image
-          $output .= theme('image_style', array(
-            'style_name' => 'photo_film_form_image_style',
-            'path' => $form['image_' . $id]['#value'],
-            'width' => 0,
-            'height' => 0,
-          ));
-          // output video src so we can render it
-          $output .= '<span class="video-src">' . $form['video_' . $id]['#value'] . '</span>';
-          // output name of the term
-          $output .= '<span>' . $form['title_' . $id]['#value'] . '</span>';
-
-          $output .= '</div></li>';
-        }
+        $items[] = array(
+          'id' => $id,
+          'image_path' => $form['image_' . $id]['#value'],
+          'title' => $form['title_' . $id]['#value'],
+          'video_url' => $form['video_' . $id]['#value'],
+        );
       }
     }
+    // adding form action attribute
+    $form['#attributes']['action'] = $form['#action'];
+    $output .= theme('photo_film_form_select_style_slider');
+    $output .= '<form' . drupal_attributes($form['#attributes']) . '><ul class="style-list">';
 
-    $output .= '</ul>';
-    // render form "id" so drupal can process this form as usual form
+    $output .= theme('photo_film_form_select_style_content', array(
+      'title' => variable_get('photo_film_form_style_form_title', ''),
+      'items' => $items,
+    ));
+    // render form "id" so drupal can process this form as usual
     $output .= drupal_render($form['form_id']);
     $output .= drupal_render($form['form_build_id']);
     $output .= drupal_render($form['form_token']);

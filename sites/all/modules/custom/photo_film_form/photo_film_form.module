@@ -18,7 +18,6 @@ function photo_film_form_theme($existing, $type, $theme, $path) {
       'template' => '/templates/photo-film-form-select-theme-content',
       'path' => drupal_get_path('module', 'photo_film_form'),
     ),
-
     'photo_film_form_select_style_wrapper' => array(
       'render element' => 'form',
       'path' => drupal_get_path('module', 'photo_film_form'),
@@ -29,14 +28,9 @@ function photo_film_form_theme($existing, $type, $theme, $path) {
         'title' => NULL,
         'items' => array(),
       ),
-      'template' => '/templates/photo-film-form-select-style-slider',
+      'template' => '/templates/photo-film-form-select-style-content',
       'path' => drupal_get_path('module', 'photo_film_form'),
 
-    ),
-    'photo_film_form_choose_style_step_theme' => array(
-      'render element' => 'form',
-      'path' => drupal_get_path('module', 'photo_film_form'),
-      'file' => '/includes/photo_film_style_step.inc'
     ),
     'photo_film_select_music_step_theme' => array(
       'render element' => 'form',
