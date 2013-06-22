@@ -11,7 +11,7 @@ function photo_film_form_choose_theme_step($form, &$form_state) {
   if ($themes_vocabulary_vid = variable_get('photo_film_form_theme_vid', FALSE)) {
     if ($vocabulary_terms = taxonomy_get_tree($themes_vocabulary_vid)) {
       // adding our theme to the first step form
-      $form['#theme'] = array('photo_film_form_choose_theme_step_theme');
+      $form['#theme'] = array('photo_film_form_select_theme_wrapper');
       // Attach the CSS and JS to the form
       $form['#attached'] = array(
         'css' => array(
@@ -80,37 +80,32 @@ function photo_film_form_choose_theme_step_validate(&$form, &$form_state) {
 /**
  *  Theme function for the photo_film_form_choose_theme_step form
  */
-function theme_photo_film_form_choose_theme_step_theme($variables) {
+function theme_photo_film_form_select_theme_wrapper($variables) {
   $form = reset($variables);
   $output = '';
   // check if we have term ids in the form
   if (!empty($form['terms']['term_ids']['#options']) && $term_ids = $form['terms']['term_ids']['#options']) {
-    // render title of the first step form
-    if ($title = variable_get('photo_film_form_theme_form_title', '')) {
-      $output .= '<h4>' . $title . '</h4>';
-    }
     // adding form action attribute, so it looks like a normal form
     $form['#attributes']['action'] = $form['#action'];
     $output .= '<form' . drupal_attributes($form['#attributes']) . '><ul class="theme-list">';
+
     // loop through all terms that given in the form and add them to our output
+    $items = array();
     foreach ($term_ids as $id) {
       if (!empty($form['title_' . $id]['#value']) && !empty($form['image_' . $id]['#value'])) {
-        $output .= '<li><div class="single-theme-info">';
-        // output an image
-        $output .= theme('image_style', array(
-          'style_name' => 'photo_film_form_image_style',
-          'path' => $form['image_' . $id]['#value'],
-          'width' => 0,
-          'height' => 0,
-        ));
-        // output name of the term
-        $output .= '<span>' . $form['title_' . $id]['#value'] . '</span>';
-
-        $output .= '</div></li>';
+        $items[] = array(
+          'id' => $id,
+          'image_path' => $form['image_' . $id]['#value'],
+          'title' => $form['title_' . $id]['#value'],
+        );
       }
     }
 
-    $output .= '</ul>';
+    $output .= theme('photo_film_form_select_theme_content', array(
+      'title' => variable_get('photo_film_form_theme_form_title', ''),
+      'items' => $items,
+    ));
+
     // render form "id" so drupal can process this form as usual form
     $output .= drupal_render($form['form_id']);
     $output .= drupal_render($form['form_build_id']);
