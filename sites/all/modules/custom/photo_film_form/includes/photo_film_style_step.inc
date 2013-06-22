@@ -12,6 +12,9 @@ function photo_film_form_choose_style_step($form, &$form_state) {
     if ($vocabulary_terms = taxonomy_get_tree($themes_vocabulary_vid)) {
       // adding our theme to the first step form
       $form['#theme'] = array('photo_film_form_select_style_wrapper');
+      $form['#attributes'] = array();
+      $form['#attributes']['class'] = array();
+      $form['#attributes']['class'][] = 'photo-film-form';
       // Attach the CSS and JS to the form
       $form['#attached'] = array(
         'css' => array(
