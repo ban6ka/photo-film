@@ -82,7 +82,7 @@ function photo_film_form_single_step_pane_render($subtype, $conf, $args, $contex
     // We reset the form when $step is NULL because that means they have
     // for whatever reason started over.
     photo_film_form_cache_clear($object_id);
-    $step = 'start';
+    $step = 'themes';
   }
 
   // This automatically gets defaults if there wasn't anything saved.
@@ -109,7 +109,12 @@ function photo_film_form_single_step_pane_render($subtype, $conf, $args, $contex
     $output = render($results) . "\n\r" . l(t('Back'), 'example-link');
   }
 
-  $block->content = $output;
+  $block->content = theme('photo_film_form_breadcrumb', array(
+    'steps' => $form_info['order'],
+    'current' => $step,
+
+  ));
+  $block->content .= $output;
 
   return $block;
 }

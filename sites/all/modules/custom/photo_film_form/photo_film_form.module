@@ -10,17 +10,22 @@ function photo_film_form_theme($existing, $type, $theme, $path) {
       'path' => drupal_get_path('module', 'photo_film_form'),
       'file' => '/includes/photo_film_choose_theme_step.inc'
     ),
-
     'photo_film_form_choose_style_step_theme' => array(
       'render element' => 'form',
       'path' => drupal_get_path('module', 'photo_film_form'),
       'file' => '/includes/photo_film_style_step.inc'
     ),
-
     'photo_film_select_picture_step_theme' => array(
       'render element' => 'form',
       'path' => drupal_get_path('module', 'photo_film_form'),
       'file' => '/includes/photo_film_user_music_upload_step.inc'
+    ),
+    'photo_film_form_breadcrumb' => array(
+      'render element' => 'form',
+      'variables' => array(
+        'steps' => array(),
+        'current' => NULL,
+      ),
     ),
   );
 }
@@ -189,4 +194,32 @@ function photo_film_form_wizard_cancel(&$form_state) {
 function photo_film_form_get_result($object) {
 
   return t('Results:');
+}
+
+/**
+ * Theme function for photo-film breadcrumbs
+ */
+function theme_photo_film_form_breadcrumb($variables) {
+  $output = '<div class="photo-film-breadcrumb">';
+  $links = array();
+  if (!empty($variables['steps']) && !empty($variables['current'])) {
+    foreach ($variables['steps'] as $key => $step) {
+
+      $attributes = array();
+
+      if ($key == $variables['current']) {
+        $next = next($variables['steps']);
+      }
+      // add next class to the next step
+      if (!empty($next) && $next == $step) {
+        $attributes = array('attributes' => array('class' => array('next')));
+      }
+      $links[] = l(t($step), 'photo-film-form/nojs/' . $key, $attributes);
+    }
+    $output .= implode('=>', $links);
+  }
+
+  $output .= '</div>';
+
+  return $output;
 }
