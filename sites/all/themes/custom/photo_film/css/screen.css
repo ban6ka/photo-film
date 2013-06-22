@@ -21,6 +21,16 @@ body {
     background: url(../images/main-bg.png) repeat 0 0;
 }
 
+h4 {
+    color: #6d6d6d;
+    font-size: 16px;
+    font-weight: 300;
+    text-align: center;
+    text-shadow: 1px 1px #ffffff;
+    line-height: 18px;
+    margin: 5px 0;
+}
+
 /* Layout */
 .block-content {
     background: url(../images/header-bg.png) repeat-x 0 0;
@@ -61,11 +71,84 @@ body {
 }
 
 /* Form Navigation */
-.photo-film-breadcrumb {
+.photo-film-navigation {
+    height: 92px;
     font-family: 'PT Sans', sans-serif;
     font-weight: 700;
-    font-size: 24px;
-    color: #a6a6a6;
-    line-height: 25px;
+    font-size: 25px;
+    line-height: 30px;
     text-transform: uppercase;
+    list-style: none;
+}
+.photo-film-navigation li {
+    display: inline-block;
+    margin: 8px 10px 0px 0;
+}
+.photo-film-navigation .navigation-separator {
+    float: right;
+    width: 40px;
+    height: 40px;
+    background: url(../images/lock-icon.png) no-repeat center center;
+}
+.photo-film-navigation li.active-step .navigation-separator {
+    background-image: url(../images/next-icon.png);
+}
+.photo-film-navigation a {
+    float: left;
+    padding: 6px 20px 6px 0;
+
+    color: #a6a6a6;
+    text-decoration: none;
+}
+.photo-film-navigation a.active {
+    color: #0d6d95;
+}
+.photo-film-navigation a.next {
+    color: #6d6d6d;
+}
+
+/* Form */
+.photo-film-form {
+    border-top: 1px solid #e3e3e3;
+}
+.photo-film-form > div {
+    border-top: 1px solid #ffffff;
+    padding: 38px 0 20px 0;
+}
+
+.photo-film-form input[type=checkbox],
+.photo-film-form .form-type-radio {
+    display: none;
+}
+
+.photo-film-form .images-list {
+    display: block;
+    margin: 44px -20px 0 0;
+    list-style: none;
+}
+.photo-film-form .images-list > li {
+    float: left;
+    width: 300px;
+    height: 200px;
+    margin: 0 20px 20px 0;
+    position: relative;
+}
+.photo-film-form .images-list div.title {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+
+    font-family: 'PT Sans', sans-serif;
+    font-weight: 700;
+    font-size: 16px;
+    color: #3b3a3a;
+
+    width: 276px;
+    padding: 20px 12px;
+    background-color: rgba(241, 241, 241, 0.75);
+}
+.photo-film-form .images-list div.title:hover {
+    color: #ffffff;
+    background: url(../images/checked-icon.png) no-repeat 250px center;
+    background-color: rgba(13, 109, 149, 0.75);
 }

@@ -90,7 +90,7 @@ function theme_photo_film_form_select_theme_wrapper($variables) {
   if (!empty($form['terms']['term_ids']['#options']) && $term_ids = $form['terms']['term_ids']['#options']) {
     // adding form action attribute, so it looks like a normal form
     $form['#attributes']['action'] = $form['#action'];
-    $output .= '<form' . drupal_attributes($form['#attributes']) . '><ul class="theme-list">';
+    $output .= '<form' . drupal_attributes($form['#attributes']) . '>';
 
     // loop through all terms that given in the form and add them to our output
     $items = array();

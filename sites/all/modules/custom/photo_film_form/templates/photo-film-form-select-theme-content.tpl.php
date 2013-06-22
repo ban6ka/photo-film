@@ -16,7 +16,7 @@
 <?php endif; ?>
 
 <?php if (!empty($items)): ?>
-  <ul>
+  <ul class="images-list clearfix">
     <?php foreach ($items as $item): ?>
       <li>
         <?php print theme('image_style', array(
@@ -25,7 +25,7 @@
           'width' => 0,
           'height' => 0,
         )); ?>
-        <span><?php print $item['title'] ?></span>
+        <div class="title"><?php print $item['title'] ?></div>
       </li>
     <?php endforeach ?>
   </ul>

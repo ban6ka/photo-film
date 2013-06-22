@@ -26,7 +26,7 @@ function photo_film_form_choose_style_step($form, &$form_state) {
           'data' => drupal_get_path('module', 'photo_film_form') . '/js/photo_film_style_step.js',
         ),
       );
-      $form['#attributes']['class'] = array('photo-video-style-step');
+      $form['#attributes']['class'] = array('photo-film-form');
       $options = array();
       foreach ($vocabulary_terms as $value) {
         // load term with all its fields
