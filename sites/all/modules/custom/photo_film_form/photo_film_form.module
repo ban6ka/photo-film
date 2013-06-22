@@ -5,21 +5,34 @@
  */
 function photo_film_form_theme($existing, $type, $theme, $path) {
   return array(
-    'photo_film_form_choose_theme_step_theme' => array(
+    'photo_film_form_select_theme_wrapper' => array(
       'render element' => 'form',
       'path' => drupal_get_path('module', 'photo_film_form'),
       'file' => '/includes/photo_film_choose_theme_step.inc'
     ),
+
+    'photo_film_form_select_theme_content' => array(
+      'render element' => 'form',
+      'variables' => array(
+        'title' => NULL,
+        'items' => array(),
+      ),
+      'template' => '/templates/photo-film-form-select-theme-content',
+      'path' => drupal_get_path('module', 'photo_film_form'),
+    ),
+
     'photo_film_form_choose_style_step_theme' => array(
       'render element' => 'form',
       'path' => drupal_get_path('module', 'photo_film_form'),
       'file' => '/includes/photo_film_style_step.inc'
     ),
-    'photo_film_select_picture_step_theme' => array(
+
+    'photo_film_select_music_step_theme' => array(
       'render element' => 'form',
       'path' => drupal_get_path('module', 'photo_film_form'),
       'file' => '/includes/photo_film_user_music_upload_step.inc'
     ),
+
     'photo_film_form_breadcrumb' => array(
       'render element' => 'form',
       'variables' => array(
