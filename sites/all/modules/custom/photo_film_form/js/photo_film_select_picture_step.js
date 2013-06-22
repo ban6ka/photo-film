@@ -10,7 +10,7 @@
         var maxFiles = 100,
             uploadedFilesNumber = 0;
         $("#photos-upload").fileupload({
-            url: '/admin/photo-film/music/save/file',
+            url: '/admin/photo-film/file/save/file',
             dataType: 'json',
             autoUpload: true,
             singleFileUploads: false,
