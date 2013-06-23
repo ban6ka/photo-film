@@ -1,6 +1,7 @@
 name = Panels photo film order
 core = 7.x
 package = Panels
+php = 5.2.4
 version = 7.x-1.0
 project = panels_photo_film_order
 dependencies[] = ctools

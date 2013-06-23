@@ -1,8 +1,10 @@
 name = Image styles
 core = 7.x
 package = Other
+php = 5.2.4
 version = 7.x-1.0
 project = image_styles
 dependencies[] = image
 features[features_api][] = api:2
-features[image][] = photo_film_form_image_style
+features[image][] = photo_film_style_thumb
+features[image][] = photo_film_theme_thumb

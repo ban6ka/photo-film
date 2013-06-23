@@ -21,7 +21,7 @@ function mini_panel_footer_default_panels_mini() {
   $mini->contexts = array();
   $mini->relationships = array();
   $display = new panels_display();
-  $display->layout = 'onecol';
+  $display->layout = 'mini_footer';
   $display->layout_settings = array();
   $display->panel_settings = array(
     'style_settings' => array(
@@ -29,12 +29,34 @@ function mini_panel_footer_default_panels_mini() {
       'left' => NULL,
       'middle' => NULL,
       'right' => NULL,
+      'region-one' => NULL,
     ),
   );
   $display->cache = array();
   $display->title = '';
   $display->content = array();
   $display->panels = array();
+    $pane = new stdClass();
+    $pane->pid = 'new-1';
+    $pane->panel = 'region-one';
+    $pane->type = 'block';
+    $pane->subtype = 'menu-menu-footer-menu';
+    $pane->shown = TRUE;
+    $pane->access = array();
+    $pane->configuration = array(
+      'override_title' => 1,
+      'override_title_text' => '',
+    );
+    $pane->cache = array();
+    $pane->style = array(
+      'settings' => NULL,
+    );
+    $pane->css = array();
+    $pane->extras = array();
+    $pane->position = 0;
+    $pane->locks = array();
+    $display->content['new-1'] = $pane;
+    $display->panels['region-one'][0] = 'new-1';
   $display->hide_title = PANELS_TITLE_FIXED;
   $display->title_pane = '0';
   $mini->display = $display;

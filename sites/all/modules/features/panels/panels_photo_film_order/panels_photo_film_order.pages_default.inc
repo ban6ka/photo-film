@@ -52,12 +52,17 @@ function panels_photo_film_order_default_page_manager_pages() {
     'relationships' => array(),
   );
   $display = new panels_display();
-  $display->layout = 'onecol';
+  $display->layout = 'main_layout';
   $display->layout_settings = array();
   $display->panel_settings = array(
     'style_settings' => array(
       'default' => NULL,
       'middle' => NULL,
+      'region-one' => NULL,
+      'region-two' => NULL,
+    ),
+    'middle' => array(
+      'style' => '-1',
     ),
   );
   $display->cache = array();
@@ -66,7 +71,7 @@ function panels_photo_film_order_default_page_manager_pages() {
   $display->panels = array();
     $pane = new stdClass();
     $pane->pid = 'new-1';
-    $pane->panel = 'middle';
+    $pane->panel = 'region-one';
     $pane->type = 'panels_mini';
     $pane->subtype = 'header_mini_panel';
     $pane->shown = TRUE;
@@ -84,10 +89,10 @@ function panels_photo_film_order_default_page_manager_pages() {
     $pane->position = 0;
     $pane->locks = array();
     $display->content['new-1'] = $pane;
-    $display->panels['middle'][0] = 'new-1';
+    $display->panels['region-one'][0] = 'new-1';
     $pane = new stdClass();
     $pane->pid = 'new-2';
-    $pane->panel = 'middle';
+    $pane->panel = 'region-two';
     $pane->type = 'page_messages';
     $pane->subtype = 'page_messages';
     $pane->shown = TRUE;
@@ -99,13 +104,13 @@ function panels_photo_film_order_default_page_manager_pages() {
     );
     $pane->css = array();
     $pane->extras = array();
-    $pane->position = 1;
+    $pane->position = 0;
     $pane->locks = array();
     $display->content['new-2'] = $pane;
-    $display->panels['middle'][1] = 'new-2';
+    $display->panels['region-two'][0] = 'new-2';
     $pane = new stdClass();
     $pane->pid = 'new-3';
-    $pane->panel = 'middle';
+    $pane->panel = 'region-two';
     $pane->type = 'single_step_pane';
     $pane->subtype = 'single_step_pane';
     $pane->shown = TRUE;
@@ -118,15 +123,18 @@ function panels_photo_film_order_default_page_manager_pages() {
     $pane->style = array(
       'settings' => NULL,
     );
-    $pane->css = array();
+    $pane->css = array(
+      'css_id' => '',
+      'css_class' => 'main-content',
+    );
     $pane->extras = array();
-    $pane->position = 2;
+    $pane->position = 1;
     $pane->locks = array();
     $display->content['new-3'] = $pane;
-    $display->panels['middle'][2] = 'new-3';
+    $display->panels['region-two'][1] = 'new-3';
     $pane = new stdClass();
     $pane->pid = 'new-4';
-    $pane->panel = 'middle';
+    $pane->panel = 'region-two';
     $pane->type = 'panels_mini';
     $pane->subtype = 'footer_mini_panel';
     $pane->shown = TRUE;
@@ -141,10 +149,10 @@ function panels_photo_film_order_default_page_manager_pages() {
     );
     $pane->css = array();
     $pane->extras = array();
-    $pane->position = 3;
+    $pane->position = 2;
     $pane->locks = array();
     $display->content['new-4'] = $pane;
-    $display->panels['middle'][3] = 'new-4';
+    $display->panels['region-two'][2] = 'new-4';
   $display->hide_title = PANELS_TITLE_FIXED;
   $display->title_pane = '0';
   $handler->conf['display'] = $display;
