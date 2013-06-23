@@ -69,9 +69,29 @@ function photo_film_form_settings_form($form_state) {
   );
 
   $form['second_step']['photo_film_form_style_form_title'] = array(
-    '#title' => t('Enter the title of the first step, which will be displayed to user'),
+    '#title' => t('Enter the title of the second step, which will be displayed to user'),
     '#type' => 'textarea',
     '#default_value' => variable_get('photo_film_form_style_form_title', ''),
+    '#required' => FALSE,
+  );
+
+  $form['third_step'] = array(
+    '#type' => 'fieldset',
+    '#title' => t('Third step configuration'),
+  );
+
+  $form['third_step']['photo_film_user_music_upload_step_title'] = array(
+    '#title' => t('Enter the title of the third step, which will be displayed to user'),
+    '#type' => 'textarea',
+    '#default_value' => variable_get('photo_film_user_music_upload_step_title', ''),
+    '#required' => FALSE,
+  );
+
+  $form['third_step']['photo_film_user_music_upload_step_user_warning'] = array(
+    '#title' => t('Enter warning message for user'),
+    '#description' => t('Warning about quantity of user music items per video'),
+    '#type' => 'textarea',
+    '#default_value' => variable_get('photo_film_user_music_upload_step_user_warning', ''),
     '#required' => FALSE,
   );
 

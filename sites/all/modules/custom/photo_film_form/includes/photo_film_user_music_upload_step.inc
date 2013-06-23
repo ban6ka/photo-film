@@ -8,7 +8,7 @@
  * Generate third step of the photo_film_form multi step form.
  */
 function photo_film_form_user_music_upload_step($form, &$form_state) {
-  $form['#theme'] = array('photo_film_select_picture_step_theme');
+  $form['#theme'] = array('photo_film_select_music_step_wrapper');
   // Attach the CSS and JS to the form
   drupal_add_js(libraries_get_path('jquery_file_upload') . '/js/vendor/jquery.ui.widget.js');
   drupal_add_js(libraries_get_path('jquery_file_upload') . '/js/jquery.iframe-transport.js');
@@ -42,7 +42,7 @@ function photo_film_form_user_music_upload_step($form, &$form_state) {
       if ($music_item = node_load($item->nid)) {
         // fetch each composition
         if ($composition = field_get_items('node', $music_item, 'field_composition', $music_item->language)) {
-          $track_list[] = $composition[0]['fid'];
+          $track_list[$item->nid] = $composition[0]['fid'];
 
           $form['tracks_list']['track_' . $item->nid] = array(
             '#title' => t('Track'),
@@ -57,16 +57,6 @@ function photo_film_form_user_music_upload_step($form, &$form_state) {
   $form['photo_film_compositions'] = array(
     '#type' => 'radios',
     '#options' => $track_list,
-  );
-
-  $form['user_file_upload'] = array(
-    '#type' => 'markup',
-    '#markup' => '<div class="user-file-upload">' .
-      '<div class="file-uploader-holder" style="width: 300px; height: 100px; border: 1px dotted #ccc;">' .
-      '</div>' .
-      '<div class="user-track-info">test</div>' .
-      '<input id="track-upload" type="file" name="track-file[]" />' .
-      '</div>',
   );
 
   return $form;
@@ -86,22 +76,34 @@ function photo_film_form_user_music_upload_step_validate(&$form, &$form_state) {
 
 }
 
-
 /**
  *  Theme function for the photo_film_form_choose_theme_step form
  */
-function theme_photo_film_select_picture_step_theme($variables) {
-
+function theme_photo_film_select_music_step_wrapper($variables) {
   $form = reset($variables);
   $output = '';
   // adding form action attribute, so it looks like a normal form
   $form['#attributes']['action'] = $form['#action'];
   $output .= '<form' . drupal_attributes($form['#attributes']) . '><ul class="theme-list">';
 
-  if (!empty($form['tracks_list'])) {
-    $output .= drupal_render($form['tracks_list']);
+  $proposed_list = array();
+  if (!empty($form['photo_film_compositions']['#options'])) {
+    foreach ($form['photo_film_compositions']['#options'] as $key => $option) {
+      if (!empty($form['tracks_list']['track_' . $key]['#markup'])) {
+        $proposed_list[$key] = array(
+          'fid' => $option,
+          'title' => $form['tracks_list']['track_' . $key]['#markup'],
+        );
+      }
+    }
   }
 
+  $output .= theme('photo_film_select_music_step_content', array(
+    'title' => variable_get('photo_film_user_music_upload_step_title', ''),
+    'items' => $proposed_list,
+    'warning' => variable_get('photo_film_user_music_upload_step_user_warning', '')
+  ));
+  krumo($proposed_list);
   if (!empty($form['photo_film_compositions'])) {
     $output .= drupal_render($form['photo_film_compositions']);
   }
