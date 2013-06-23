@@ -1,0 +1,7 @@
+<?php
+/**
+ * @file
+ * Code for the content_type_music feature.
+ */
+
+include_once 'content_type_music.features.inc';
