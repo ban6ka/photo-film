@@ -103,7 +103,6 @@ function theme_photo_film_select_music_step_wrapper($variables) {
     'items' => $proposed_list,
     'warning' => variable_get('photo_film_user_music_upload_step_user_warning', '')
   ));
-  krumo($proposed_list);
   if (!empty($form['photo_film_compositions'])) {
     $output .= drupal_render($form['photo_film_compositions']);
   }
