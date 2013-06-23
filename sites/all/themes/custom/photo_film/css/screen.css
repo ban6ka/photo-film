@@ -199,23 +199,38 @@ hr.separator {
     position: relative;
 }
 
-.photo-film-form .images-list div.title {
+.photo-film-form .images-list .image-toolbar {
     position: absolute;
     left: 0;
     bottom: 0;
 
+    width: 274px;
+    padding: 10px 14px 10px 12px;
+    background-color: rgba(241, 241, 241, 0.75);
+    color: #3b3a3a;
+}
+
+.photo-film-form .images-list .image-toolbar .title {
+    float: left;
     font-family: 'PT Sans', sans-serif;
     font-weight: 700;
     font-size: 16px;
-    color: #3b3a3a;
-
-    width: 276px;
-    padding: 20px 12px;
-    background-color: rgba(241, 241, 241, 0.75);
+    line-height: 34px;
 }
-
-.photo-film-form .images-list div.title:hover {
+.photo-film-form .images-list .image-toolbar .checkbox {
+    float: right;
+    visibility: hidden;
+    width: 36px;
+    height: 36px;
+    background: url(../images/checked-icon.png) no-repeat 0 0;
+    cursor: pointer;
+}
+.photo-film-form .images-list .image-toolbar:hover,
+.photo-film-form .images-list .image-toolbar.selected {
     color: #ffffff;
-    background: url(../images/checked-icon.png) no-repeat 250px center;
     background-color: rgba(13, 109, 149, 0.75);
+}
+.photo-film-form .images-list .image-toolbar:hover .checkbox,
+.photo-film-form .images-list .image-toolbar.selected .checkbox {
+    visibility: visible;
 }

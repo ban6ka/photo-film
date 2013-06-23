@@ -25,7 +25,14 @@
           'width' => 0,
           'height' => 0,
         )); ?>
-        <div class="title"><?php print $item['title'] ?></div>
+        <div class="image-toolbar clearfix" id="theme-<?php print $item['id'] ?>">
+          <div class="title">
+          <?php print $item['title'] ?>
+          </div>
+          <div class="checkbox">
+
+          </div>
+        </div>
       </li>
     <?php endforeach ?>
   </ul>
