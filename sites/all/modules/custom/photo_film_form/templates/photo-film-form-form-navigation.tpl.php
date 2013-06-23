@@ -9,14 +9,21 @@
  */
 ?>
 
-<?php if (!empty($steps)): ?>
+<?php if (!empty($steps)):
+  $is_active = TRUE; ?>
   <ul class="photo-film-navigation">
     <?php foreach ($steps as $key => $single_step):
-      $class = "clearfix" . ($key == $current ? " active-step" : ""); ?>
-      <li class="<?php print $class ?>">
-        <?php print l(t($single_step['title']), $single_step['href'], $single_step['attributes']) ?>
-        <span class="navigation-separator">&nbsp;</span>
-      </li>
+    if ($key === $current) :
+      $is_active = FALSE;
+    endif;
+    if ($is_active):
+      $single_step['attributes'] = array('attributes' => array('class' => array('active')));
+    endif ?>
+    <li class="<?php print ($is_active ? "active-step " : "") ?> clearfix">
+      <?php print l(t($single_step['title']), $single_step['href'], $single_step['attributes']) ?>
+      <span class="navigation-separator">&nbsp;</span>
+    </li>
     <?php endforeach; ?>
   </ul>
 <?php endif ?>
+<hr class="separator" />

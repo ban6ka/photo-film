@@ -63,27 +63,6 @@ body {
   zoom: 1;
 }
 
-.panels-dnd .prefooter {
-  float: left;
+.panels-dnd .foooter-menu {
   margin-bottom: 10px;
-}
-
-.panels-dnd .prefooter .blocks {
-  width: 310px;
-  margin-right: 10px;
-  float: left;
-}
-.panels-dnd .footer-end-wrap {
-  clear: left;
-  float: left;
-  width: 990px;
-}
-.panels-dnd .information {
-  float: left;
-  width: 700px;
-  margin-right: 10px;
-}
-.panels-dnd .custom-pics {
-  float: left;
-  width: 240px;
 }
