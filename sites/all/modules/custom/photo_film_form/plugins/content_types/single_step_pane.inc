@@ -117,13 +117,12 @@ function photo_film_form_single_step_pane_render($subtype, $conf, $args, $contex
     if (!empty($form_state['next']) && $form_state['next'] == $key) {
       $attributes = array('attributes' => array('class' => array('next')));
     }
-    $steps[] = array('title' => $single_step, 'href' => 'photo-film-form/nojs/' . $key, 'attributes' => $attributes);
+    $steps[$key] = array('title' => $single_step, 'href' => 'photo-film-form/nojs/' . $key, 'attributes' => $attributes);
   }
 
   $block->content = theme('photo_film_form_breadcrumb', array(
     'steps' => $steps,
-    'current' => $step,
-
+    'current' => $step
   ));
   $block->content .= $output;
 

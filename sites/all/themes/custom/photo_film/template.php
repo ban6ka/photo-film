@@ -29,23 +29,68 @@ function photo_film_preprocess_html(&$variables) {
   $fallback = theme_get_setting('zentropy_responsive_fallback', 'zentropy');
 
   // CSS files for Internet Explorer-specific styles.
-  drupal_add_css(path_to_theme() . '/css/ie/photo_film-ielt9.css', array('group' => CSS_THEME, 'every_page' => TRUE, 'media' => 'screen', 'browsers' => array('IE' => 'lt IE 9', '!IE' => FALSE), 'preprocess' => FALSE));
-  drupal_add_css(path_to_theme() . '/css/ie/photo_film-ielt8.css', array('group' => CSS_THEME, 'every_page' => TRUE, 'media' => 'screen', 'browsers' => array('IE' => 'lt IE 8', '!IE' => FALSE), 'preprocess' => FALSE));
+  drupal_add_css(path_to_theme() . '/css/ie/photo_film-ielt9.css', array(
+    'group' => CSS_THEME,
+    'every_page' => TRUE,
+    'media' => 'screen',
+    'browsers' => array('IE' => 'lt IE 9', '!IE' => FALSE),
+    'preprocess' => FALSE
+  ));
+  drupal_add_css(path_to_theme() . '/css/ie/photo_film-ielt8.css', array(
+    'group' => CSS_THEME,
+    'every_page' => TRUE,
+    'media' => 'screen',
+    'browsers' => array('IE' => 'lt IE 8', '!IE' => FALSE),
+    'preprocess' => FALSE
+  ));
 
   // CSS files for custom Google-fonts
-  drupal_add_css('http://fonts.googleapis.com/css?family=Open+Sans:400,300', array('group' => CSS_THEME, 'every_page' => TRUE, 'type' => 'external', 'preprocess' => FALSE));
-  drupal_add_css('http://fonts.googleapis.com/css?family=PT+Sans:400,700', array('group' => CSS_THEME, 'every_page' => TRUE, 'type' => 'external', 'preprocess' => FALSE));
+  drupal_add_css('http://fonts.googleapis.com/css?family=Open+Sans:400,300', array(
+    'group' => CSS_THEME,
+    'every_page' => TRUE,
+    'type' => 'external',
+    'preprocess' => FALSE
+  ));
+  drupal_add_css('http://fonts.googleapis.com/css?family=PT+Sans:400,700', array(
+    'group' => CSS_THEME,
+    'every_page' => TRUE,
+    'type' => 'external',
+    'preprocess' => FALSE
+  ));
 
   // Responsive stylesheets.
   if (theme_get_setting('zentropy_responsive_enable')) {
-    drupal_add_css(path_to_theme() . '/css/layout/photo_film-320.css', array('preprocess' => $mode, 'group' => CSS_THEME, 'every_page' => TRUE));
-    drupal_add_css(path_to_theme() . '/css/layout/photo_film-480.css', array('preprocess' => $mode, 'group' => CSS_THEME, 'every_page' => TRUE));
-    drupal_add_css(path_to_theme() . '/css/layout/photo_film-768.css', array('preprocess' => $mode, 'group' => CSS_THEME, 'every_page' => TRUE));
-    drupal_add_css(path_to_theme() . '/css/layout/photo_film-992.css', array('preprocess' => $mode, 'group' => CSS_THEME, 'every_page' => TRUE));
-    drupal_add_css(path_to_theme() . '/css/layout/photo_film-1382.css', array('preprocess' => $mode, 'group' => CSS_THEME, 'every_page' => TRUE));
+    drupal_add_css(path_to_theme() . '/css/layout/photo_film-320.css', array(
+      'preprocess' => $mode,
+      'group' => CSS_THEME,
+      'every_page' => TRUE
+    ));
+    drupal_add_css(path_to_theme() . '/css/layout/photo_film-480.css', array(
+      'preprocess' => $mode,
+      'group' => CSS_THEME,
+      'every_page' => TRUE
+    ));
+    drupal_add_css(path_to_theme() . '/css/layout/photo_film-768.css', array(
+      'preprocess' => $mode,
+      'group' => CSS_THEME,
+      'every_page' => TRUE
+    ));
+    drupal_add_css(path_to_theme() . '/css/layout/photo_film-992.css', array(
+      'preprocess' => $mode,
+      'group' => CSS_THEME,
+      'every_page' => TRUE
+    ));
+    drupal_add_css(path_to_theme() . '/css/layout/photo_film-1382.css', array(
+      'preprocess' => $mode,
+      'group' => CSS_THEME,
+      'every_page' => TRUE
+    ));
 
     // Styles for iPhone 4+, iPad 3+, Opera Mobile 11+ and other high pixel ratio browsers and devices.
-    drupal_add_css(path_to_theme() . '/css/layout/photo_film-hipixel.css', array('group' => CSS_THEME, 'every_page' => TRUE));
+    drupal_add_css(path_to_theme() . '/css/layout/photo_film-hipixel.css', array(
+      'group' => CSS_THEME,
+      'every_page' => TRUE
+    ));
 
     // Styles for iPads (portrait & landscape).
     //drupal_add_css(path_to_theme() . '/css/layout/photo_film-ipad.css', array('group' => CSS_THEME, 'every_page' => TRUE));
@@ -53,20 +98,19 @@ function photo_film_preprocess_html(&$variables) {
   }
   // If not, use fallback stylesheet.
   elseif (isset($fallback) && $fallback != FALSE) {
-    drupal_add_css(path_to_theme() . "/css/layout/photo_film-{$fallback}.css", array('preprocess' => $mode, 'group' => CSS_THEME, 'every_page' => TRUE));
+    drupal_add_css(path_to_theme() . "/css/layout/photo_film-{$fallback}.css", array(
+      'preprocess' => $mode,
+      'group' => CSS_THEME,
+      'every_page' => TRUE
+    ));
   }
 
   /* Add your own custom logic in between the following lines:
 	--------------------------------------------------------------------*/
 
 
-
-
-
-
-
   /* STOP!!!! Don't edit this function below this line!
-	--------------------------------------------------------------------*/
+    --------------------------------------------------------------------*/
 
   // The below code comments are placeholders for Zentropy optional components downloaded and installed via Drush.
   // For more information see the section "Advanced Drush Integration" in Zentropy's README.txt or the project page on drupal.org: http://drupal.org/project/zentropy
@@ -93,23 +137,23 @@ function photo_film_preprocess_html(&$variables) {
  */
 
 /* Put Breadcrumbs in a ul li structure */
- function photo_film_breadcrumb($variables) {
+function photo_film_breadcrumb($variables) {
   $breadcrumb = $variables['breadcrumb'];
   $crumbs = '';
-   if (!empty($breadcrumb)) {
+  if (!empty($breadcrumb)) {
 
-			//$breadcrumb[] = drupal_get_title();
+    //$breadcrumb[] = drupal_get_title();
 
-      $crumbs = '<ul class="breadcrumbs">';
+    $crumbs = '<ul class="breadcrumbs">';
 
-      foreach($breadcrumb as $value) {
-           $crumbs .= '<li>'.$value.'</li>';
-      }
-      $crumbs .= '<li class="current">' . drupal_get_title() . '</li>';
-      $crumbs .= '</ul>';
+    foreach ($breadcrumb as $value) {
+      $crumbs .= '<li>' . $value . '</li>';
     }
-      return $crumbs;
- }
+    $crumbs .= '<li class="current">' . drupal_get_title() . '</li>';
+    $crumbs .= '</ul>';
+  }
+  return $crumbs;
+}
 
 
 /**
@@ -181,4 +225,27 @@ function photo_film_css_alter(&$css) {
 
   );
   $css = array_diff_key($css, $exclude);
+}
+
+/**
+ * Return a themed set of links delimitated by "|"
+ * An override of theme_links()
+ *
+ * @see theme_links
+ */
+function photo_film_menu_link(array $variables) {
+  $element = $variables['element'];
+  $sub_menu = '';
+  $delimiter = '';
+  // Only add delimiter if item is not the last one
+  if (!in_array('last', $element['#attributes']['class'])) {
+    $delimiter = '<span class="menu-delimiter">|</span>';
+  }
+
+  if ($element['#below']) {
+    $sub_menu = drupal_render($element['#below']);
+  }
+  $output = l($element['#title'], $element['#href'], $element['#localized_options']);
+  // Add delimiter just before the closing </li> tag
+  return '<li' . drupal_attributes($element['#attributes']) . '>' . $output . $sub_menu . $delimiter . "</li>\n";
 }

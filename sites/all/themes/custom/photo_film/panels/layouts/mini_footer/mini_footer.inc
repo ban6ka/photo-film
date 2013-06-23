@@ -11,10 +11,6 @@ $plugin = array(
   'theme' => 'mini-footer',
   'css' => 'mini_footer.css',
   'regions' => array(
-    'region-one'      => t('Our sites'),
-    'region-two'      => t('Quick links'),
-	'region-three'    => t('Related links'),
-    'region-four'     => t('Information'),
-    'region-five'     => t('Pictures')
+    'region-one' => t('Footer Menu')
 	),
 );
