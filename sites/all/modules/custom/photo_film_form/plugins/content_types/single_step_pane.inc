@@ -44,6 +44,7 @@ function photo_film_form_single_step_pane_render($subtype, $conf, $args, $contex
       'styles' => t('Select style for your video'),
       'user_music_upload' => t('Select music for your video'),
       'photo_film_select_picture_step' => t('Select photos for your video'),
+      'photo_film_form_order' => t('Order'),
     ),
     'forms' => array(
       'themes' => array(
@@ -61,7 +62,10 @@ function photo_film_form_single_step_pane_render($subtype, $conf, $args, $contex
       'photo_film_select_picture_step' => array(
         'form id' => 'photo_film_select_picture_step',
         'include' => drupal_get_path('module', 'photo_film_form') . '/includes/photo_film_select_picture_step.inc',
-
+      ),
+      'photo_film_form_order' => array(
+        'form id' => 'photo_film_form_order',
+        'include' => drupal_get_path('module', 'photo_film_form') . '/includes/photo_film_order.inc',
       ),
     ),
   );

@@ -45,7 +45,6 @@ function photo_film_form_theme($existing, $type, $theme, $path) {
       'template' => '/templates/photo-film-select-music-step-content',
       'path' => drupal_get_path('module', 'photo_film_form'),
     ),
-
     'photo_film_select_picture_step_content' => array(
       'variables' => array(
         'title' => NULL,
@@ -61,6 +60,16 @@ function photo_film_form_theme($existing, $type, $theme, $path) {
         'current' => NULL,
       ),
       'template' => '/templates/photo-film-form-form-navigation',
+      'path' => drupal_get_path('module', 'photo_film_form'),
+    ),
+    'photo_film_form_textfield' => array(
+      'render element' => 'element',
+      'template' => '/templates//elements/photo-film-form-textfield',
+      'path' => drupal_get_path('module', 'photo_film_form'),
+    ),
+    'photo_film_form_select' => array(
+      'render element' => 'element',
+      'template' => '/templates/elements/photo-film-form-select',
       'path' => drupal_get_path('module', 'photo_film_form'),
     ),
   );
@@ -89,6 +98,22 @@ function photo_film_form_menu() {
   );
 
   return $items;
+}
+
+/**
+ * Implementation of template_process()
+ */
+function photo_film_form_process(&$variables, $hook) {
+  if ($hook == 'photo_film_form_textfield') {
+    element_set_attributes($variables['element'], array('id', 'name', 'value', 'size', 'maxlength'));
+    _form_set_class($variables['element'], array('form-text'));
+    $variables['element']['#attributes']['type'] = 'text';
+  }
+
+  if ($hook == 'photo_film_form_select') {
+    element_set_attributes($variables['element'], array('id', 'name', 'size'));
+    _form_set_class($variables['element'], array('form-select'));
+  }
 }
 
 /**

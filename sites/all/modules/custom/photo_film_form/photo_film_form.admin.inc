@@ -27,6 +27,20 @@ function photo_film_form_settings_form($form_state) {
     '#required' => TRUE,
   );
 
+  $form['basic']['photo_film_form_delivery_methods'] = array(
+    '#title' => t('Delivery methods'),
+    '#type' => 'textarea',
+    '#default_value' => variable_get('photo_film_form_delivery_methods', ''),
+    '#required' => TRUE,
+  );
+
+  $form['basic']['photo_film_form_video_formats'] = array(
+    '#title' => t('Video format'),
+    '#type' => 'textarea',
+    '#default_value' => variable_get('photo_film_form_video_formats', ''),
+    '#required' => TRUE,
+  );
+
   $form['basic']['photo_film_form_picture_upload_destination'] = array(
     '#title' => t('Pictures upload destination'),
     '#description' => t('Drupal relative path'),
@@ -112,6 +126,18 @@ function photo_film_form_settings_form($form_state) {
     '#description' => t('Warning about quantity of user pictures items per video'),
     '#type' => 'textarea',
     '#default_value' => variable_get('photo_film_select_picture_step_warning', ''),
+    '#required' => FALSE,
+  );
+
+  $form['fifth_step'] = array(
+    '#type' => 'fieldset',
+    '#title' => t('Fifth step configuration'),
+  );
+
+  $form['fifth_step']['photo_film_form_order_title'] = array(
+    '#title' => t('Enter the title of the fifth step, which will be displayed to user'),
+    '#type' => 'textarea',
+    '#default_value' => variable_get('photo_film_form_order_title', ''),
     '#required' => FALSE,
   );
 
