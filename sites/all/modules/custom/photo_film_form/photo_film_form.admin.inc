@@ -95,5 +95,25 @@ function photo_film_form_settings_form($form_state) {
     '#required' => FALSE,
   );
 
+  $form['fourth_step'] = array(
+    '#type' => 'fieldset',
+    '#title' => t('Fourth step configuration'),
+  );
+
+  $form['fourth_step']['photo_film_select_picture_step_title'] = array(
+    '#title' => t('Enter the title of the fourth step, which will be displayed to user'),
+    '#type' => 'textarea',
+    '#default_value' => variable_get('photo_film_select_picture_step_title', ''),
+    '#required' => FALSE,
+  );
+
+  $form['fourth_step']['photo_film_select_picture_step_warning'] = array(
+    '#title' => t('Enter warning message for user'),
+    '#description' => t('Warning about quantity of user pictures items per video'),
+    '#type' => 'textarea',
+    '#default_value' => variable_get('photo_film_select_picture_step_warning', ''),
+    '#required' => FALSE,
+  );
+
   return system_settings_form($form);
 }

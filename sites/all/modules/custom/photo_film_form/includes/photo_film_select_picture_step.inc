@@ -24,20 +24,12 @@ function photo_film_select_picture_step($form, &$form_state) {
     ),
   );
 
-  $form['tracks_list'] = array(
-    '#type' => 'markup',
-    '#markup' => '<div class="user-track-list"></div>',
-  );
-
   $form['user_file_upload'] = array(
     '#type' => 'markup',
-    '#markup' => '<div class="user-file-upload">' .
-      '<div class="file-uploader-holder" style="width: 300px; height: 100px; border: 1px dotted #ccc;">' .
-      '<div class="user-photos-info"></div>' .
-      '</div>' .
-      // todo remove this check "music select" step
-      '<input id="photos-upload" type="file" name="photos-file[]" multiple />' .
-      '</div>',
+    '#markup' => theme('photo_film_select_picture_step_content', array(
+      'title' => variable_get('photo_film_select_picture_step_title', ''),
+      'warning' => variable_get('photo_film_user_music_upload_step_user_warning', ''),
+    ))
   );
 
   return $form;
