@@ -28,21 +28,23 @@ function photo_film_form_choose_theme_step($form, &$form_state) {
       );
       $options = array();
       foreach ($vocabulary_terms as $value) {
-        // load term with all its fields
-        $term = taxonomy_term_load($value->tid);
-        // storing options, so in future we can fetch theme
-        $options[$value->tid] = $value->tid;
-        $image = field_get_items('taxonomy_term', $term, 'field_image');
+        if ($value->depth == 0) {
+          // load term with all its fields
+          $term = taxonomy_term_load($value->tid);
+          // storing options, so in future we can fetch theme
+          $options[$value->tid] = $value->tid;
+          $image = field_get_items('taxonomy_term', $term, 'field_image');
 
-        $form['image_' . $value->tid] = array(
-          '#type' => 'value',
-          '#value' => $image[0]['uri']
-        );
+          $form['image_' . $value->tid] = array(
+            '#type' => 'value',
+            '#value' => $image[0]['uri']
+          );
 
-        $form['title_' . $value->tid] = array(
-          '#type' => 'value',
-          '#value' => $term->name
-        );
+          $form['title_' . $value->tid] = array(
+            '#type' => 'value',
+            '#value' => $term->name
+          );
+        }
       }
 
       $form['terms'] = array(

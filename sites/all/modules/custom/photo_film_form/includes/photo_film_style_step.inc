@@ -8,8 +8,9 @@
  * Generate second step of the photo_film_form multi step form.
  */
 function photo_film_form_choose_style_step($form, &$form_state) {
-  if ($themes_vocabulary_vid = variable_get('photo_film_form_style_vid', FALSE)) {
-    if ($vocabulary_terms = taxonomy_get_tree($themes_vocabulary_vid)) {
+  $previous_step_section = photo_film_form_cache_get(1);
+  if (!empty($previous_step_section->user_theme) && $parent = $previous_step_section->user_theme) {
+    if ($vocabulary_terms = taxonomy_get_tree(variable_get('photo_film_form_theme_vid', FALSE), $parent)) {
       // adding our theme to the first step form
       $form['#theme'] = array('photo_film_form_select_style_wrapper');
       $form['#attributes'] = array();
