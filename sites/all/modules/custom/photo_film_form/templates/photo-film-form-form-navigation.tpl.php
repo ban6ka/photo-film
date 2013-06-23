@@ -8,12 +8,15 @@
  * - $current: key for current step:
  */
 ?>
-<div class="photo-film-breadcrumb">
-  <?php if (!empty($steps)): ?>
-  <ul>
-    <?php foreach ($steps as $single_step): ?>
-      <li> <?php print l(t($single_step['title']), $single_step['href'], $single_step['attributes']) ?></li>
+
+<?php if (!empty($steps)): ?>
+  <ul class="photo-film-navigation">
+    <?php foreach ($steps as $key => $single_step):
+      $class = "clearfix" . ($key == $current ? " active-step" : ""); ?>
+      <li class="<?php print $class ?>">
+        <?php print l(t($single_step['title']), $single_step['href'], $single_step['attributes']) ?>
+        <span class="navigation-separator">&nbsp;</span>
+      </li>
     <?php endforeach; ?>
-    <?php endif ?>
   </ul>
-</div>
+<?php endif ?>
