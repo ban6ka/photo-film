@@ -27,13 +27,19 @@
   <ul class="images-list clearfix">
     <?php foreach ($items as $item): ?>
       <li>
-        <?php print theme('image_style', array(
-          'style_name' => 'photo_film_form_image_style',
-          'path' => $item['image_path'],
-          'width' => 0,
-          'height' => 0,
-        )); ?>
-        <div class="title"><?php print $item['title'] ?></div>
+        <div class="clearfix">
+          <?php print theme('image_style', array(
+            'style_name' => 'photo_film_style_thumb',
+            'path' => $item['image_path'],
+            'width' => 0,
+            'height' => 0,
+            'attributes' => array('align' => 'left')
+          )); ?>
+        </div>
+        <div class="style-toolbar clearfix" id="style-<?php print $item['id'] ?>">
+          <div class="title"><?php print $item['title'] ?></div>
+          <div class="checkbox">&nbsp;</div>
+        </div>
         <span><?php print $item['video_url'] ?></span>
       </li>
     <?php endforeach ?>

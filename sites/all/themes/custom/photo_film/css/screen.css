@@ -172,11 +172,8 @@ hr.separator {
     color: #6d6d6d;
 }
 
-/* Form */
+/* Main Form */
 .photo-film-form {
-}
-
-.photo-film-form > div {
     padding: 38px 0 20px 0;
 }
 
@@ -193,44 +190,60 @@ hr.separator {
 
 .photo-film-form .images-list > li {
     float: left;
-    width: 300px;
-    height: 200px;
     margin: 0 20px 20px 0;
     position: relative;
 }
 
-.photo-film-form .images-list .image-toolbar {
+/* 'Theme' Step */
+.photo-film-form .images-list .theme-toolbar {
     position: absolute;
     left: 0;
     bottom: 0;
-
-    width: 274px;
-    padding: 10px 14px 10px 12px;
+    width: 300px;
+    padding: 10px 0 10px;
     background-color: rgba(241, 241, 241, 0.75);
     color: #3b3a3a;
 }
 
-.photo-film-form .images-list .image-toolbar .title {
+.photo-film-form .images-list .theme-toolbar .title {
     float: left;
+    margin-left: 12px;
     font-family: 'PT Sans', sans-serif;
     font-weight: 700;
     font-size: 16px;
     line-height: 34px;
 }
-.photo-film-form .images-list .image-toolbar .checkbox {
+.photo-film-form .images-list .theme-toolbar .checkbox {
     float: right;
-    visibility: hidden;
+    margin-right: 14px;
     width: 36px;
     height: 36px;
     background: url(../images/checked-icon.png) no-repeat 0 0;
     cursor: pointer;
 }
-.photo-film-form .images-list .image-toolbar:hover,
-.photo-film-form .images-list .image-toolbar.selected {
+.photo-film-form .images-list .theme-toolbar:hover,
+.photo-film-form .images-list .theme-toolbar.selected {
     color: #ffffff;
     background-color: rgba(13, 109, 149, 0.75);
 }
-.photo-film-form .images-list .image-toolbar:hover .checkbox,
-.photo-film-form .images-list .image-toolbar.selected .checkbox {
+.photo-film-form .images-list .theme-toolbar:hover .checkbox,
+.photo-film-form .images-list .theme-toolbar.selected .checkbox {
     visibility: visible;
+}
+
+/* 'Style' Step */
+.photo-film-form .images-list .style-toolbar {
+    padding: 10px 0;
+    background-color: #e5e6e6;
+    color: #3b3a3a;
+}
+.photo-film-form .images-list .style-toolbar .title {
+    float: left;
+    margin-left: 10px;
+    font-size: 13px;
+}
+.photo-film-form .images-list .style-toolbar .checkbox {
+    float: right;
+    margin-right: 12px;
+    line-height: 12px;
 }

@@ -18,14 +18,15 @@
 <?php if (!empty($items)): ?>
   <ul class="images-list clearfix">
     <?php foreach ($items as $item): ?>
-      <li>
+      <li class="clearfix">
         <?php print theme('image_style', array(
-          'style_name' => 'photo_film_form_image_style',
+          'style_name' => 'photo_film_theme_thumb',
           'path' => $item['image_path'],
           'width' => 0,
           'height' => 0,
+          'attributes' => array('align' => 'left')
         )); ?>
-        <div class="image-toolbar clearfix" id="theme-<?php print $item['id'] ?>">
+        <div class="theme-toolbar clearfix" id="theme-<?php print $item['id'] ?>">
           <div class="title">
           <?php print $item['title'] ?>
           </div>
