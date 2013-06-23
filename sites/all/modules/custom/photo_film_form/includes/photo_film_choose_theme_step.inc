@@ -56,6 +56,11 @@ function photo_film_form_choose_theme_step($form, &$form_state) {
         '#options' => $options,
         //'#required' => TRUE,
       );
+
+      $cache = photo_film_form_cache_get(1);
+      if (!empty($cache->user_theme)) {
+        $form['terms']['term_ids']['#default_value'] = $cache->user_theme;
+      }
     }
   }
 

@@ -63,6 +63,11 @@ function photo_film_form_choose_style_step($form, &$form_state) {
         '#options' => $options,
         //'#required' => TRUE,
       );
+
+      $cache = photo_film_form_cache_get(1);
+      if (!empty($cache->user_style)) {
+        $form['terms']['term_ids']['#default_value'] = $cache->user_style;
+      }
     }
   }
 
@@ -74,7 +79,7 @@ function photo_film_form_choose_style_step($form, &$form_state) {
  */
 function photo_film_form_choose_style_step_submit(&$form, &$form_state) {
   if (!empty($form_state['values']['term_ids'])) {
-    $form_state['object']->user_theme = $form_state['values']['term_ids'];
+    $form_state['object']->user_style = $form_state['values']['term_ids'];
   }
 }
 

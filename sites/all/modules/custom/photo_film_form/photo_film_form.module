@@ -198,6 +198,9 @@ function photo_film_form_save_file($file_to_upload, $destination) {
       $file->filemime = file_get_mimetype($file_name);
       $file->filesize = $file_to_upload['size'];
       $uploaded_file = file_save($file);
+      // delete file from file usage table, so system can delete it per cron run
+      file_usage_delete($uploaded_file, 'file');
+
     }
   }
 
