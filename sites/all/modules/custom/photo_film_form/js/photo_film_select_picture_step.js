@@ -125,8 +125,8 @@
     Drupal.updatePhotoNumbers = function () {
         this.controls.files_holder.children("li").each(function (index) {
             $(this).children("input.photo-order").val(index)
-                .end()
-                .children("div.photo-number").text(index + 1);
+                   .end()
+                   .children("div.photo-number").text(index + 1);
         });
     }
 
