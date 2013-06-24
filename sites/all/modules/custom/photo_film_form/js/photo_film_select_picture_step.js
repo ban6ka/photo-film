@@ -5,69 +5,150 @@
         }
     }
 
+    // TODO: all constant in to backend!
+    Drupal.form_settings = {
+        max_files: 100,
+        max_weight: 10000000, // 10 MB
+        accept_types: /(\.|\/)(gif|jpe?g|png)$/i,
+        uploaded_files: 0
+    }
+    Drupal.controls = {
+        uploader: null,
+        drop_zone: null,
+        files_holder: null
+    }
+    Drupal.control_classes = {
+        loading: "loading"
+    }
+    Drupal.item_template =
+        '<li>' +
+            '<img src="" width="220" height="120" align="left" />' +
+            '<div class="photo-number"></div>' +
+            '<div class="photo-toolbar clearfix">' +
+            '<div class="photo-comment">коментировать</div>' +
+            '<div class="photo-remove">удалить</div>' +
+          '</div>' +
+          '<input type="text" class="photo-id hidden" name="photos_id[]" />' +
+          '<input type="text" class="photo-order hidden" name="photos_order[]" />' +
+          '<input type="text" class="photo-comment hidden" name="photos_comment[]" />' +
+        '</li>';
+
     Drupal.initPhotosUploader = function () {
-        // todo all constant in to backend!
-        var maxFiles = 100,
-            uploadedFilesNumber = 0;
-        $("#photos-upload").fileupload({
+        this.controls.uploader = $("#photos-upload");
+        this.controls.drop_zone = $("div.file-uploader-holder");
+        this.controls.files_holder = $('ul.user-photos-wrap');
+
+        this.controls.uploader.fileupload({
             url: '/admin/photo-film/file/save/file',
             dataType: 'json',
             autoUpload: true,
-            singleFileUploads: false,
-            acceptFileTypes: /(\.|\/)(gif|jpe?g|png)$/i,
-            maxNumberOfFiles: maxFiles,
-            maxFileSize: 5000000, // 5 MB
+            singleFileUploads: true,
+            acceptFileTypes: this.form_settings.accept_types,
+            maxNumberOfFiles: this.form_settings.max_files,
+            maxFileSize: this.form_settings.max_weight,
             disableImagePreview: true,
 
-            dropZone: $('div.file-uploader-holder')
+            dropZone: this.controls.drop_zone
         })
-        .bind('fileuploadsend', function (e, data) {
-            var fileCount = data.files.length,
-                maxAllowed = maxFiles - uploadedFilesNumber;
-
-            if (maxAllowed <= 0)
-                return false;
-
-            if (fileCount > maxAllowed) {
-                data.files = data.files.splice(0, fileCount - maxAllowed + 1);
-            }
-            uploadedFilesNumber += data.files.length;
-        })
-        //.bind('fileuploadsend', function (e, data) {/* ... */})
-        .bind('fileuploaddone', Drupal.renderPhotoFiles)
+        .bind('fileuploadsend', $.proxy(this.beforePhotoUploaded, this))
+        .bind('fileuploaddone', $.proxy(this.onPhotoUploaded, this))
         .bind('fileuploadfail', function (e, data) { console.log('Processing ' + data.files[0].name + ' fail.'); });
 
 
+    }
+
+    Drupal.beforePhotoUploaded = function (e, data) {
+        var fileCount = data.files.length,
+            maxAllowed = this.form_settings.max_files - this.form_settings.uploaded_files;
+
+        if (maxAllowed <= 0)
+            return false;
+
+        if (fileCount > maxAllowed) {
+            data.files = data.files.splice(0, fileCount - maxAllowed + 1);
+        }
+        this.form_settings.uploaded_files += data.files.length;
+        this.controls.drop_zone.addClass(this.control_classes.loading);
     }
 
     // RESPONSE should be in next format:
     // {
     //   Success: bool TRUE|FALSE
     //   ErrorMessage: string for Success = FALSE
-    //   Result: array of objects { ID, ThumbPath }
+    //   Result: array of objects { fid, image_preview }
     // }
-    Drupal.renderPhotoFiles = function (e, data) {
-        console.log('Processing ' + data.files[0].name + ' done.');
-        var uploadFilesBox = $("div.user-photos-info");
-        $.each(data.files, function (index, file) {
-            var newFileDiv = $("<div class='uploadBox' id='fileDiv_" + file.name + "'><div class='leftEle'><a href='#' id='link_" + index + "' class='removeFile'>Remove</a></div><div class='midEle'>" + file.name + "</div></div>");
-            uploadFilesBox.append(newFileDiv);
+    Drupal.onPhotoUploaded = function (e, data) {
+        var response = jQuery.parseJSON(data.jqXHR.responseText);
+        if (response.Success) {
+            for (var i = 0; i < response.Result.length; i ++) {
+                var id = response.Result[i].fid,
+                    thumb = response.Result[i].image_preview;
 
-            newFileDiv.find('a').on('click', { filename: file.name, files: data.files }, function (event) {
-                event.preventDefault();
-                var uploadFilesBox = uploadFilesBox;
-                var remDiv = $(document.getElementById("fileDiv_" + event.data.filename));
-                remDiv.remove();
-                data.files.length = 0;    //zero out the files array
-            });
+                this.renderPhotoFile(id, thumb);
+            }
+            data.files.length = 0;
+        } else {
+            this.renderErrorMessage(response.ErrorMessage);
+        }
+        this.controls.drop_zone.removeClass(this.control_classes.loading);
+    }
 
-            data.context = newFileDiv;
-        });
+    Drupal.renderPhotoFile = function (id, thumb) {
+        var item = $(this.item_template).clone(),
+            order = this.controls.files_holder.children("li").length;
 
-        $('#myButton').click(function () {
-            if (data.files.length > 0) {     //only submit if we have something to upload
-                data.submit();
+        item.attr("fid", id)
+            .children("img").attr("src", thumb)
+            .end()
+            .children("div.photo-number").text(order + 1)
+            .end()
+            .children("input.photo-id").val(id)
+            .end()
+            .children("input.photo-order").val(order)
+            .end()
+            .find("div.photo-comment").on("click", $.proxy())
+            .end()
+            .find("div.photo-remove").on("click", $.proxy(this.removeUploadedFile, this));
+
+        this.controls.files_holder.append(item);
+    }
+
+    Drupal.removeUploadedFile = function (event) {
+        event.preventDefault();
+
+        var item = $(event.currentTarget).parents("li");
+        $.ajax({
+            url: "/admin/photo-film/file/remove/file",
+            type: "POST",
+            dataType: "json",
+            data: {
+                fid: item.attr("fid")
+            },
+            context: this,
+            beforeSend: function () {
+                item.addClass(Drupal.control_classes.loading);
+            },
+            success: function (response) {
+                item.addClass(Drupal.control_classes.loading);
+                if (response.Success) {
+                    item.remove();
+                    this.form_settings.uploaded_files --;
+
+                    //update sort order and index
+                    this.controls.files_holder.children("li").each(function (index) {
+                        $(this).children("input.photo-order").val(index)
+                               .end()
+                               .children("div.photo-number").text(index + 1);
+                    });
+                } else {
+                    this.renderErrorMessage(response.ErrorMessage);
+                }
             }
         });
+    }
+
+    //TODO: refactor
+    Drupal.renderErrorMessage = function (message) {
+        alert(message);
     }
 })(jQuery)
