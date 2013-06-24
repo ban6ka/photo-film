@@ -11,7 +11,6 @@ function photo_film_form_order($form, &$form_state) {
   unset($form['ctools_trail']);
   unset($form['buttons']['cancel']);
   unset($form['buttons']['previous']);
-
   $form['title'] = array(
     '#type' => 'markup',
     '#markup' => '<h4>' . variable_get('photo_film_form_order_title', '') . '</h4>',
@@ -80,6 +79,7 @@ function photo_film_form_order($form, &$form_state) {
     ),
     '#title_display' => 'none',
     '#required' => TRUE,
+    '#default_value' => 'my@email.com',
     '#theme' => array('photo_film_form_textfield'),
   );
 
@@ -88,6 +88,7 @@ function photo_film_form_order($form, &$form_state) {
     '#title' => t('Mobile'),
     '#title_display' => 'none',
     '#required' => TRUE,
+    '#default_value' => 'mobile',
     '#theme' => array('photo_film_form_textfield'),
   );
 
@@ -97,6 +98,7 @@ function photo_film_form_order($form, &$form_state) {
     '#title' => t('Format'),
     '#required' => TRUE,
     '#options' => $options,
+    '#default_value' => 'key',
     '#title_display' => 'none',
     '#theme' => array('photo_film_form_select'),
   );
@@ -107,6 +109,7 @@ function photo_film_form_order($form, &$form_state) {
     '#title' => t('Delivery method'),
     '#required' => TRUE,
     '#title_display' => 'none',
+    '#default_value' => 'key',
     '#options' => $options,
     '#theme' => array('photo_film_form_select'),
   );

@@ -19,7 +19,7 @@ function photo_film_form_save_file_wrapper() {
     $files = array_pop($_FILES);
     // if we have one file rearange structure for our upload
     if (!is_array($files['name'])) {
-      foreach($files as &$file) {
+      foreach ($files as &$file) {
         $file = array($file);
       }
     }
@@ -156,32 +156,35 @@ function photo_film_form_create_info_file($cache_object) {
     $data .= 'style = ' . $cache_object->style['style'] . ";\n";
   }
 
-  $directory = '/home/ban6ka/www/photo_vid/sites/default/files/';
+  if (!empty($cache_object->pictures)) {
+    $data .= 'picture_info;' . "\n";
+    foreach ($cache_object->pictures as $file_info) {
 
+      if (isset($file_info['serial_number'])) {
+        $description = (!empty($file_info['description']) ? $file_info['description'] : '');
+        $data .= $file_info['serial_number'] . ':' . $description . "\n";
+      }
+    }
+  }
+  $directory = variable_get('file_temporary_path', "/tmp");
   if (file_prepare_directory($directory)) {
-    $remote_file = $directory . '/' . 'test_order_info' . $cache_object->order_info['mobile'] . '.txt';
-    // Create temporaly file
-    $tmpfname = tempnam(variable_get('file_temporary_path', "/tmp"), "FOO");
+    // Create temporary file
+    $file_name = tempnam($directory, "photo_film_info");
 
-    // Rewrite file
-    $fp = fopen($tmpfname, 'w');
+    // Write file
+    $fp = fopen($file_name, 'w');
     $data = mb_convert_encoding($data, 'UTF-8');
     fwrite($fp, pack("CCC", 0xef, 0xbb, 0xbf));
     fwrite($fp, $data);
     // Clodse and write
     fclose($fp);
-
-    // read and copy
-    $data = file_get_contents($tmpfname);
-    $data = mb_convert_encoding($data, 'UTF-8');
-    file_put_contents($remote_file, $data);
-
     return array(
-      'real_path' => $remote_file,
+      'real_path' => $file_name,
       'name' => 'order-info.txt'
     );
   }
 }
+
 
 /**
  * Get all loaded by user files
@@ -190,7 +193,7 @@ function photo_film_form_create_info_file($cache_object) {
  */
 function photo_film_form_prepare_files($cache_object) {
   $files = array();
-  
+
   $files[] = photo_film_form_create_info_file($cache_object);
   if (!empty($cache_object->music['fid']) && $file = file_load($cache_object->music['fid'])) {
     $path_parts = pathinfo($file->uri);
@@ -199,6 +202,17 @@ function photo_film_form_prepare_files($cache_object) {
       'real_path' => drupal_realpath($file->uri),
       'name' => '/music/music.' . $path_parts['extension'],
     );
+  }
+  if (!empty($cache_object->pictures)) {
+    foreach ($cache_object->pictures as $file_info) {
+      if (!empty($file_info['fid']) && isset($file_info['serial_number']) && $file = file_load($file_info['fid'])) {
+        $path_parts = pathinfo($file->uri);
+        $files[] = array(
+          'real_path' => drupal_realpath($file->uri),
+          'name' => '/pictures/' . $file_info['serial_number'] . '.' . $path_parts['extension'],
+        );
+      }
+    }
   }
 
   return $files;
@@ -217,7 +231,8 @@ function photo_film_form_create_archive($files, $archive_name) {
     $zip->addFile(file_get_contents($file['real_path']), $file['name']); // the second parameter specifies the filename in the zip
   }
 
-  if (!file_save_data($zip->file(), 'public://photo-film/' . $archive_name . '.zip')) {
-    drupal_set_message(t('The zip could not be created.'), 'error');
+  $destination = file_build_uri(variable_get('photo_film_form_archive_upload_destination', ''));
+  if (!file_save_data($zip->file(), $destination . '/' . $archive_name . '.zip')) {
+    watchdog('photo_film_form_archive', t('The zip could not be created.'));
   }
 }
