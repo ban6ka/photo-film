@@ -17,6 +17,13 @@ function photo_film_form_save_file_wrapper() {
   if (!empty($_FILES)) {
     // jquery user file upload library adds it's own key which depends on input id
     $files = array_pop($_FILES);
+    // if we have one file rearange structure for our upload
+    if (!is_array($files['name'])) {
+      foreach($files as &$file) {
+        $file = array($file);
+      }
+    }
+
     foreach ($files['name'] as $key => $value) {
       if (!empty($files['tmp_name'][$key]) && !empty($files['size'][$key]) && !empty($files['type'][$key])) {
         $destination = '';
@@ -110,7 +117,7 @@ function photo_film_form_save_file($file_to_upload, $destination) {
 /**
  * Callback function for admin/photo-film/file/remove page
  */
-function photo_film_form_delete_file(){
+function photo_film_form_delete_file() {
   $results = array(
     'Success' => FALSE,
     'Result' => array(),
@@ -121,10 +128,96 @@ function photo_film_form_delete_file(){
     if (file_delete($file) == TRUE) {
       $results['Success'] = TRUE;
       $results['ErrorMessage'] = "";
-    };
+    }
+    ;
   }
-
 
   drupal_json_output($results);
   exit;
+}
+
+/**
+ * Create's order info file
+ * @param $cache_object
+ * @return array
+ */
+function photo_film_form_create_info_file($cache_object) {
+  $data = '';
+  if (!empty($cache_object->order_info)) {
+    foreach ($cache_object->order_info as $key => $option) {
+      $data .= $key . ' = ' . $option . ";\n";
+    }
+  }
+  if (!empty($cache_object->theme['theme'])) {
+    $data .= 'theme = ' . $cache_object->theme['theme'] . ";\n";
+  }
+
+  if (!empty($cache_object->style['style'])) {
+    $data .= 'style = ' . $cache_object->style['style'] . ";\n";
+  }
+
+  $directory = '/home/ban6ka/www/photo_vid/sites/default/files/';
+
+  if (file_prepare_directory($directory)) {
+    $remote_file = $directory . '/' . 'test_order_info' . $cache_object->order_info['mobile'] . '.txt';
+    // Create temporaly file
+    $tmpfname = tempnam(variable_get('file_temporary_path', "/tmp"), "FOO");
+
+    // Rewrite file
+    $fp = fopen($tmpfname, 'w');
+    $data = mb_convert_encoding($data, 'UTF-8');
+    fwrite($fp, pack("CCC", 0xef, 0xbb, 0xbf));
+    fwrite($fp, $data);
+    // Clodse and write
+    fclose($fp);
+
+    // read and copy
+    $data = file_get_contents($tmpfname);
+    $data = mb_convert_encoding($data, 'UTF-8');
+    file_put_contents($remote_file, $data);
+
+    return array(
+      'real_path' => $remote_file,
+      'name' => 'order-info.txt'
+    );
+  }
+}
+
+/**
+ * Get all loaded by user files
+ * @param $cache_object
+ * @return array
+ */
+function photo_film_form_prepare_files($cache_object) {
+  $files = array();
+  
+  $files[] = photo_film_form_create_info_file($cache_object);
+  if (!empty($cache_object->music['fid']) && $file = file_load($cache_object->music['fid'])) {
+    $path_parts = pathinfo($file->uri);
+
+    $files[] = array(
+      'real_path' => drupal_realpath($file->uri),
+      'name' => '/music/music.' . $path_parts['extension'],
+    );
+  }
+
+  return $files;
+}
+
+/**
+ * Create archive with the files
+ * @param $files
+ * @param $archive_name
+ */
+function photo_film_form_create_archive($files, $archive_name) {
+  module_load_include('inc', 'photo_film_form', 'includes/archive');
+  $zip = new zipfile();
+
+  foreach ($files as $file) {
+    $zip->addFile(file_get_contents($file['real_path']), $file['name']); // the second parameter specifies the filename in the zip
+  }
+
+  if (!file_save_data($zip->file(), 'public://photo-film/' . $archive_name . '.zip')) {
+    drupal_set_message(t('The zip could not be created.'), 'error');
+  }
 }
