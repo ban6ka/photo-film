@@ -55,20 +55,29 @@ function photo_film_form_order($form, &$form_state) {
   $form['country'] = array(
     '#type' => 'textfield',
     '#title' => t('Country'),
+    '#rules' => array(
+      'alpha',
+    ),
     '#title_display' => 'none',
     '#theme' => array('photo_film_form_textfield'),
   );
 
   $form['city'] = array(
     '#type' => 'textfield',
-    '#title' => t('Country'),
+    '#title' => t('City'),
     '#title_display' => 'none',
+    '#rules' => array(
+      'alpha',
+    ),
     '#theme' => array('photo_film_form_textfield'),
   );
 
   $form['email'] = array(
     '#type' => 'textfield',
     '#title' => t('Email'),
+    '#rules' => array(
+      'email',
+    ),
     '#title_display' => 'none',
     '#required' => TRUE,
     '#theme' => array('photo_film_form_textfield'),
@@ -80,13 +89,6 @@ function photo_film_form_order($form, &$form_state) {
     '#title_display' => 'none',
     '#required' => TRUE,
     '#theme' => array('photo_film_form_textfield'),
-  );
-
-  $form['format'] = array(
-    '#type' => 'select',
-    '#title' => t('Format'),
-    '#required' => TRUE,
-    '#options' => array(),
   );
 
   $options = photo_film_order_prepare_radios(variable_get('photo_film_form_video_formats', ''));
@@ -108,6 +110,7 @@ function photo_film_form_order($form, &$form_state) {
     '#options' => $options,
     '#theme' => array('photo_film_form_select'),
   );
+
   $form['discount'] = array(
     '#type' => 'textfield',
     '#title' => t('Discount'),
@@ -133,4 +136,22 @@ function photo_film_order_prepare_radios($text) {
   }
 
   return $result;
+}
+
+/**
+ * Form submit function for photo_film_form_order
+ */
+function photo_film_form_order_submit($form, &$form_state) {
+  if (!empty($form_state['object'])) {
+    $form_state['object']->order_info = array(
+      'name' => !empty($form_state['values']['name']) ? $form_state['values']['name'] : '',
+      'country' => !empty($form_state['values']['country']) ? $form_state['values']['country'] : '',
+      'city' => !empty($form_state['values']['city']) ? $form_state['values']['city'] : '',
+      'email' => !empty($form_state['values']['email']) ? $form_state['values']['email'] : '',
+      'mobile' => !empty($form_state['values']['mobile']) ? $form_state['values']['mobile'] : '',
+      'format' => !empty($form_state['values']['format']) ? $form_state['values']['format'] : '',
+      'delivery' => !empty($form_state['values']['delivery']) ? $form_state['values']['delivery'] : '',
+      'discount' => !empty($form_state['values']['format']) ? $form_state['values']['format'] : '',
+    );
+  }
 }

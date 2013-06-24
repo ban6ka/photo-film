@@ -69,24 +69,9 @@ function photo_film_form_single_step_pane_render($subtype, $conf, $args, $contex
       ),
     ),
   );
-  // TODO do it in normal way this is really ugly
-
-  // We're not using any real storage here, so we're going to set our
-  // object_id to 1. When using wizard forms, id management turns
-  // out to be one of the hardest parts. Editing an object with an id
-  // is easy, but new objects don't usually have ids until somewhere
-  // in creation.
-  //
-  // We skip all this here by just using an id of 1.
   $object_id = 1;
   if (!empty($args)) {
     $step = array_pop($args);
-  }
-  else {
-    // We reset the form when $step is NULL because that means they have
-    // for whatever reason started over.
-    photo_film_form_cache_clear($object_id);
-    $step = 'themes';
   }
 
   // This automatically gets defaults if there wasn't anything saved.
@@ -108,7 +93,7 @@ function photo_film_form_single_step_pane_render($subtype, $conf, $args, $contex
   }
 
   if (empty($output) || !empty($form_state['complete'])) {
-    $results = photo_film_form_get_result($object);
+    $results = photo_film_form_finished($object);
 
     $output = render($results) . "\n\r" . l(t('Back'), 'example-link');
   }

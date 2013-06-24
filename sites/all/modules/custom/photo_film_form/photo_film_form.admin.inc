@@ -141,5 +141,18 @@ function photo_film_form_settings_form($form_state) {
     '#required' => FALSE,
   );
 
+  $form['finish'] = array(
+    '#type' => 'fieldset',
+    '#title' => t('Finish message'),
+  );
+
+  $form['finish']['photo_film_form_success_message'] = array(
+    '#title' => t('Enter success message here'),
+    '#type' => 'text_format',
+    '#format' => 'full_html',
+    '#default_value' => variable_get('photo_film_form_success_message', ''),
+    '#required' => FALSE,
+  );
+
   return system_settings_form($form);
 }
