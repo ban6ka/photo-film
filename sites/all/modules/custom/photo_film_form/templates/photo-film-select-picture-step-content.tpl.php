@@ -26,13 +26,5 @@
   <?php endif; ?>
 
   <ul class="user-photos-wrap">
-    <li style="display: none;">
-      <img src="" width="220" height="120" align="left" />
-      <div class="photo-number">1</div>
-      <div class="photo-toolbar clearfix">
-        <div class="photo-comment"><?php print t("comment") ?></div>
-        <div class="photo-remove"><?php print t("remove") ?></div>
-      </div>
-    </li>
-  </div>
+  </ul>
 </div>
