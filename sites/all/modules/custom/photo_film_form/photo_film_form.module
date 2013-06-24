@@ -301,6 +301,7 @@ function photo_film_form_wizard_next(&$form_state) {
  * the pane.
  */
 function photo_film_form_wizard_finish(&$form_state) {
+  photo_film_form_cache_clear(1);
   $form_state['complete'] = TRUE;
 }
 
@@ -308,11 +309,12 @@ function photo_film_form_wizard_finish(&$form_state) {
  * Handles the 'cancel' click on the add/edit pane form wizard.
  */
 function photo_film_form_wizard_cancel(&$form_state) {
+  photo_film_form_cache_clear(1);
   $form_state['cancel'] = TRUE;
 }
 
 /**
- * Returns form results.
+ * Returns form with success message.
  *
  * @param object $object
  *   object with form values.
@@ -320,7 +322,19 @@ function photo_film_form_wizard_cancel(&$form_state) {
  * @return array
  *   returns renderable array for multistep form result output.
  */
-function photo_film_form_get_result($object) {
+function photo_film_form_finished($object) {
+  photo_film_form_cache_clear(1);
+  $form = array();
+  $message = variable_get('photo_film_form_success_message', '');
+  $form['success_message'] = array(
+    '#type' => 'markup',
+    '#markup' => (!empty($message['value']) ? $message['value'] : '')
+  );
+  $form['order_more'] = array(
+    '#type' => 'submit',
+    '#value' => t('Order more')
+  );
+  $form['#action'] = 'photo-film-form/nojs/themes';
 
-  return t('Results:');
+  return $form;
 }
