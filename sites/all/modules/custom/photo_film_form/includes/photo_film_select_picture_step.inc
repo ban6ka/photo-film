@@ -17,6 +17,11 @@ function photo_film_select_picture_step($form, &$form_state) {
   drupal_add_js(libraries_get_path('jquery_file_upload') . '/js/jquery.iframe-transport.js');
   drupal_add_js(libraries_get_path('jquery_file_upload') . '/js/jquery.fileupload.js');
 
+  drupal_add_library('system', 'ui');
+  drupal_add_css(drupal_get_path('module', 'jquery_update') . '/replace/ui/themes/base/jquery-ui.css');
+  drupal_add_css(drupal_get_path('module', 'jquery_update') . '/replace/ui/themes/base/jquery.ui.dialog.css');
+
+
   $form['#theme'] = array('photo_film_form_choose_theme_step_theme');
   $form['#attributes'] = array();
   $form['#attributes']['class'] = array();

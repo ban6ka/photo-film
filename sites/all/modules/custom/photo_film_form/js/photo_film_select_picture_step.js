@@ -15,7 +15,8 @@
     Drupal.controls = {
         uploader: null,
         drop_zone: null,
-        files_holder: null
+        files_holder: null,
+        comment_dialog: null
     }
     Drupal.control_classes = {
         loading: "loading"
@@ -30,13 +31,14 @@
           '</div>' +
           '<input type="text" class="photo-id hidden" name="photos_id[]" />' +
           '<input type="text" class="photo-order hidden" name="photos_order[]" />' +
-          '<input type="text" class="photo-comment hidden" name="photos_comment[]" />' +
+          '<textarea class="photo-desc hidden" name="photos_comment[]" />' +
         '</li>';
 
     Drupal.initPhotosUploader = function () {
         this.controls.uploader = $("#photos-upload");
         this.controls.drop_zone = $("div.file-uploader-holder");
-        this.controls.files_holder = $('ul.user-photos-wrap');
+        this.controls.files_holder = $("ul.user-photos-wrap");
+        this.controls.comment_dialog = $("#comment-dialog");
 
         this.controls.uploader.fileupload({
             url: '/admin/photo-film/file/save/file',
@@ -53,8 +55,6 @@
         .bind('fileuploadsend', $.proxy(this.beforePhotoUploaded, this))
         .bind('fileuploaddone', $.proxy(this.onPhotoUploaded, this))
         .bind('fileuploadfail', function (e, data) { console.log('Processing ' + data.files[0].name + ' fail.'); });
-
-
     }
 
     Drupal.beforePhotoUploaded = function (e, data) {
@@ -106,11 +106,51 @@
             .end()
             .children("input.photo-order").val(order)
             .end()
-            .find("div.photo-comment").on("click", $.proxy())
+            .find("div.photo-comment").on("click", $.proxy(this.commentUploadedFile, this))
             .end()
             .find("div.photo-remove").on("click", $.proxy(this.removeUploadedFile, this));
 
         this.controls.files_holder.append(item);
+        this.initPhotosSorting();
+    }
+
+    Drupal.initPhotosSorting = function () {
+        this.controls.files_holder.sortable({
+            placeholder: "photo-placeholder",
+            stop:$.proxy(this.updatePhotoNumbers, this)
+        });
+        this.controls.files_holder.disableSelection();
+    }
+
+    Drupal.updatePhotoNumbers = function () {
+        this.controls.files_holder.children("li").each(function (index) {
+            $(this).children("input.photo-order").val(index)
+                .end()
+                .children("div.photo-number").text(index + 1);
+        });
+    }
+
+    Drupal.commentUploadedFile = function (event) {
+        event.preventDefault();
+
+        var item = $(event.currentTarget).parents("li"),
+            comment = $("#comment"),
+            input = item.children("textarea.photo-desc");
+
+        comment.val(input.val());
+        this.controls.comment_dialog.dialog({
+            autoOpen: false,
+            width: 350,
+            height: 215,
+            modal: true,
+            resizable: false,
+            buttons: {
+                "Сохранить": function() {
+                    $(this).dialog('close');
+                    input.val(comment.val());
+                }
+            }
+        }).dialog("open");
     }
 
     Drupal.removeUploadedFile = function (event) {
@@ -132,14 +172,9 @@
                 item.addClass(Drupal.control_classes.loading);
                 if (response.Success) {
                     item.remove();
+                    this.updatePhotoNumbers();
                     this.form_settings.uploaded_files --;
 
-                    //update sort order and index
-                    this.controls.files_holder.children("li").each(function (index) {
-                        $(this).children("input.photo-order").val(index)
-                               .end()
-                               .children("div.photo-number").text(index + 1);
-                    });
                 } else {
                     this.renderErrorMessage(response.ErrorMessage);
                 }

@@ -14,12 +14,6 @@ function photo_film_preprocess_maintenance_page(&$variables) {
 }
 
 /**
- * Implementation of hook_preprocess page()
- */
-function photo_film_preprocess_page(&$variables) {
-  drupal_add_library('system', 'ui');
-}
-/**
  * Implements template_preprocess_html().
  */
 function photo_film_preprocess_html(&$variables) {
