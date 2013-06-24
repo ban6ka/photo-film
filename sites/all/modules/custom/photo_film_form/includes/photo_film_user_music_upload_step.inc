@@ -80,6 +80,7 @@ function photo_film_form_user_music_upload_step($form, &$form_state) {
   );
 
   $form['file'] = array(
+    '#name' => 'track-file',
     '#type' => 'file',
     '#title' => t('File'),
     '#id' => 'track-upload',

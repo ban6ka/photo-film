@@ -40,7 +40,7 @@
         <h5><?php print t("Uploaded") ?></h5>
         <div class="user-track-info clearfix">
           <div class="status">&nbsp;</div>
-          <div class="title">Godsmack - Straight out of line</div>
+          <div class="title"></div>
           <div class="remove">&nbsp;</div>
         </div>
       </div>
