@@ -92,7 +92,7 @@ function photo_film_form_user_music_upload_step($form, &$form_state) {
  * Submit handler for photo_film_form_choose_theme_step form
  */
 function photo_film_form_user_music_upload_step_submit(&$form, &$form_state) {
-  if (!empty($form_state['values']['file_fid']) && !empty($form_state['object']->user_theme)) {
+  if (!empty($form_state['values']['file_fid']) && !empty($form_state['object'])) {
     $form_state['object']->current_step = $form_state['next'];
     $form_state['object']->music = array(
       'fid' => $form_state['values']['file_fid'],
