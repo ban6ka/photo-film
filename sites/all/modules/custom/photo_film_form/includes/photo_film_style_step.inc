@@ -66,8 +66,8 @@ function photo_film_form_choose_style_step($form, &$form_state) {
       );
 
       $cache = photo_film_form_cache_get(1);
-      if (!empty($cache->user_style)) {
-        $form['terms']['term_ids']['#default_value'] = $cache->user_style;
+      if (!empty($cache->style['style'])) {
+        $form['terms']['term_ids']['#default_value'] = $cache->style['style'];
       }
     }
   }

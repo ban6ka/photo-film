@@ -301,7 +301,7 @@ function photo_film_form_wizard_next(&$form_state) {
  * the pane.
  */
 function photo_film_form_wizard_finish(&$form_state) {
-  photo_film_form_cache_clear(1);
+  // photo_film_form_cache_clear(1);
   $form_state['complete'] = TRUE;
 }
 
@@ -309,7 +309,7 @@ function photo_film_form_wizard_finish(&$form_state) {
  * Handles the 'cancel' click on the add/edit pane form wizard.
  */
 function photo_film_form_wizard_cancel(&$form_state) {
-  photo_film_form_cache_clear(1);
+  //photo_film_form_cache_clear(1);
   $form_state['cancel'] = TRUE;
 }
 
@@ -323,7 +323,10 @@ function photo_film_form_wizard_cancel(&$form_state) {
  *   returns renderable array for multistep form result output.
  */
 function photo_film_form_finished($object) {
-  photo_film_form_cache_clear(1);
+  if ($object->current_step == 'order_info') {
+    // todo save order here and the clear cache
+    photo_film_form_cache_clear(1);
+  }
   $form = array();
   $message = variable_get('photo_film_form_success_message', '');
   $form['success_message'] = array(
@@ -337,4 +340,52 @@ function photo_film_form_finished($object) {
   $form['#action'] = 'photo-film-form/nojs/themes';
 
   return $form;
+}
+
+/**
+ * Define array for ctools multistep wizard.
+ * @return array
+ */
+function photo_film_form_ctools_multi_step_form_info() {
+  return array(
+    'id' => 'photo_film_form',
+    'path' => "photo-film-form/nojs/%step",
+    'show trail' => TRUE,
+    'show back' => TRUE,
+    'show cancel' => TRUE,
+    'show return' => FALSE,
+    'next callback' => 'photo_film_form_wizard_next',
+    'finish callback' => 'photo_film_form_wizard_finish',
+    'cancel callback' => 'photo_film_form_wizard_cancel',
+    // we need to override this
+    'order' => array(
+      'themes' => t('Select theme for your video'),
+      'styles' => t('Select style for your video'),
+      'user_music_upload' => t('Select music for your video'),
+      'photo_film_select_picture_step' => t('Select photos for your video'),
+      'photo_film_form_order' => t('Order'),
+    ),
+    'forms' => array(
+      'themes' => array(
+        'form id' => 'photo_film_form_choose_theme_step',
+        'include' => drupal_get_path('module', 'photo_film_form') . '/includes/photo_film_choose_theme_step.inc',
+      ),
+      'styles' => array(
+        'form id' => 'photo_film_form_choose_style_step',
+        'include' => drupal_get_path('module', 'photo_film_form') . '/includes/photo_film_style_step.inc',
+      ),
+      'user_music_upload' => array(
+        'form id' => 'photo_film_form_user_music_upload_step',
+        'include' => drupal_get_path('module', 'photo_film_form') . '/includes/photo_film_user_music_upload_step.inc',
+      ),
+      'photo_film_select_picture_step' => array(
+        'form id' => 'photo_film_select_picture_step',
+        'include' => drupal_get_path('module', 'photo_film_form') . '/includes/photo_film_select_picture_step.inc',
+      ),
+      'photo_film_form_order' => array(
+        'form id' => 'photo_film_form_order',
+        'include' => drupal_get_path('module', 'photo_film_form') . '/includes/photo_film_order.inc',
+      ),
+    ),
+  );
 }

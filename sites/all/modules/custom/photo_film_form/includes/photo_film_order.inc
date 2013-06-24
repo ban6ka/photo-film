@@ -143,6 +143,7 @@ function photo_film_order_prepare_radios($text) {
  */
 function photo_film_form_order_submit($form, &$form_state) {
   if (!empty($form_state['object'])) {
+    $form_state['object']->current_step = 'order_info';
     $form_state['object']->order_info = array(
       'name' => !empty($form_state['values']['name']) ? $form_state['values']['name'] : '',
       'country' => !empty($form_state['values']['country']) ? $form_state['values']['country'] : '',

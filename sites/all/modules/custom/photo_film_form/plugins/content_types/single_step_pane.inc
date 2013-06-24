@@ -28,47 +28,7 @@ function photo_film_form_single_step_pane_render($subtype, $conf, $args, $contex
   $block->content = '';
 
   // Define array for ctools multistep wizard.
-  $form_info = array(
-    'id' => 'photo_film_form',
-    'path' => "photo-film-form/nojs/%step",
-    'show trail' => TRUE,
-    'show back' => TRUE,
-    'show cancel' => TRUE,
-    'show return' => FALSE,
-    'next callback' => 'photo_film_form_wizard_next',
-    'finish callback' => 'photo_film_form_wizard_finish',
-    'cancel callback' => 'photo_film_form_wizard_cancel',
-    // we need to override this
-    'order' => array(
-      'themes' => t('Select theme for your video'),
-      'styles' => t('Select style for your video'),
-      'user_music_upload' => t('Select music for your video'),
-      'photo_film_select_picture_step' => t('Select photos for your video'),
-      'photo_film_form_order' => t('Order'),
-    ),
-    'forms' => array(
-      'themes' => array(
-        'form id' => 'photo_film_form_choose_theme_step',
-        'include' => drupal_get_path('module', 'photo_film_form') . '/includes/photo_film_choose_theme_step.inc',
-      ),
-      'styles' => array(
-        'form id' => 'photo_film_form_choose_style_step',
-        'include' => drupal_get_path('module', 'photo_film_form') . '/includes/photo_film_style_step.inc',
-      ),
-      'user_music_upload' => array(
-        'form id' => 'photo_film_form_user_music_upload_step',
-        'include' => drupal_get_path('module', 'photo_film_form') . '/includes/photo_film_user_music_upload_step.inc',
-      ),
-      'photo_film_select_picture_step' => array(
-        'form id' => 'photo_film_select_picture_step',
-        'include' => drupal_get_path('module', 'photo_film_form') . '/includes/photo_film_select_picture_step.inc',
-      ),
-      'photo_film_form_order' => array(
-        'form id' => 'photo_film_form_order',
-        'include' => drupal_get_path('module', 'photo_film_form') . '/includes/photo_film_order.inc',
-      ),
-    ),
-  );
+  $form_info = photo_film_form_ctools_multi_step_form_info();
   $object_id = 1;
   if (!empty($args)) {
     $step = array_pop($args);
@@ -76,7 +36,6 @@ function photo_film_form_single_step_pane_render($subtype, $conf, $args, $contex
 
   // This automatically gets defaults if there wasn't anything saved.
   $object = photo_film_form_cache_get($object_id);
-
   // live $form_state changes.
   $form_state = array(
     'ajax' => 0,
@@ -93,6 +52,7 @@ function photo_film_form_single_step_pane_render($subtype, $conf, $args, $contex
   }
 
   if (empty($output) || !empty($form_state['complete'])) {
+
     $results = photo_film_form_finished($object);
 
     $output = render($results) . "\n\r" . l(t('Back'), 'example-link');

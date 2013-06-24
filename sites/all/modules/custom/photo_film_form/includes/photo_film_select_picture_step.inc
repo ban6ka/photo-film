@@ -45,7 +45,13 @@ function photo_film_select_picture_step($form, &$form_state) {
  * Submit handler for photo_film_form_choose_theme_step form
  */
 function photo_film_select_picture_step_submit(&$form, &$form_state) {
+  $form_state['object']->pictures = array(
+    'fids' => 'some_value',
+  );
+  if (!empty($form_state['values']['file_fid']) && !empty($form_state['object']->user_theme)) {
+    $form_state['object']->current_step = $form_state['next'];
 
+  }
 }
 
 /**
