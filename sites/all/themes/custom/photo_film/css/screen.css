@@ -302,8 +302,8 @@ hr.separator {
     height: 100%;
     left: 0;
     top: 0;
-    background: url("../images/lock-big.png") no-repeat scroll center center rgba(122, 122, 122, 0.5);
-    opacity: 0.5;
+    background: url("../images/lock-big.png") no-repeat scroll center center rgba(122, 122, 122, 0.3);
+    opacity: 0.3;
 }
 .tracks-list li {
     padding: 6px 0px 7px 10px;
@@ -341,11 +341,30 @@ hr.separator {
     color: transparent;
     border-color: transparent;
     border-radius: 0px;
-    background: url(../images/lock-medium.png) no-repeat center center rgba(0, 0, 0, 0.1);
+    background: url(../images/lock-medium.png) no-repeat center center rgba(0, 0, 0, 0.3);
+    opacity: 0.3;
+}
+.user-file-upload .file-uploader-holder.loading {
+    color: transparent;
+    background: url(../images/ajax-loader.gif) no-repeat center center rgba(0, 0, 0, 0.3);
+    opacity: 0.3;
 }
 
 .user-file-upload .user-track-wrap {
     padding-top: 22px;
+}
+.user-file-upload .user-track-wrap.loading {
+    position: relative;
+}
+.user-file-upload .user-track-wrap.loading:after {
+    content: '';
+    display: block;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    left: 0;
+    top: 0;
+    background: url("../images/ajax-loader.gif") no-repeat scroll center center rgba(0, 0, 0, 0.1);
 }
 .user-file-upload .user-track-info {
     color: #ffffff;
