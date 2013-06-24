@@ -56,12 +56,19 @@ function photo_film_select_picture_step($form, &$form_state) {
  * Submit handler for photo_film_form_choose_theme_step form
  */
 function photo_film_select_picture_step_submit(&$form, &$form_state) {
-  $form_state['object']->pictures = array(
-    'fids' => 'some_value',
-  );
-  if (!empty($form_state['values']['file_fid']) && !empty($form_state['object']->user_theme)) {
+  if (!empty($form_state['input']['photos_id']) && !empty($form_state['object'])) {
     $form_state['object']->current_step = $form_state['next'];
+    $form_state['object']->pictures = array();
 
+    foreach ($form_state['input']['photos_id'] as $key => $fid) {
+      $serial_number =(!empty($form_state['input']['photos_order'][$key]) ? $form_state['input']['photos_order'][$key] : 0);
+      $description = (!empty($form_state['input']['photos_comment'][$key]) ? $form_state['input']['photos_comment'][$key] : '');
+      $form_state['object']->pictures[] = array(
+        'fid' => $fid,
+        'serial_number' => $serial_number,
+        'description' => $description,
+      );
+    }
   }
 }
 
