@@ -123,7 +123,7 @@
     Drupal.renderTrackFile = function (id, file) {
         this.controls.file_input.val(id);
         this.controls.file_holder.attr("fid", id)
-                                 .children("div.name").text(file.name)
+                                 .children("div.title").text(file.name)
                                  .end()
                                  .parent().show();
     }
@@ -150,6 +150,7 @@
 
                     this.controls.drop_zone.show();
                     this.lockTracksList(false);
+                    this.form_settings.uploaded_files --;
                 } else {
                     this.renderErrorMessage(response.ErrorMessage);
                 }

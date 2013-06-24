@@ -193,7 +193,8 @@ hr.separator {
 
 .photo-film-form input[type=checkbox],
 .photo-film-form .form-type-radio,
-.photo-film-form .form-item-files-file{
+.photo-film-form .form-type-file,
+.photo-film-form .form-item-files-file {
     display: none;
 }
 
@@ -413,4 +414,85 @@ hr.separator {
 .scrollbar-handle-up,
 .scrollbar-handle-down {
     height: 0;
+}
+
+/* 'Photos' Step */
+.photos-step {
+    margin-top: 44px;
+}
+.photos-step .photos-uploader-wrap {
+    float: left;
+    width: 380px;
+    margin-right: 100px;
+}
+.photos-step .form-warning-message {
+    float: left;
+    width: 372px;
+}
+.photos-step .user-photos-wrap {
+    clear: both;
+    margin: 40px -20px 0 0;
+    list-style: none;
+}
+.photos-step .user-photos-wrap li {
+    position: relative;
+    float: left;
+    margin: 20px 20px 0 0;
+}
+.photos-step .user-photos-wrap li .photo-number {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 32px;
+    height: 32px;
+    background-color: #00b6e3;
+    color: #ffffff;
+    font-size: 15px;
+    text-align: center;
+    line-height: 32px;
+    z-index: 10;
+}
+.photos-step .user-photos-wrap li .photo-toolbar {
+    visibility: hidden;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 200px;
+    height: 15px;
+    padding: 10px;
+    background-color: rgba(233, 233, 233, 0.9);
+    color: #5a5c5d;
+    font-size: 10px;
+    font-weight: bold;
+    line-height: 15px;
+    z-index: 10;
+}
+.photos-step .user-photos-wrap li .photo-comment {
+    float: left;
+    padding: 0 0 0 22px;
+    background: url(../images/edit-icon.png) no-repeat 0 0;
+    cursor: pointer;
+}
+.photos-step .user-photos-wrap li .photo-remove {
+    float: right;
+    padding: 0 0 0 26px;
+    background: url(../images/remove-small-icon.png) no-repeat 0 0;
+    cursor: pointer;
+}
+.photos-step .user-photos-wrap li:hover:after {
+    content: '';
+    display: block;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    left: 0;
+    top: 0;
+    background: rgba(0, 182, 227, 0.4);
+    z-index: 5;
+}
+.photos-step .user-photos-wrap li:hover .photo-toolbar {
+    visibility: visible;
+}
+.photos-step .user-photos-wrap li .photo-toolbar div:hover {
+    color: #1a1b1b;
 }
