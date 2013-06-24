@@ -19,7 +19,7 @@
             $(this).attr("checked", null);
 
             var style_id = $(this).attr("id").replace("edit-term-ids-", ""),
-                place = Drupal.controls.items.filter("#style-" + style_id);
+                place = Drupal.controls.items.filter("[style_id=" + style_id + "]");
             if (place.length) {
                 place.children(".checkbox").append(this);
             }

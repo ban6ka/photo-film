@@ -6,21 +6,39 @@
         }
     }
 
+    Drupal.controls = {
+        uploader: null,
+        drop_zone: null,
+        file_holder: null,
+        tracks_list: null
+    }
+
+    // todo all constant in to backend!
+    Drupal.form_settings = {
+        max_files: 1,
+        max_weight: 10000000, // 10 MB
+        accept_types: /(\.|\/)(gif|jpe?g|png)$/i,
+        uploaded_files: 0
+    }
     Drupal.initTrackUploader = function () {
-        // todo all constant in to backend!
-        var maxFiles = 1,
-            uploadedFilesNumber = 0;
-        $("#track-upload").fileupload({
+        this.controls.uploader =  $("#track-upload");
+        this.controls.drop_zone = $("div.file-uploader-holder");
+        this.controls.file_holder = $("div.user-track-info");
+        this.controls.tracks_list = $("ul.tracks-list");
+
+        this.controls.tracks_list.scrollbar();
+
+        this.controls.uploader.fileupload({
             url: '/admin/photo-film/file/save/file',
             dataType: 'json',
             autoUpload: true,
             singleFileUploads: true,
-            acceptFileTypes: /(\.|\/)(gif|jpe?g|png)$/i,
-            maxNumberOfFiles: maxFiles,
-            maxFileSize: 5000000, // 5 MB
+            acceptFileTypes: this.form_settings.accept_types,
+            maxNumberOfFiles: this.form_settings.max_files,
+            maxFileSize: this.form_settings.max_weight,
             disableAudioPreview: true,
 
-            dropZone: $('div.file-uploader-holder')
+            dropZone: this.controls.drop_zone
         })
         .bind('fileuploadsend', function (e, data) {
             var fileCount = data.files.length,
@@ -34,14 +52,13 @@
             }
             uploadedFilesNumber += data.files.length;
         })
-        //.bind('fileuploadsend', function (e, data) {/* ... */})
         .bind('fileuploaddone', Drupal.renderTrackFile)
         .bind('fileuploadfail', function (e, data) { console.log('Processing ' + data.files[0].name + ' fail.'); });
 
 
     }
 
-    // RESPONSE should be in next format:
+    // RESPONSE Format:
     // {
     //   Success: bool TRUE|FALSE
     //   ErrorMessage: string for Success = FALSE
@@ -70,5 +87,15 @@
                 data.submit();
             }
         });
+    }
+
+    Drupal.removeUploadedFile = function (event) {
+        event.preventDefault();
+        $.ajax({
+
+        });
+        var remDiv = $(document.getElementById("fileDiv_" + event.data.filename));
+        remDiv.remove();
+        data.files.length = 0;
     }
 })(jQuery)

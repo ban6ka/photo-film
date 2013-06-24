@@ -13,6 +13,12 @@ function photo_film_form_user_music_upload_step($form, &$form_state) {
   drupal_add_js(libraries_get_path('jquery_file_upload') . '/js/vendor/jquery.ui.widget.js');
   drupal_add_js(libraries_get_path('jquery_file_upload') . '/js/jquery.iframe-transport.js');
   drupal_add_js(libraries_get_path('jquery_file_upload') . '/js/jquery.fileupload.js');
+  drupal_add_js(libraries_get_path('jquery_scroll_master') . '/jquery.scroll.min.js');
+  drupal_add_css(libraries_get_path('jquery_scroll_master') . '/css/scrollbar.css');
+  $form['#attributes'] = array();
+  $form['#attributes']['class'] = array();
+  $form['#attributes']['class'][] = 'photo-film-form';
+
   $form['#attached'] = array(
     'css' => array(
       'type' => 'file',
@@ -50,6 +56,15 @@ function photo_film_form_user_music_upload_step($form, &$form_state) {
             '#markup' => $music_item->title,
           );
         }
+        if ($author = field_get_items('node', $music_item, 'field_author', $music_item->language)) {
+          $track_list[$item->nid] = $author[0]['value'];
+
+          $form['tracks_list']['author_' . $item->nid] = array(
+            '#title' => t('Author'),
+            '#type' => 'markup',
+            '#markup' => $author[0]['value'],
+          );
+        }
       }
     }
   }
@@ -57,6 +72,12 @@ function photo_film_form_user_music_upload_step($form, &$form_state) {
   $form['photo_film_compositions'] = array(
     '#type' => 'radios',
     '#options' => $track_list,
+  );
+
+  $form['file'] = array(
+    '#type' => 'file',
+    '#title' => t('File'),
+    '#id' => 'track-upload',
   );
 
   return $form;
@@ -93,6 +114,7 @@ function theme_photo_film_select_music_step_wrapper($variables) {
         $proposed_list[$key] = array(
           'fid' => $option,
           'title' => $form['tracks_list']['track_' . $key]['#markup'],
+          'author' => $form['tracks_list']['author_' . $key]['#markup']
         );
       }
     }
@@ -106,7 +128,9 @@ function theme_photo_film_select_music_step_wrapper($variables) {
   if (!empty($form['photo_film_compositions'])) {
     $output .= drupal_render($form['photo_film_compositions']);
   }
-
+  if (!empty($form['file'])) {
+    $output .= drupal_render($form['file']);
+  }
   if (!empty($form['user_file_upload'])) {
     $output .= drupal_render($form['user_file_upload']);
   }

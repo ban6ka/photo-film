@@ -21,6 +21,14 @@ body {
     background: url(../images/main-bg.png) repeat 0 0;
 }
 
+h2 {
+    font-family: 'PT Sans', sans-serif;
+    font-size: 16px;
+    font-weight: 700;
+    color: #3b3a3a;
+    text-transform: uppercase;
+    margin-bottom: 22px;
+}
 h4 {
     color: #6d6d6d;
     font-size: 16px;
@@ -29,6 +37,12 @@ h4 {
     text-shadow: 1px 1px #ffffff;
     line-height: 18px;
     margin: 5px 0;
+}
+h5 {
+    font-family: 'PT Sans', sans-serif;
+    font-size: 15px;
+    color: #1a1a1a;
+    margin-bottom: 10px;
 }
 
 a {
@@ -178,7 +192,8 @@ hr.separator {
 }
 
 .photo-film-form input[type=checkbox],
-.photo-film-form .form-type-radio {
+.photo-film-form .form-type-radio,
+.photo-film-form .form-item-files-file{
     display: none;
 }
 
@@ -193,21 +208,29 @@ hr.separator {
     margin: 0 20px 20px 0;
     position: relative;
 }
+.photo-film-form .form-warning-message {
+    min-height: 58px;
+    padding-left: 72px;
+    background: url(../images/info-icon.png) no-repeat 1px 1px;
+
+    color: #808080;
+    line-height: 18px;
+    text-shadow: 1px 1px #FFFFFF;
+}
 
 /* 'Theme' Step */
 .photo-film-form .images-list .theme-toolbar {
     position: absolute;
     left: 0;
     bottom: 0;
-    width: 300px;
-    padding: 10px 0 10px;
+    width: 274px;
+    padding: 10px 14px 10px 12px;
     background-color: rgba(241, 241, 241, 0.75);
     color: #3b3a3a;
 }
 
 .photo-film-form .images-list .theme-toolbar .title {
     float: left;
-    margin-left: 12px;
     font-family: 'PT Sans', sans-serif;
     font-weight: 700;
     font-size: 16px;
@@ -215,7 +238,6 @@ hr.separator {
 }
 .photo-film-form .images-list .theme-toolbar .checkbox {
     float: right;
-    margin-right: 14px;
     width: 36px;
     height: 36px;
     background: url(../images/checked-icon.png) no-repeat 0 0;
@@ -233,17 +255,143 @@ hr.separator {
 
 /* 'Style' Step */
 .photo-film-form .images-list .style-toolbar {
-    padding: 10px 0;
+    width: 198px;
+    padding: 10px 12px 10px 10px;
     background-color: #e5e6e6;
     color: #3b3a3a;
 }
 .photo-film-form .images-list .style-toolbar .title {
     float: left;
-    margin-left: 10px;
     font-size: 13px;
 }
 .photo-film-form .images-list .style-toolbar .checkbox {
     float: right;
-    margin-right: 12px;
     line-height: 12px;
+}
+
+/* 'Music' Step */
+.tracks-step {
+    margin: 38px 0 60px 0;
+}
+.tracks-list-wrap {
+    float: left;
+    width: 460px;
+    margin-right: 100px;
+}
+.track-uploader-wrap {
+    float: left;
+    width: 380px;
+}
+
+.tracks-list {
+    display: block;
+    height: 395px;
+    background-color: #ffffff;
+    border-top: 1px solid #e3e3e3;
+    border-bottom: 1px solid #e3e3e3;
+    list-style: none;
+}
+.tracks-list.locked {
+    position: relative;
+}
+.tracks-list.locked:after {
+    content: '';
+    display: block;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    left: 0;
+    top: 0;
+    background: url("../images/lock-big.png") no-repeat scroll center center rgba(122, 122, 122, 0.5);
+    opacity: 0.5;
+}
+.tracks-list li {
+    padding: 6px 0px 7px 10px;
+}
+.tracks-list li.even {
+    background-color: #f0f0f0;
+}
+.tracks-list li.checked {
+    color: #ffffff;
+    background: url(../images/checked-small-icon.png) no-repeat 410px 12px #247b9f;
+}
+.tracks-list li .author {
+    font-weight: bold;
+    font-size: 10px;
+    margin-top: 1px;
+}
+
+.user-file-upload {
+    height: 214px;
+}
+.user-file-upload .file-uploader-holder {
+    height: 48px;
+    padding: 50px 0;
+    background: url(../images/download-icon.png) no-repeat center 80px;
+    border: 3px dashed rgb(203, 203, 203);
+    border-radius: 8px;
+
+    font-family: 'PT Sans', sans-serif;
+    font-size: 14px;
+    text-align: center;
+    text-transform: uppercase;
+    color: #b7b7b7;
+}
+.user-file-upload .file-uploader-holder.locked {
+    color: transparent;
+    border-color: transparent;
+    border-radius: 0px;
+    background: url(../images/lock-medium.png) no-repeat center center rgba(0, 0, 0, 0.1);
+}
+
+.user-file-upload .user-track-wrap {
+    padding-top: 22px;
+}
+.user-file-upload .user-track-info {
+    color: #ffffff;
+    font-family: 'PT Sans', sans-serif;
+    font-size: 14px;
+    padding: 18px;
+    line-height: 22px;
+    background-color: #247b9f;
+}
+.user-file-upload .user-track-info div {
+    float: left;
+}
+.user-file-upload .user-track-info div.status {
+    display: inline-block;
+    width: 24px;
+    height: 24px;
+    background: url(../images/checked-small-icon.png) no-repeat 0 1px;
+}
+.user-file-upload .user-track-info div.title {
+    width: 274px;
+    padding: 0 10px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.user-file-upload .user-track-info div.remove {
+    display: inline-block;
+    width: 24px;
+    height: 24px;
+    background: url(../images/remove-icon.png) no-repeat 0 0;
+    cursor: pointer;
+}
+
+/* Custom Scrollbar Style */
+.scrollbar-handle-container {
+    width: 12px;
+    background: #e3e3e3;
+}
+.scrollbar-handle {
+    width: 12px;
+    background: #248ab4;
+}
+.scrollbar-pane {
+    margin-right: 12px;
+    width: 100%;
+}
+.scrollbar-handle-up,
+.scrollbar-handle-down {
+    height: 0;
 }

@@ -20,7 +20,7 @@
     Drupal.initThemesSelected = function (e) {
         var item = $(e.currentTarget);
         if ($(e.target).is("div.checkbox")) {
-            var theme_id = item.attr("id").replace("theme-", ""),
+            var theme_id = item.attr("theme_id"),
                 radio = this.controls.inputs.filter("#edit-term-ids-" + theme_id);
 
             if (radio.length) {

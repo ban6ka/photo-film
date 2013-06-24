@@ -13,6 +13,12 @@ function photo_film_select_picture_step($form, &$form_state) {
   drupal_add_js(libraries_get_path('jquery_file_upload') . '/js/vendor/jquery.ui.widget.js');
   drupal_add_js(libraries_get_path('jquery_file_upload') . '/js/jquery.iframe-transport.js');
   drupal_add_js(libraries_get_path('jquery_file_upload') . '/js/jquery.fileupload.js');
+
+  unset($form['ctools_trail']);
+  $form['#attributes'] = array();
+  $form['#attributes']['class'] = array();
+  $form['#attributes']['class'][] = 'photo-film-form';
+
   $form['#attached'] = array(
     'css' => array(
       'type' => 'file',

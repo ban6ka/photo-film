@@ -36,7 +36,7 @@
             'attributes' => array('align' => 'left')
           )); ?>
         </div>
-        <div class="style-toolbar clearfix" id="style-<?php print $item['id'] ?>">
+        <div class="style-toolbar clearfix" style_id="<?php print $item['id'] ?>">
           <div class="title"><?php print $item['title'] ?></div>
           <div class="checkbox">&nbsp;</div>
         </div>

@@ -26,7 +26,7 @@
           'height' => 0,
           'attributes' => array('align' => 'left')
         )); ?>
-        <div class="theme-toolbar clearfix" id="theme-<?php print $item['id'] ?>">
+        <div class="theme-toolbar clearfix" theme_id="<?php print $item['id'] ?>">
           <div class="title">
           <?php print $item['title'] ?>
           </div>
