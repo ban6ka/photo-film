@@ -27,13 +27,6 @@ stylesheets[all][] = css/screen.css
 ; If you are targetting Internet Explorer 6-8 you are not using the "css3-mediaqueries-js" polyfill you should uncomment the below line and create the print stylesheet.
 stylesheets[print][] = css/print.css
 
-; Javascript ---------------------------------------------------------------
-; Add your awesome javascript in the below file.
-; scripts[] = js/jquery.tinyscrollbar.min.js
-; scripts[] = js/jquery.aviaSlider.min.js
-; scripts[] = js/jquery.placeholder.js
-; scripts[] = js/init.js
-
 ; Panels layouts. You can place multiple layouts under the "layouts" folder.
 
 plugins[panels][layouts] = panels/layouts

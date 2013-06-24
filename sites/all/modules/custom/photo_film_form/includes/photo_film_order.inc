@@ -11,114 +11,120 @@ function photo_film_form_order($form, &$form_state) {
   unset($form['ctools_trail']);
   unset($form['buttons']['cancel']);
   unset($form['buttons']['previous']);
+
+  $form['#attributes'] = array();
+  $form['#attributes']['class'] = array();
+  $form['#attributes']['class'][] = 'photo-film-form';
+  $form['#attributes']['class'][] = 'order-form';
+
   $form['title'] = array(
     '#type' => 'markup',
     '#markup' => '<h4>' . variable_get('photo_film_form_order_title', '') . '</h4>',
-    '#weight' => -10,
+    '#weight' => -20,
   );
 
   $form['theme'] = array(
     '#type' => 'textfield',
-    '#title' => t('Theme'),
-    '#title_display' => 'none',
-    '#theme' => array('photo_film_form_textfield'),
+    '#title' => t('Theme') . ':',
     '#disabled' => TRUE,
-    '#value' => 'picked theme'
+    '#value' => 'picked theme',
+    '#weight' => -19
   );
 
   $form['style'] = array(
     '#type' => 'textfield',
-    '#title' => t('Style'),
-    '#title_display' => 'none',
-    '#theme' => array('photo_film_form_textfield'),
+    '#title' => t('Style') . ':',
     '#disabled' => TRUE,
-    '#value' => 'picked style'
+    '#value' => 'picked style',
+    '#weight' => -17
   );
 
   $form['music'] = array(
     '#type' => 'textfield',
-    '#title' => t('Music'),
-    '#title_display' => 'none',
-    '#theme' => array('photo_film_form_textfield'),
+    '#title' => t('Music') . ':',
     '#disabled' => TRUE,
-    '#value' => 'picked music track'
+    '#value' => 'picked music track',
+    '#weight' => -15
   );
 
   $form['name'] = array(
     '#type' => 'textfield',
-    '#title' => t('Name'),
-    '#title_display' => 'none',
-    '#theme' => array('photo_film_form_textfield'),
+    '#title' => t('Name') . ':',
+    '#weight' => -18
   );
 
   $form['country'] = array(
     '#type' => 'textfield',
-    '#title' => t('Country'),
+    '#title' => t('Country') . ':',
     '#rules' => array(
       'alpha',
     ),
-    '#title_display' => 'none',
-    '#theme' => array('photo_film_form_textfield'),
+    '#weight' => -16
   );
 
   $form['city'] = array(
     '#type' => 'textfield',
-    '#title' => t('City'),
-    '#title_display' => 'none',
+    '#title' => t('City') . ':',
     '#rules' => array(
       'alpha',
     ),
-    '#theme' => array('photo_film_form_textfield'),
+    '#weight' => -14
   );
 
   $form['email'] = array(
     '#type' => 'textfield',
-    '#title' => t('Email'),
+    '#title' => t('Email') . ':',
     '#rules' => array(
       'email',
     ),
-    '#title_display' => 'none',
     '#required' => TRUE,
-    '#default_value' => 'my@email.com',
-    '#theme' => array('photo_film_form_textfield'),
+    '#weight' => -12
   );
 
   $form['mobile'] = array(
     '#type' => 'textfield',
-    '#title' => t('Mobile'),
-    '#title_display' => 'none',
+    '#title' => t('Mobile') . ':',
     '#required' => TRUE,
-    '#default_value' => 'mobile',
-    '#theme' => array('photo_film_form_textfield'),
+    '#weight' => -10
   );
 
   $options = photo_film_order_prepare_radios(variable_get('photo_film_form_video_formats', ''));
   $form['format'] = array(
     '#type' => 'select',
-    '#title' => t('Format'),
+    '#title' => t('Format') . ':',
     '#required' => TRUE,
     '#options' => $options,
     '#default_value' => 'key',
-    '#title_display' => 'none',
-    '#theme' => array('photo_film_form_select'),
+    '#weight' => -13,
+    '#prefix' => '<div class="form-delimeter">&nbsp;</div>'
   );
 
   $options = photo_film_order_prepare_radios(variable_get('photo_film_form_delivery_methods', ''));
   $form['delivery'] = array(
     '#type' => 'select',
-    '#title' => t('Delivery method'),
+    '#title' => t('Delivery method') . ':',
     '#required' => TRUE,
-    '#title_display' => 'none',
     '#default_value' => 'key',
     '#options' => $options,
-    '#theme' => array('photo_film_form_select'),
+    '#weight' => -11
+  );
+
+  $form['separator'] = array(
+    '#type' => 'markup',
+    '#markup' => '<div class="form-delimeter">&nbsp;</div><hr class="separator" /><div class="form-delimeter">&nbsp;</div>',
+    '#weight' => -9
   );
 
   $form['discount'] = array(
     '#type' => 'textfield',
-    '#title' => t('Discount'),
-    '#title_display' => 'none',
-    '#theme' => array('photo_film_form_textfield'),
+    '#title' => t('Discount') . ':',
+    '#weight' => -8
+  );
+
+  $form['total'] = array(
+    '#type' => 'markup',
+    '#markup' => '<div class="form-item payment-item"><label>' . t('Pay amount') . ':</label><span>2000 </span></div>',
+    '#weight' => -7
   );
 
   return $form;

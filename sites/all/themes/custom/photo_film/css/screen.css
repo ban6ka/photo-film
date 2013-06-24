@@ -37,6 +37,7 @@ h4 {
     text-shadow: 1px 1px #ffffff;
     line-height: 18px;
     margin: 5px 0;
+    padding: 36px 0;
 }
 h5 {
     font-family: 'PT Sans', sans-serif;
@@ -118,6 +119,7 @@ hr.separator {
 /* Footer */
 .footer-wrap {
     padding: 22px 0 100px 0;
+    margin: 20px 0 0 0;
     background: url(../images/footer-logo.png) no-repeat center bottom;
 }
 .footer-menu ul {
@@ -190,10 +192,6 @@ hr.separator {
 }
 
 /* Main Form */
-.photo-film-form {
-    padding: 38px 0 20px 0;
-}
-
 .photo-film-form input[type=checkbox],
 .photo-film-form .form-type-radio,
 .photo-film-form .form-type-file,
@@ -522,4 +520,69 @@ hr.separator {
     width: 315px;
     height: 90px;
     margin-top: 5px;
+}
+
+/* 'Order' step */
+.order-form {
+}
+.order-form .form-item {
+    float: left;
+    width: 470px;
+    height: 48px;
+}
+.order-form .form-item label {
+    float: left;
+    width: 76px;
+    margin: 15px 0;
+
+    font-family: 'PT Sans', sans-serif;
+    font-size: 13px;
+    font-weight: 700;
+    color: #3b3a3a;
+}
+.order-form .form-item .form-required {
+    color: #fb4f4f;
+}
+.order-form input,
+.order-form select {
+    width: 282px;
+    padding: 8px;
+    background: #ffffff;
+
+    font-size: 14px;
+    color: #1a1a1a;
+    border: 1px solid #cacaca;
+}
+.order-form select {
+    width: 300px;
+}
+.order-form input:disabled {
+    color: #696969;
+    background: #f0f0f0;
+}
+.order-form .form-delimeter {
+    clear: both;
+    width: 100%;
+    height: 30px;
+}
+.order-form .separator {
+    display: block;
+    clear: both;
+    margin: 6px 0 2px 0;
+}
+.order-form .form-item-discount label {
+    width: 105px;
+    margin-left: 155px;
+}
+.order-form .form-item-discount input {
+    width: 96px;
+}
+.order-form .payment-item label {
+    margin-left: 10px;
+}
+.order-form .payment-item span {
+    font-family: 'PT Sans', sans-serif;
+    font-size: 30px;
+    color: #25bae4;
+    line-height: 40px;
 }
