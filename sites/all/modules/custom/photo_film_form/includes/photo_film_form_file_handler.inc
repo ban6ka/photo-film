@@ -178,6 +178,7 @@ function photo_film_form_create_info_file($cache_object) {
     fwrite($fp, $data);
     // Clodse and write
     fclose($fp);
+
     return array(
       'real_path' => $file_name,
       'name' => 'order-info.txt'
@@ -232,7 +233,12 @@ function photo_film_form_create_archive($files, $archive_name) {
   }
 
   $destination = file_build_uri(variable_get('photo_film_form_archive_upload_destination', ''));
-  if (!file_save_data($zip->file(), $destination . '/' . $archive_name . '.zip')) {
+
+  $file = file_save_data($zip->file(), $destination . '/' . $archive_name . '.zip');
+
+  if (empty($file)) {
     watchdog('photo_film_form_archive', t('The zip could not be created.'));
   }
+
+  return $file;
 }

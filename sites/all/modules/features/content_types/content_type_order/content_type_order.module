@@ -1,0 +1,7 @@
+<?php
+/**
+ * @file
+ * Code for the Content type order feature.
+ */
+
+include_once 'content_type_order.features.inc';
