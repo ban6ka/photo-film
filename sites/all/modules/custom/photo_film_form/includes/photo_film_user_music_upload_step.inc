@@ -145,6 +145,9 @@ function theme_photo_film_select_music_step_wrapper($variables) {
     $output .= drupal_render($form['user_file_upload']);
   }
 
+  if (!empty($form['file_fid'])) {
+    $output .= drupal_render($form['file_fid']);
+  }
   // next step submit button
   if (!empty($form['buttons']['next'])) {
     $output .= drupal_render($form['buttons']['next']);
