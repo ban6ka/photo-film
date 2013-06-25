@@ -159,6 +159,12 @@ function photo_film_form_order($form, &$form_state) {
     '#weight' => -8
   );
 
+  // finish step submit button
+  if (!empty($form['buttons']['return'])) {
+    $form['buttons']['return']['#value'] = t("Send");
+    $form['buttons']['return'] = photo_film_form_render_submit_button($form['buttons']['return'], "");
+  }
+
   $amount = photo_film_form_calculate_amount($cache);
   $form['total'] = photo_film_form_order_get_amount_element($amount);
 

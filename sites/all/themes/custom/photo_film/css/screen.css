@@ -21,6 +21,14 @@ body {
     background: url(../images/main-bg.png) repeat 0 0;
 }
 
+h1 {
+    font-family: 'PT Sans', sans-serif;
+    font-size: 26px;
+    font-weight: 700;
+    color: #3b3a3a;
+    text-transform: uppercase;
+    text-align: center;
+}
 h2 {
     font-family: 'PT Sans', sans-serif;
     font-size: 16px;
@@ -188,16 +196,54 @@ hr.separator {
 }
 
 /* Main Form */
-.photo-film-form input[type=checkbox],
 .photo-film-form .form-type-radio,
 .photo-film-form .form-type-file,
 .photo-film-form .form-item-files-file {
     display: none;
 }
+.photo-film-form .form-button-container {
+    margin: 26px 0 36px 0;
+}
+.photo-film-form .form-button-container .form-button-text {
+    display: block;
+    color: #3b3a3a;
+    font-family: 'PT Sans', sans-serif;
+    font-size: 16px;
+    font-weight: 700;
+
+}
+.photo-film-form .form-button-container .form-button-wrap {
+    width: 222px;
+    margin: 4px auto 0 auto;
+    border-bottom: 4px solid #b3b3b3;
+    border-radius: 0 0 10px 10px;
+}
+.photo-film-form .form-button-wrap .form-submit {
+    width: 222px;
+    padding: 14px 0 14px 30px;
+    margin: 14px 0 2px 0;
+    background: url(../images/denied-icon.png) no-repeat 180px center #5696b1;
+    border: none;
+    border-radius: 10px;
+    outline: none;
+    color: #ffffff;
+    font-family: 'PT Sans', sans-serif;
+    font-size: 18px;
+    text-align: left;
+    text-transform: uppercase;
+    cursor: pointer;
+}
+.photo-film-form .form-button-wrap.active {
+    border-color: #949494;
+}
+.photo-film-form .form-button-wrap.active .form-submit {
+    background-color: #116e94;
+    background-image: url(../images/accepted-icon.png);
+}
 
 .photo-film-form .images-list {
     display: block;
-    margin: 8px -20px 0 0;
+    margin: 4px -20px 38px 0;
     list-style: none;
 }
 
@@ -298,7 +344,7 @@ hr.separator {
 
 /* 'Music' Step */
 .tracks-step {
-    margin: 4px 0 60px 0;
+    margin: 0px 0 66px 0;
 }
 .tracks-list-wrap {
     float: left;
@@ -444,7 +490,7 @@ hr.separator {
 
 /* 'Photos' Step */
 .photos-step {
-    margin-top: 8px;
+    margin: 4px 0 44px 0;
 }
 .photos-step .photos-uploader-wrap {
     float: left;
@@ -456,8 +502,9 @@ hr.separator {
     width: 372px;
 }
 .photos-step .user-photos-wrap {
-    clear: both;
-    margin: 40px -20px 0 0;
+    float: left;
+    width: 960px;
+    margin: -18px 0 0 0;
     list-style: none;
 }
 .photos-step .user-photos-wrap li {
