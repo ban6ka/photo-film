@@ -50,10 +50,6 @@ a {
     text-decoration: none;
 }
 
-a:hover {
-    text-decoration: underline;
-}
-
 hr.separator {
     width: 100%;
     height: 0px;
@@ -282,7 +278,7 @@ hr.separator {
     height: 100%;
     background: rgba(0, 182, 227, 0.4);
 }
-.photo-film-form .images-list .style-example > div {
+.photo-film-form .images-list .style-example > a {
     position: absolute;
     left: 0;
     bottom: 0;
