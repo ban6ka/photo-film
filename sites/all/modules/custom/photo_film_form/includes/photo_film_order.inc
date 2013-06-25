@@ -112,7 +112,7 @@ function photo_film_form_order($form, &$form_state) {
       }
     }
   }
-
+  // todo make it with default value which is unexceptable for validation
   $form['format'] = array(
     '#type' => 'select',
     '#title' => t('Format') . ':',
@@ -161,6 +161,20 @@ function photo_film_form_order($form, &$form_state) {
 
   $amount = photo_film_form_calculate_amount($cache);
   $form['total'] = photo_film_form_order_get_amount_element($amount);
+
+  // Webmoney inputs
+  $form['#action'] = 'https://merchant.webmoney.ru/lmi/payment.asp';
+
+  $form['LMI_PAYEE_PURSE'] = array(
+    '#type' => 'hidden',
+    '#value' => variable_get('photo_film_form_webmoney_pursues', ''),
+  );
+  watchdog('asdad', $form['total']['#amount']);
+  $form['LMI_PAYMENT_AMOUNT'] = array(
+    '#type' => 'hidden',
+    // todo do it in right way
+    '#value' => 10,
+  );
 
   return $form;
 }

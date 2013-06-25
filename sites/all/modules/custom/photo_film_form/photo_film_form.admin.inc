@@ -27,6 +27,27 @@ function photo_film_form_settings_form($form_state) {
     '#required' => TRUE,
   );
 
+  $form['basic']['photo_film_form_webmoney_wmid'] = array(
+    '#title' => t('Webmoney wmid'),
+    '#type' => 'textfield',
+    '#default_value' => variable_get('photo_film_form_webmoney_wmid', ''),
+    '#required' => TRUE,
+  );
+
+  $form['basic']['photo_film_form_webmoney_pursues'] = array(
+    '#title' => t('Webmoney pursues'),
+    '#type' => 'textfield',
+    '#default_value' => variable_get('photo_film_form_webmoney_pursues', ''),
+    '#required' => TRUE,
+  );
+
+  $form['basic']['photo_film_form_music_upload_destination'] = array(
+    '#title' => t('Music upload destination'),
+    '#description' => t('Drupal relative path'),
+    '#type' => 'textfield',
+    '#default_value' => variable_get('photo_film_form_music_upload_destination', 'photo-film/music/'),
+    '#required' => TRUE,
+  );
   $form['basic']['photo_film_form_picture_upload_destination'] = array(
     '#title' => t('Pictures upload destination'),
     '#description' => t('Drupal relative path'),
@@ -45,17 +66,15 @@ function photo_film_form_settings_form($form_state) {
 
   $form['basic']['photo_film_form_delivery_methods'] = array(
     '#title' => t('Delivery methods'),
-    '#type' => 'select',
-    '#options' => $options,
+    '#type' => 'textarea',
     '#default_value' => variable_get('photo_film_form_delivery_methods', ''),
     '#required' => TRUE,
   );
 
-  $form['basic']['photo_film_form_video_formats_vid'] = array(
+  $form['basic']['photo_film_form_video_formats'] = array(
     '#title' => t('Video format'),
-    '#type' => 'select',
-    '#options' => $options,
-    '#default_value' => variable_get('photo_film_form_video_formats_vid', ''),
+    '#type' => 'textarea',
+    '#default_value' => variable_get('photo_film_form_video_formats', ''),
     '#required' => TRUE,
   );
 
@@ -156,7 +175,7 @@ function photo_film_form_settings_form($form_state) {
     '#title' => t('Enter success message here'),
     '#type' => 'text_format',
     '#format' => 'full_html',
-    '#default_value' => (!empty($success_message['value']) ? $success_message['value'] : ''),
+    '#default_value' => (!empty($success_message['value']) ? $success_message['value'] : '') ,
     '#required' => FALSE,
   );
 
