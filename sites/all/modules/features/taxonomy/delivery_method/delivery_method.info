@@ -1,0 +1,14 @@
+name = Delivery method
+description = Delivery method vocabulary
+core = 7.x
+package = Taxonomy
+version = 7.x-1.0
+project = delivery_method
+dependencies[] = features
+dependencies[] = number
+dependencies[] = taxonomy
+features[features_api][] = api:2
+features[field_base][] = field_coefficient
+features[field_instance][] = taxonomy_term-delivery_method-field_coefficient
+features[taxonomy][] = delivery_method
+features_exclude[field][taxonomy_term-delivery_method-field_coefficient] = taxonomy_term-delivery_method-field_coefficient

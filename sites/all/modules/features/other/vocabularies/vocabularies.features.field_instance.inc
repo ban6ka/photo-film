@@ -9,6 +9,47 @@
  */
 function vocabularies_field_default_field_instances() {
   $field_instances = array();
+
+  // Exported field_instance: 'taxonomy_term-themes-field_coefficient'
+  $field_instances['taxonomy_term-themes-field_coefficient'] = array(
+    'bundle' => 'themes',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'number',
+        'settings' => array(
+          'decimal_separator' => '.',
+          'prefix_suffix' => TRUE,
+          'scale' => 2,
+          'thousand_separator' => ' ',
+        ),
+        'type' => 'number_decimal',
+        'weight' => 2,
+      ),
+    ),
+    'entity_type' => 'taxonomy_term',
+    'field_name' => 'field_coefficient',
+    'label' => 'Сoefficient',
+    'required' => 1,
+    'settings' => array(
+      'max' => '',
+      'min' => '',
+      'prefix' => '',
+      'suffix' => '',
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 0,
+      'module' => 'number',
+      'settings' => array(),
+      'type' => 'number',
+      'weight' => 3,
+    ),
+  );
+
   // Exported field_instance: 'taxonomy_term-themes-field_image'
   $field_instances['taxonomy_term-themes-field_image'] = array(
     'bundle' => 'themes',
@@ -99,6 +140,7 @@ function vocabularies_field_default_field_instances() {
   // Included for use with string extractors like potx.
   t('Image');
   t('Video url');
+  t('Сoefficient');
 
   return $field_instances;
 }
