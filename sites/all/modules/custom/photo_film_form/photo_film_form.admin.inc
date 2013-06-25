@@ -45,15 +45,17 @@ function photo_film_form_settings_form($form_state) {
 
   $form['basic']['photo_film_form_delivery_methods'] = array(
     '#title' => t('Delivery methods'),
-    '#type' => 'textarea',
+    '#type' => 'select',
+    '#options' => $options,
     '#default_value' => variable_get('photo_film_form_delivery_methods', ''),
     '#required' => TRUE,
   );
 
-  $form['basic']['photo_film_form_video_formats'] = array(
+  $form['basic']['photo_film_form_video_formats_vid'] = array(
     '#title' => t('Video format'),
-    '#type' => 'textarea',
-    '#default_value' => variable_get('photo_film_form_video_formats', ''),
+    '#type' => 'select',
+    '#options' => $options,
+    '#default_value' => variable_get('photo_film_form_video_formats_vid', ''),
     '#required' => TRUE,
   );
 
@@ -154,7 +156,7 @@ function photo_film_form_settings_form($form_state) {
     '#title' => t('Enter success message here'),
     '#type' => 'text_format',
     '#format' => 'full_html',
-    '#default_value' => (!empty($success_message['value']) ? $success_message['value'] : '') ,
+    '#default_value' => (!empty($success_message['value']) ? $success_message['value'] : ''),
     '#required' => FALSE,
   );
 

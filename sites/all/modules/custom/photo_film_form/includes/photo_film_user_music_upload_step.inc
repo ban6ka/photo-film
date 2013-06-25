@@ -57,8 +57,6 @@ function photo_film_form_user_music_upload_step($form, &$form_state) {
           );
         }
         if ($author = field_get_items('node', $music_item, 'field_author', $music_item->language)) {
-          $track_list[$item->nid] = $author[0]['value'];
-
           $form['tracks_list']['author_' . $item->nid] = array(
             '#title' => t('Author'),
             '#type' => 'markup',
@@ -123,7 +121,7 @@ function theme_photo_film_select_music_step_wrapper($variables) {
     foreach ($form['photo_film_compositions']['#options'] as $key => $option) {
       if (!empty($form['tracks_list']['track_' . $key]['#markup'])) {
         $proposed_list[$key] = array(
-          'fid' => $option,
+          'fid' => $form['photo_film_compositions']['#options'][$key],
           'title' => $form['tracks_list']['track_' . $key]['#markup'],
           'author' => $form['tracks_list']['author_' . $key]['#markup']
         );

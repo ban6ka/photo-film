@@ -305,3 +305,67 @@ function photo_film_form_ctools_multi_step_form_info() {
     ),
   );
 }
+
+
+/**
+ * Function that calculates total amount of the order
+ * @param $cache object that stores info about users selects
+ * @return total amount of the order
+ */
+function photo_film_form_calculate_amount($cache) {
+  $pictures_count = count($cache->pictures);
+  $music = !(empty($cache->music['fid']));
+  if (!empty($cache->style['style']) && $style = taxonomy_term_load($cache->style['style'])) {
+    if ($style_price = field_get_items('taxonomy_term', $style, 'field_coefficient')) {
+      $style_price = $style_price[0]['value'];
+    }
+  }
+  else {
+    $style_price = 1;
+  }
+
+  if (!empty($cache->format['tid']) && $format = $cache->format['tid']) {
+    $format = taxonomy_term_load($format);
+    if ($format_price = field_get_items('taxonomy_term', $format, 'field_coefficient')) {
+      $format_price = $format_price[0]['value'];
+    }
+  }
+  else {
+    $format_price = 0;
+  }
+
+  return ($pictures_count * $style_price + $music * 30) * $format_price;
+}
+
+/**
+ * Callback for ajax on the last step on our form
+ * returns recalculated amount of order
+ */
+function photo_film_form_order_get_amount($form, $form_state) {
+  $cache = photo_film_form_cache_get(1);
+  // try to add new property to the object
+  if (!empty($form_state['values']['format'])) {
+    $cache->format['tid'] = $form_state['values']['format'];
+  }
+
+  $amount = photo_film_form_calculate_amount($cache);
+  watchdog('my', $amount);
+  return photo_film_form_order_get_amount_element($amount);
+}
+
+/**
+ * Total amount element of the last step
+ * @param $amount
+ */
+function photo_film_form_order_get_amount_element($amount) {
+  $title = '<label>' . t('Pay amount') . ':</label>';
+
+  return array(
+    '#prefix' => '<div class="form-item payment-item" id="order-amount">',
+    '#title' => t('Pay amount') . ':',
+    '#type' => 'markup',
+    '#markup' => $title . '<span>' . $amount . '</span>',
+    '#suffix' => '</div>',
+    '#weight' => -7
+  );
+}

@@ -11,6 +11,8 @@ function photo_film_form_order($form, &$form_state) {
   unset($form['ctools_trail']);
   unset($form['buttons']['cancel']);
   unset($form['buttons']['previous']);
+  // get the form previous step info
+  $cache = photo_film_form_cache_get(1);
 
   $form['#attributes'] = array();
   $form['#attributes']['class'] = array();
@@ -27,17 +29,25 @@ function photo_film_form_order($form, &$form_state) {
     '#type' => 'textfield',
     '#title' => t('Theme') . ':',
     '#disabled' => TRUE,
-    '#value' => 'picked theme',
     '#weight' => -19
   );
+  // provide value that user picked up at first step
+  if (!empty($cache->theme['theme']) & $theme = $cache->theme['theme']) {
+    $theme = taxonomy_term_load($theme);
+    $form['theme']['#value'] = (!empty($theme->name) ? $theme->name : '');
+  }
 
   $form['style'] = array(
     '#type' => 'textfield',
     '#title' => t('Style') . ':',
     '#disabled' => TRUE,
-    '#value' => 'picked style',
     '#weight' => -17
   );
+  // provide value that user picked up at second step
+  if (!empty($cache->style['style']) & $style = $cache->style['style']) {
+    $style = taxonomy_term_load($style);
+    $form['style']['#value'] = (!empty($style->name) ? $style->name : '');
+  }
 
   $form['music'] = array(
     '#type' => 'textfield',
@@ -46,6 +56,12 @@ function photo_film_form_order($form, &$form_state) {
     '#value' => 'picked music track',
     '#weight' => -15
   );
+
+  // provide value that user picked up at third step
+  if (!empty($cache->music['fid']) & $music = $cache->music['fid']) {
+    $file = file_load($music);
+    $form['music']['#value'] = (!empty($file->filename) ? $file->filename : '');
+  }
 
   $form['name'] = array(
     '#type' => 'textfield',
@@ -88,18 +104,40 @@ function photo_film_form_order($form, &$form_state) {
     '#weight' => -10
   );
 
-  $options = photo_film_order_prepare_radios(variable_get('photo_film_form_video_formats', ''));
+  $options = array();
+  if ($themes_vocabulary_vid = variable_get('photo_film_form_video_formats_vid', FALSE)) {
+    if ($terms = taxonomy_get_tree($themes_vocabulary_vid)) {
+      foreach ($terms as $term) {
+        $options[$term->tid] = $term->name;
+      }
+    }
+  }
+
   $form['format'] = array(
     '#type' => 'select',
     '#title' => t('Format') . ':',
     '#required' => TRUE,
     '#options' => $options,
     '#default_value' => 'key',
+    '#ajax' => array(
+      'callback' => 'photo_film_form_order_get_amount',
+      'wrapper' => 'order-amount',
+      'method' => 'replace',
+      'effect' => 'none',
+    ),
     '#weight' => -13,
     '#prefix' => '<div class="form-delimeter">&nbsp;</div>'
   );
 
-  $options = photo_film_order_prepare_radios(variable_get('photo_film_form_delivery_methods', ''));
+  $options = array();
+  if ($themes_vocabulary_vid = variable_get('photo_film_form_delivery_methods', FALSE)) {
+    if ($terms = taxonomy_get_tree($themes_vocabulary_vid)) {
+      foreach ($terms as $term) {
+        $options[$term->tid] = $term->name;
+      }
+    }
+  }
+
   $form['delivery'] = array(
     '#type' => 'select',
     '#title' => t('Delivery method') . ':',
@@ -121,30 +159,10 @@ function photo_film_form_order($form, &$form_state) {
     '#weight' => -8
   );
 
-  $form['total'] = array(
-    '#type' => 'markup',
-    '#markup' => '<div class="form-item payment-item"><label>' . t('Pay amount') . ':</label><span>2000 </span></div>',
-    '#weight' => -7
-  );
+  $amount = photo_film_form_calculate_amount($cache);
+  $form['total'] = photo_film_form_order_get_amount_element($amount);
 
   return $form;
-}
-
-/**
- * Helper function to parce string(key|value) and return an array
- * @param $text text with options
- */
-function photo_film_order_prepare_radios($text) {
-  $result = array();
-  $options_sets = explode("\n", $text);
-  foreach ($options_sets as $set) {
-    $option = explode('|', $set);
-    if (!empty($option[0]) && !empty($option[1])) {
-      $result[$option[0]] = $option[1];
-    }
-  }
-
-  return $result;
 }
 
 /**
