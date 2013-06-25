@@ -127,6 +127,7 @@ function theme_photo_film_form_select_theme_wrapper($variables) {
     $output .= drupal_render($form['terms']['term_ids']);
     // next step submit button
     if (!empty($form['buttons']['next'])) {
+      $form['buttons']['next'] = photo_film_form_render_submit_button($form['buttons']['next']);
       $output .= drupal_render($form['buttons']['next']);
     }
 

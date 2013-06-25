@@ -369,3 +369,19 @@ function photo_film_form_order_get_amount_element($amount) {
     '#weight' => -7
   );
 }
+
+/**
+ * Layout of submit button
+ * @param $button
+ * @param @add_text - text before button
+ */
+function photo_film_form_render_submit_button($button, $add_text = 'Did you select?') {
+    $button['#prefix'] = '<hr class="separator" />' .
+                         '<div class="form-button-container">' .
+                           '<h1>' . t($add_text) . '</h1>' .
+                           '<div class="form-button-wrap">';
+    $button['#suffix'] = '</div></div>';
+    $button['#tree'] = TRUE;
+
+    return $button;
+}

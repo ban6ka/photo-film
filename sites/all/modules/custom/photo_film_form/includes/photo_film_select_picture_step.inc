@@ -54,6 +54,11 @@ function photo_film_select_picture_step($form, &$form_state) {
     '#attributes' => array('multiple' => 'multiple')
   );
 
+  // next step submit button
+  if (!empty($form['buttons']['next'])) {
+    $form['buttons']['next'] = photo_film_form_render_submit_button($form['buttons']['next']);
+  }
+
   return $form;
 }
 
