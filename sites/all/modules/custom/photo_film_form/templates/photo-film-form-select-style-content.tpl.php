@@ -36,7 +36,7 @@
             'attributes' => array('align' => 'left')
           )); ?>
           <div class="style-example">
-            <div><?php print t("Preview example") ?></div>
+            <a rel="style_video" href="<?php print $item['video_url'] ?>"><?php print t("Preview example") ?></a>
           </div>
         </div>
         <div class="style-toolbar clearfix" style_id="<?php print $item['id'] ?>">

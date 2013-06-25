@@ -13,6 +13,10 @@ function photo_film_form_choose_style_step($form, &$form_state) {
     if ($vocabulary_terms = taxonomy_get_tree(variable_get('photo_film_form_theme_vid', FALSE), $parent)) {
       // adding our theme to the first step form
       $form['#theme'] = array('photo_film_form_select_style_wrapper');
+      // Attach the CSS and JS to the form
+      drupal_add_js(libraries_get_path('jquery_fancybox') . '/jquery.fancybox-1.3.4.js');
+      drupal_add_css(libraries_get_path('jquery_fancybox') . '/jquery.fancybox-1.3.4.css');
+
       $form['#attributes'] = array();
       $form['#attributes']['class'] = array();
       $form['#attributes']['class'][] = 'photo-film-form';
