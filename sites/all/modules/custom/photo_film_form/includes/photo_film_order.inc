@@ -32,7 +32,7 @@ function photo_film_form_order($form, &$form_state) {
     '#weight' => -19
   );
   // provide value that user picked up at first step
-  if (!empty($cache->theme['theme']) & $theme = $cache->theme['theme']) {
+  if (!empty($cache->theme['theme']) && $theme = $cache->theme['theme']) {
     $theme = taxonomy_term_load($theme);
     $form['theme']['#value'] = (!empty($theme->name) ? $theme->name : '');
   }
@@ -44,7 +44,7 @@ function photo_film_form_order($form, &$form_state) {
     '#weight' => -17
   );
   // provide value that user picked up at second step
-  if (!empty($cache->style['style']) & $style = $cache->style['style']) {
+  if (!empty($cache->style['style']) && $style = $cache->style['style']) {
     $style = taxonomy_term_load($style);
     $form['style']['#value'] = (!empty($style->name) ? $style->name : '');
   }
@@ -58,7 +58,7 @@ function photo_film_form_order($form, &$form_state) {
   );
 
   // provide value that user picked up at third step
-  if (!empty($cache->music['fid']) & $music = $cache->music['fid']) {
+  if (!empty($cache->music['fid']) && $music = $cache->music['fid']) {
     $file = file_load($music);
     $form['music']['#value'] = (!empty($file->filename) ? $file->filename : '');
   }
