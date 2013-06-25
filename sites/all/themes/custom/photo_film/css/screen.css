@@ -36,8 +36,7 @@ h4 {
     text-align: center;
     text-shadow: 1px 1px #ffffff;
     line-height: 18px;
-    margin: 5px 0;
-    padding: 36px 0;
+    padding: 41px 0;
 }
 h5 {
     font-family: 'PT Sans', sans-serif;
@@ -151,6 +150,7 @@ hr.separator {
 /* Form Navigation */
 .photo-film-navigation {
     height: 92px;
+    margin-right: -30px;
     font-family: 'PT Sans', sans-serif;
     font-weight: 700;
     font-size: 25px;
@@ -161,7 +161,7 @@ hr.separator {
 
 .photo-film-navigation li {
     display: inline-block;
-    margin: 8px 10px 0px 0;
+    margin: 8px 9px 0px 0;
 }
 
 .photo-film-navigation .navigation-separator {
@@ -177,7 +177,7 @@ hr.separator {
 
 .photo-film-navigation a {
     float: left;
-    padding: 6px 20px 6px 0;
+    padding: 6px 19px 6px 0;
 
     color: #a6a6a6;
     text-decoration: none;
@@ -201,7 +201,7 @@ hr.separator {
 
 .photo-film-form .images-list {
     display: block;
-    margin: 42px -20px 0 0;
+    margin: 8px -20px 0 0;
     list-style: none;
 }
 
@@ -256,6 +256,9 @@ hr.separator {
 }
 
 /* 'Style' Step */
+.photo-film-form .images-list .style-image-wrap {
+    position: relative;
+}
 .photo-film-form .images-list .style-toolbar {
     width: 198px;
     padding: 10px 12px 10px 10px;
@@ -270,10 +273,36 @@ hr.separator {
     float: right;
     line-height: 12px;
 }
+.photo-film-form .images-list .style-example {
+    visibility: hidden;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 182, 227, 0.4);
+}
+.photo-film-form .images-list .style-example > div {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    padding: 14px 0;
+    background: #00b6e3;
+    color: #ffffff;
+    font-family: 'PT Sans', sans-serif;
+    font-size: 13px;
+    font-weight: 700;
+    text-align: center;
+    cursor: pointer;
+}
+.photo-film-form .images-list .style-image-wrap:hover .style-example {
+    visibility: visible;
+}
 
 /* 'Music' Step */
 .tracks-step {
-    margin: 38px 0 60px 0;
+    margin: 4px 0 60px 0;
 }
 .tracks-list-wrap {
     float: left;
@@ -419,7 +448,7 @@ hr.separator {
 
 /* 'Photos' Step */
 .photos-step {
-    margin-top: 44px;
+    margin-top: 8px;
 }
 .photos-step .photos-uploader-wrap {
     float: left;
@@ -565,10 +594,10 @@ hr.separator {
     width: 100%;
     height: 30px;
 }
-.order-form .separator {
-    display: block;
-    clear: both;
-    margin: 6px 0 2px 0;
+.order-form hr.separator {
+    float: left;
+    width: 100%;
+    margin: 40px 0 32px 0;
 }
 .order-form .form-item-discount label {
     width: 105px;

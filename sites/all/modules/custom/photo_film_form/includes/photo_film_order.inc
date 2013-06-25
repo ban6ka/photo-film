@@ -111,7 +111,7 @@ function photo_film_form_order($form, &$form_state) {
 
   $form['separator'] = array(
     '#type' => 'markup',
-    '#markup' => '<div class="form-delimeter">&nbsp;</div><hr class="separator" /><div class="form-delimeter">&nbsp;</div>',
+    '#markup' => '<hr class="separator" />',
     '#weight' => -9
   );
 
