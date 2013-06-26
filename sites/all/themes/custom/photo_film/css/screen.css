@@ -501,6 +501,9 @@ hr.separator {
     width: 12px;
     background: #248ab4;
 }
+.scrollbar-handle:hover {
+    background: #116e94;
+}
 .scrollbar-pane {
     margin-right: 12px;
     width: 100%;

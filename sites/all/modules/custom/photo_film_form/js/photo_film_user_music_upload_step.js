@@ -18,7 +18,8 @@
         drop_zone: null,
         file_holder: null,
         file_input: null,
-        tracks_list: null
+        tracks_list: null,
+        tracks_items: null
     }
     Drupal.control_classes = {
         loading: "loading",
@@ -31,11 +32,12 @@
         this.controls.file_holder = $("div.user-track-info");
         this.controls.file_input = $("input[name=file_fid]");
         this.controls.tracks_list = $("ul.tracks-list");
+        this.controls.tracks_items = this.controls.tracks_list.find("li.track-item");
 
         this.controls.tracks_list.scrollbar();
         this.initTrackUploader();
 
-        this.controls.tracks_list.children().on("click", $.proxy(this.onTrackSelected, this));
+        this.controls.tracks_items.on("click", $.proxy(this.onTrackSelected, this));
         this.controls.file_holder.children("div.remove").on("click", $.proxy(this.removeUploadedFile, this));
     }
 
@@ -59,8 +61,8 @@
 
     Drupal.lockTracksList = function (lock) {
         if (lock) {
-            this.controls.tracks_list.addClass(this.control_classes.locked)
-                                     .children().removeClass(this.control_classes.checked);
+            this.controls.tracks_list.addClass(this.control_classes.locked);
+            this.controls.tracks_items.removeClass(this.control_classes.checked);
         } else {
             this.controls.tracks_list.removeClass(this.control_classes.locked);
         }
@@ -70,7 +72,7 @@
         var track = $(e.currentTarget),
             is_selected = track.hasClass(this.control_classes.checked);
 
-        this.controls.tracks_list.children().removeClass(this.control_classes.checked);
+        this.controls.tracks_items.removeClass(this.control_classes.checked);
 
         if (!is_selected) {
             track.addClass(this.control_classes.checked);
