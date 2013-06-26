@@ -21,7 +21,9 @@
     endif ?>
     <li class="<?php print ($is_active ? "active-step " : "") ?> clearfix">
       <?php print l(t($single_step['title']), $single_step['href'], $single_step['attributes']) ?>
-      <span class="navigation-separator">&nbsp;</span>
+      <?php if (end($steps) != $single_step) : ?>
+        <span class="navigation-separator">&nbsp;</span>
+      <?php endif ?>
     </li>
     <?php endforeach; ?>
   </ul>
