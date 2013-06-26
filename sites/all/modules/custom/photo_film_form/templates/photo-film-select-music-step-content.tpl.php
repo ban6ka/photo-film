@@ -49,5 +49,12 @@
     <?php if (!empty($warning)): ?>
       <div class="form-warning-message"><?php print $warning ?></div>
     <?php endif; ?>
+
+    <div class="refuse-music-wrap">
+      <h3><?php print t("No, thank you, I don't want incidental music") ?></h3>
+      <input type="checkbox" name="refuse_music" id="refuse-music-checkbox" value="" />
+      <label for="refuse-music-checkbox"><?php print t("refuse") ?></label>
+    </div>
+
   </div>
 </div>
