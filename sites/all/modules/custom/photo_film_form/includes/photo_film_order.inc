@@ -168,9 +168,9 @@ function photo_film_form_order($form, &$form_state) {
   $amount = photo_film_form_calculate_amount($cache);
   $form['total'] = photo_film_form_order_get_amount_element($amount);
 
-  // Webmoney inputs
   $form['#action'] = 'https://merchant.webmoney.ru/lmi/payment.asp';
 
+  // Webmoney inputs
   $form['LMI_PAYEE_PURSE'] = array(
     '#type' => 'hidden',
     '#value' => variable_get('photo_film_form_webmoney_pursues', ''),
@@ -202,4 +202,5 @@ function photo_film_form_order_submit($form, &$form_state) {
       'discount' => !empty($form_state['values']['format']) ? $form_state['values']['format'] : '',
     );
   }
+  die();
 }
