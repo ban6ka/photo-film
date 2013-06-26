@@ -64,17 +64,19 @@ function photo_film_form_settings_form($form_state) {
     '#required' => TRUE,
   );
 
-  $form['basic']['photo_film_form_delivery_methods'] = array(
+  $form['basic']['photo_film_form_delivery_methods_vid'] = array(
     '#title' => t('Delivery methods'),
-    '#type' => 'textarea',
-    '#default_value' => variable_get('photo_film_form_delivery_methods', ''),
+    '#type' => 'select',
+    '#options' => $options,
+    '#default_value' => variable_get('photo_film_form_delivery_methods_vid', ''),
     '#required' => TRUE,
   );
 
-  $form['basic']['photo_film_form_video_formats'] = array(
+  $form['basic']['photo_film_form_video_formats_vid'] = array(
     '#title' => t('Video format'),
-    '#type' => 'textarea',
-    '#default_value' => variable_get('photo_film_form_video_formats', ''),
+    '#type' => 'select',
+    '#options' => $options,
+    '#default_value' => variable_get('photo_film_form_video_formats_vid', ''),
     '#required' => TRUE,
   );
 
