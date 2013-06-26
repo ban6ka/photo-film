@@ -204,6 +204,14 @@ hr.separator {
     color: #6d6d6d;
 }
 
+.photo-film-navigation li:last-child {
+    margin-right: 0;
+}
+.photo-film-navigation li:last-child a {
+    padding-right: 0;
+}
+
+
 /* Main Form */
 .photo-film-form .form-type-radio,
 .photo-film-form .form-type-file,
