@@ -280,6 +280,7 @@ function photo_film_form_ctools_multi_step_form_info() {
       'user_music_upload' => t('Select music for your video'),
       'photo_film_select_picture_step' => t('Select photos for your video'),
       'photo_film_form_order' => t('Order'),
+      'photo_film_form_finish' => t('Finish'),
     ),
     'forms' => array(
       'themes' => array(
@@ -301,6 +302,10 @@ function photo_film_form_ctools_multi_step_form_info() {
       'photo_film_form_order' => array(
         'form id' => 'photo_film_form_order',
         'include' => drupal_get_path('module', 'photo_film_form') . '/includes/photo_film_order.inc',
+      ),
+      'photo_film_form_finish' => array(
+        'form id' => 'photo_film_form_finish',
+        'include' => drupal_get_path('module', 'photo_film_form') . '/includes/photo_film_finish.inc',
       ),
     ),
   );

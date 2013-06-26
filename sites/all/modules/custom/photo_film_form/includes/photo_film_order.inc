@@ -60,7 +60,9 @@ function photo_film_form_order($form, &$form_state) {
   // provide value that user picked up at third step
   if (!empty($cache->music['fid']) && $music = $cache->music['fid']) {
     $file = file_load($music);
-    $form['music']['#value'] = (!empty($file->filename) ? $file->filename : '');
+    $path_parts = pathinfo($file->uri);
+
+    $form['music']['#value'] = (!empty($path_parts['basename']) ? $path_parts['basename'] : '');
   }
 
   $form['name'] = array(
@@ -168,9 +170,9 @@ function photo_film_form_order($form, &$form_state) {
   $amount = photo_film_form_calculate_amount($cache);
   $form['total'] = photo_film_form_order_get_amount_element($amount);
 
+  // Webmoney inputs
   $form['#action'] = 'https://merchant.webmoney.ru/lmi/payment.asp';
 
-  // Webmoney inputs
   $form['LMI_PAYEE_PURSE'] = array(
     '#type' => 'hidden',
     '#value' => variable_get('photo_film_form_webmoney_pursues', ''),
@@ -202,5 +204,4 @@ function photo_film_form_order_submit($form, &$form_state) {
       'discount' => !empty($form_state['values']['format']) ? $form_state['values']['format'] : '',
     );
   }
-  die();
 }
