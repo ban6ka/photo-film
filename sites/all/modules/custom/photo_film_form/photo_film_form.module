@@ -241,7 +241,7 @@ function photo_film_form_finished($object) {
     module_load_include('inc', 'photo_film_form', 'includes/photo_film_node_order');
     photo_film_create_order_node($object, $archive);
     // clear cache
-    photo_film_form_cache_clear(1);
+   // photo_film_form_cache_clear(1);
   }
   $form = array();
   $message = variable_get('photo_film_form_success_message', '');
@@ -329,8 +329,9 @@ function photo_film_form_calculate_amount($cache) {
     $style_price = 1;
   }
 
-  if (!empty($cache->format['tid']) && $format = $cache->format['tid']) {
+  if (!empty($cache->order_info['format']) && $format = $cache->order_info['format']) {
     $format = taxonomy_term_load($format);
+
     if ($format_price = field_get_items('taxonomy_term', $format, 'field_coefficient')) {
       $format_price = $format_price[0]['value'];
     }
@@ -350,11 +351,12 @@ function photo_film_form_order_get_amount($form, $form_state) {
   $cache = photo_film_form_cache_get(1);
   // try to add new property to the object
   if (!empty($form_state['values']['format'])) {
-    $cache->format['tid'] = $form_state['values']['format'];
+    $cache->order_info = array();
+    $cache->order_info['format'] = $form_state['values']['format'];
   }
 
   $amount = photo_film_form_calculate_amount($cache);
-  watchdog('my', $amount);
+
   return photo_film_form_order_get_amount_element($amount);
 }
 
@@ -383,9 +385,9 @@ function photo_film_form_order_get_amount_element($amount) {
  */
 function photo_film_form_render_submit_button($button, $add_text = 'Did you select?') {
     $button['#prefix'] = '<hr class="separator" />' .
-                         '<div class="form-button-container">' .
-                           '<h1>' . t($add_text) . '</h1>' .
-                           '<div class="form-button-wrap">';
+                     '<div class="form-button-container">' .
+                       '<h1>' . t($add_text) . '</h1>' .
+                       '<div class="form-button-wrap">';
     $button['#suffix'] = '</div></div>';
     $button['#tree'] = TRUE;
 
