@@ -366,7 +366,8 @@ function photo_film_form_order_get_amount_element($amount) {
     '#type' => 'markup',
     '#markup' => $title . '<span>' . $amount . '</span>',
     '#suffix' => '</div>',
-    '#weight' => -7
+    '#weight' => -7,
+    '#amount' => $amount,
   );
 }
 

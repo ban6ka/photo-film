@@ -112,7 +112,7 @@ function photo_film_form_order($form, &$form_state) {
       }
     }
   }
-
+  // todo make it with default value which is unexceptable for validation
   $form['format'] = array(
     '#type' => 'select',
     '#title' => t('Format') . ':',
@@ -130,7 +130,7 @@ function photo_film_form_order($form, &$form_state) {
   );
 
   $options = array();
-  if ($themes_vocabulary_vid = variable_get('photo_film_form_delivery_methods', FALSE)) {
+  if ($themes_vocabulary_vid = variable_get('photo_film_form_delivery_methods_vid', FALSE)) {
     if ($terms = taxonomy_get_tree($themes_vocabulary_vid)) {
       foreach ($terms as $term) {
         $options[$term->tid] = $term->name;
@@ -168,6 +168,20 @@ function photo_film_form_order($form, &$form_state) {
   $amount = photo_film_form_calculate_amount($cache);
   $form['total'] = photo_film_form_order_get_amount_element($amount);
 
+  $form['#action'] = 'https://merchant.webmoney.ru/lmi/payment.asp';
+
+  // Webmoney inputs
+  $form['LMI_PAYEE_PURSE'] = array(
+    '#type' => 'hidden',
+    '#value' => variable_get('photo_film_form_webmoney_pursues', ''),
+  );
+  watchdog('asdad', $form['total']['#amount']);
+  $form['LMI_PAYMENT_AMOUNT'] = array(
+    '#type' => 'hidden',
+    // todo do it in right way
+    '#value' => 10,
+  );
+
   return $form;
 }
 
@@ -188,4 +202,5 @@ function photo_film_form_order_submit($form, &$form_state) {
       'discount' => !empty($form_state['values']['format']) ? $form_state['values']['format'] : '',
     );
   }
+  die();
 }
