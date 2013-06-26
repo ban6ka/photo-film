@@ -130,7 +130,7 @@ function photo_film_form_order($form, &$form_state) {
   );
 
   $options = array();
-  if ($themes_vocabulary_vid = variable_get('photo_film_form_delivery_methods', FALSE)) {
+  if ($themes_vocabulary_vid = variable_get('photo_film_form_delivery_methods_vid', FALSE)) {
     if ($terms = taxonomy_get_tree($themes_vocabulary_vid)) {
       foreach ($terms as $term) {
         $options[$term->tid] = $term->name;
