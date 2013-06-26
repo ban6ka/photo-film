@@ -37,6 +37,15 @@ h2 {
     text-transform: uppercase;
     margin-bottom: 22px;
 }
+h3 {
+    font-family: 'PT Sans', sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+    color: #3b3a3a;
+    text-transform: uppercase;
+    line-height: 22px;
+    margin-bottom: 18px;
+}
 h4 {
     color: #6d6d6d;
     font-size: 16px;
@@ -231,7 +240,6 @@ hr.separator {
     font-size: 18px;
     text-align: left;
     text-transform: uppercase;
-    cursor: pointer;
 }
 .photo-film-form .form-button-wrap.active {
     border-color: #949494;
@@ -239,6 +247,7 @@ hr.separator {
 .photo-film-form .form-button-wrap.active .form-submit {
     background-color: #116e94;
     background-image: url(../images/accepted-icon.png);
+    cursor: pointer;
 }
 
 .photo-film-form .images-list {
@@ -468,6 +477,19 @@ hr.separator {
     height: 24px;
     background: url(../images/remove-icon.png) no-repeat 0 0;
     cursor: pointer;
+}
+
+.refuse-music-wrap {
+    margin: 55px 0 -10px 0;
+}
+.refuse-music-wrap > input {
+    float: left;
+    margin-right: 6px;
+}
+.refuse-music-wrap > label {
+    display: inline-block;
+    font-size: 15px;
+    line-height: 16px;
 }
 
 /* Custom Scrollbar Style */
