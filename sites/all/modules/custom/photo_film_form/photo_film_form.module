@@ -228,7 +228,9 @@ function photo_film_form_wizard_cancel(&$form_state) {
  * @return array
  *   returns renderable array for multistep form result output.
  */
-function photo_film_form_finished($object) {
+function photo_film_form_insert_order($form, &$form_state) {
+  $object = $form_state['object'];
+
   if ($object->current_step == 'order_info') {
     //create an archive with order information an files
     module_load_include('inc', 'photo_film_form', 'includes/photo_film_form_file_handler');
@@ -236,26 +238,12 @@ function photo_film_form_finished($object) {
     $files = photo_film_form_prepare_files($object);
     // todo change archive name
     // create an archive
-    $archive = photo_film_form_create_archive($files, 'test');
+    $name = 'order_' . photo_film_form_get_next_order_id();
+    $archive = photo_film_form_create_archive($files, $name);
     //photo_film_node_order.inc
     module_load_include('inc', 'photo_film_form', 'includes/photo_film_node_order');
-    photo_film_create_order_node($object, $archive);
-    // clear cache
-   // photo_film_form_cache_clear(1);
+    photo_film_create_order_node($object, $archive, $name);
   }
-  $form = array();
-  $message = variable_get('photo_film_form_success_message', '');
-  $form['success_message'] = array(
-    '#type' => 'markup',
-    '#markup' => (!empty($message['value']) ? $message['value'] : '')
-  );
-  $form['order_more'] = array(
-    '#type' => 'submit',
-    '#value' => t('Order more')
-  );
-  $form['#action'] = 'photo-film-form/nojs/themes';
-
-  return $form;
 }
 
 /**
@@ -392,4 +380,11 @@ function photo_film_form_render_submit_button($button, $add_text = 'Did you sele
     $button['#tree'] = TRUE;
 
     return $button;
+}
+
+function photo_film_form_get_next_order_id() {
+  $query = db_query("SELECT MAX(nid) as nid from node where `type` = 'order'");
+  $result = $query->fetchAssoc();
+
+  return (!empty($result['nid']) ? $result['nid'] + 1 : 1);
 }

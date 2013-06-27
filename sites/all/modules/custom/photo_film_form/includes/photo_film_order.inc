@@ -169,6 +169,8 @@ function photo_film_form_order($form, &$form_state) {
   $amount = photo_film_form_calculate_amount($cache);
   $form['total'] = photo_film_form_order_get_amount_element($amount);
 
+  array_push($form['#submit'], 'photo_film_form_insert_order');
+  
   return $form;
 }
 

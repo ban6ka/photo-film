@@ -7,11 +7,11 @@
  * Create order  node from form cache object
  * @param $cache
  */
-function photo_film_create_order_node($cache, $archive = NULL) {
+function photo_film_create_order_node($cache, $archive = NULL, $name = 'test') {
   global $user;
 
   $node = new stdClass();
-  $node->title = time();
+  $node->title = $name;
   $node->type = 'order';
   $node->language = LANGUAGE_NONE;
   $node->uid = $user->uid;
