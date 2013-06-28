@@ -248,14 +248,18 @@ hr.separator {
     font-size: 18px;
     text-align: left;
     text-transform: uppercase;
+    cursor: pointer;
 }
-.photo-film-form .form-button-wrap.active {
+.photo-film-form .form-button-wrap.active,
+.photo-film-form .form-button-wrap:hover {
     border-color: #949494;
 }
-.photo-film-form .form-button-wrap.active .form-submit {
+.photo-film-form .form-button-wrap:hover .form-submit {
     background-color: #116e94;
+}
+.photo-film-form .form-button-wrap.active .form-submit {
     background-image: url(../images/accepted-icon.png);
-    cursor: pointer;
+    background-color: #116486;
 }
 
 .photo-film-form .images-list {
@@ -298,6 +302,7 @@ hr.separator {
     line-height: 34px;
 }
 .photo-film-form .images-list .theme-toolbar .checkbox {
+    visibility: hidden;
     float: right;
     width: 36px;
     height: 36px;
@@ -309,7 +314,6 @@ hr.separator {
     color: #ffffff;
     background-color: rgba(13, 109, 149, 0.75);
 }
-.photo-film-form .images-list .theme-toolbar:hover .checkbox,
 .photo-film-form .images-list .theme-toolbar.selected .checkbox {
     visibility: visible;
 }

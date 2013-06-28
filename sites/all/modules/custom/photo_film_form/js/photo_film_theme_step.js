@@ -18,17 +18,20 @@
         Drupal.controls.items.on("click", $.proxy(this.initThemesSelected, this));
     }
     Drupal.initThemesSelected = function (e) {
-        var item = $(e.currentTarget);
-        if ($(e.target).is("div.checkbox")) {
-            var theme_id = item.attr("theme_id"),
-                radio = this.controls.inputs.filter("#edit-term-ids-" + theme_id);
+        var item = $(e.currentTarget),
+            theme_id = item.attr("theme_id"),
+            radio = this.controls.inputs.filter("#edit-term-ids-" + theme_id);
 
-            if (radio.length) {
-                radio.trigger("click");
+        if (radio.length) {
+            radio.trigger("click");
 
-                this.controls.items.removeClass("selected");
-                item.addClass("selected");
-            }
+            this.controls.items.removeClass("selected");
+            item.addClass("selected");
+            this.enableSubmitButton();
         }
+    }
+
+    Drupal.enableSubmitButton = function () {
+        $("div.form-button-wrap").addClass("active");
     }
 })(jQuery)
