@@ -50,11 +50,17 @@
             maxFileSize: this.form_settings.max_weight,
             disableImagePreview: true,
 
+            paramName: 'photo-files[]',
             dropZone: this.controls.drop_zone
         })
         .bind('fileuploadsend', $.proxy(this.beforePhotoUploaded, this))
         .bind('fileuploaddone', $.proxy(this.onPhotoUploaded, this))
         .bind('fileuploadfail', function (e, data) { console.log('Processing ' + data.files[0].name + ' fail.'); });
+
+        this.controls.drop_zone.on("click", function () {
+            if (!($(this).hasClass(Drupal.control_classes.locked) || $(this).hasClass(Drupal.control_classes.loading)))
+                Drupal.controls.uploader.click()
+        });
     }
 
     Drupal.beforePhotoUploaded = function (e, data) {
@@ -112,6 +118,7 @@
 
         this.controls.files_holder.append(item);
         this.initPhotosSorting();
+        this.enableSubmitButton();
     }
 
     Drupal.initPhotosSorting = function () {
@@ -169,12 +176,12 @@
                 item.addClass(Drupal.control_classes.loading);
             },
             success: function (response) {
-                item.addClass(Drupal.control_classes.loading);
+                item.removeClass(Drupal.control_classes.loading);
                 if (response.Success) {
                     item.remove();
                     this.updatePhotoNumbers();
-                    this.form_settings.uploaded_files --;
-
+                    this.form_settings.uploaded_files -= 1;
+                    this.enableSubmitButton();
                 } else {
                     this.renderErrorMessage(response.ErrorMessage);
                 }
@@ -185,5 +192,14 @@
     //TODO: refactor
     Drupal.renderErrorMessage = function (message) {
         alert(message);
+    }
+
+    Drupal.enableSubmitButton = function () {
+        var wrap = $("div.form-button-wrap");
+        if (this.form_settings.uploaded_files > 0) {
+            wrap.addClass("active");
+        } else {
+            wrap.removeClass("active");
+        }
     }
 })(jQuery)

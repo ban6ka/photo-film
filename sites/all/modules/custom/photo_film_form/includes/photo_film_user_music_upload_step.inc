@@ -82,6 +82,7 @@ function photo_film_form_user_music_upload_step($form, &$form_state) {
     '#type' => 'file',
     '#title' => t('File'),
     '#id' => 'track-upload',
+    '#attributes' => array('accept' => 'audio/*')
   );
 
   return $form;

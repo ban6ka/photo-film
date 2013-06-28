@@ -16,7 +16,7 @@
   <div class="photos-uploader-wrap">
     <div class="user-file-upload">
       <div class="file-uploader-holder">
-        <span><?php print t("Drag files here") ?></span>
+        <span><?php print t("Click here to upload photos") ?></span>
       </div>
     </div>
   </div>

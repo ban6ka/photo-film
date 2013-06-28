@@ -556,6 +556,9 @@ hr.separator {
     float: left;
     width: 372px;
 }
+.photos-step .user-file-upload .file-uploader-holder {
+    background-position: center 80px;
+}
 .photos-step .user-photos-wrap {
     float: left;
     width: 960px;

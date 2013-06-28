@@ -51,7 +51,7 @@ function photo_film_select_picture_step($form, &$form_state) {
     '#type' => 'file',
     '#title' => t('File'),
     '#id' => 'photos-upload',
-    '#attributes' => array('multiple' => 'multiple')
+    '#attributes' => array('multiple' => 'multiple', 'accept' => 'image/*')
   );
 
   // next step submit button

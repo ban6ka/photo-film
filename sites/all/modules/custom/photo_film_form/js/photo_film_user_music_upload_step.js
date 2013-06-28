@@ -55,6 +55,7 @@
             maxFileSize: this.form_settings.max_weight,
             disableAudioPreview: true,
 
+            paramName: 'track-file',
             dropZone: this.controls.drop_zone
         })
         .bind('fileuploadsend', $.proxy(this.beforeTrackUploaded, this))
@@ -165,12 +166,12 @@
                 if (response.Success) {
                     this.controls.file_input.val("");
                     this.controls.file_holder.attr("fid", null);
-                    this.controls.uploader.val("");
-                    this.controls.file_holder.parent().hide();
+                    this.form_settings.uploaded_files -= 1;
 
+                    this.controls.file_holder.parent().hide();
                     this.controls.drop_zone.show();
+
                     this.lockTracksList(this.controls.refuse_input.is(":checked"));
-                    this.form_settings.uploaded_files --;
                 } else {
                     this.renderErrorMessage(response.ErrorMessage);
                 }
