@@ -15,14 +15,6 @@
         this.controls.inputs = $("input.radios-theme-step", Drupal.controls.form);
         this.controls.items = $("div.style-toolbar", Drupal.controls.form);
 
-        this.controls.inputs.each(function () {
-            var style_id = $(this).attr("id").replace("edit-term-ids-", ""),
-                place = Drupal.controls.items.filter("[style_id=" + style_id + "]");
-            if (place.length) {
-                place.children(".checkbox").append(this);
-            }
-        });
-
         $("a[rel=style_video]", this.controls.form).fancybox({
             'type'				: 'iframe',
 
@@ -34,6 +26,28 @@
             'height'			: '75%',
             'autoScale'     	: true
         });
+        this.controls.items.on("click", $.proxy(this.initStyleSelected, this));
 
+        if (this.controls.inputs.filter(":checked").length) {
+            var style_id = this.controls.inputs.filter(":checked").attr("id").replace("edit-term-ids-", "");
+            this.controls.items.filter("[style_id=" + style_id + "]").click();
+        }
+    }
+    Drupal.initStyleSelected = function (e) {
+        var item = $(e.currentTarget),
+            theme_id = item.attr("style_id"),
+            radio = this.controls.inputs.filter("#edit-term-ids-" + theme_id);
+
+        if (radio.length) {
+            radio.trigger("click");
+
+            this.controls.items.removeClass("selected");
+            item.addClass("selected");
+            this.enableSubmitButton();
+        }
+    }
+
+    Drupal.enableSubmitButton = function () {
+        $("div.form-button-wrap").addClass("active");
     }
 })(jQuery)

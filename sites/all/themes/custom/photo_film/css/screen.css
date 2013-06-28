@@ -254,11 +254,14 @@ hr.separator {
 .photo-film-form .form-button-wrap:hover {
     border-color: #949494;
 }
-.photo-film-form .form-button-wrap:hover .form-submit {
+.photo-film-form .form-button-wrap:hover .form-submit,
+.photo-film-form .form-button-wrap.active .form-submit {
     background-color: #116e94;
 }
 .photo-film-form .form-button-wrap.active .form-submit {
     background-image: url(../images/accepted-icon.png);
+}
+.photo-film-form .form-button-wrap.active:hover .form-submit {
     background-color: #116486;
 }
 
@@ -333,8 +336,21 @@ hr.separator {
     font-size: 13px;
 }
 .photo-film-form .images-list .style-toolbar .checkbox {
+    visibility: hidden;
     float: right;
-    line-height: 12px;
+    width: 22px;
+    height: 22px;
+    margin: -2px 0;
+    background: url(../images/checked-small-icon.png) no-repeat 0 0;
+    cursor: pointer;
+}
+.photo-film-form .images-list .style-toolbar:hover,
+.photo-film-form .images-list .style-toolbar.selected {
+    color: #ffffff;
+    background-color: rgba(13, 109, 149, 0.75);
+}
+.photo-film-form .images-list .style-toolbar.selected .checkbox {
+    visibility: visible;
 }
 .photo-film-form .images-list .style-example {
     visibility: hidden;
