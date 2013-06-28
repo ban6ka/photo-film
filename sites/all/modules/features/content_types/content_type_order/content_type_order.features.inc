@@ -20,7 +20,7 @@ function content_type_order_ctools_plugin_api() {
 function content_type_order_node_info() {
   $items = array(
     'order' => array(
-      'name' => t('Order'),
+      'name' => t('Заказать'),
       'base' => 'node_content',
       'description' => t('Storage for all created orders'),
       'has_title' => '1',
