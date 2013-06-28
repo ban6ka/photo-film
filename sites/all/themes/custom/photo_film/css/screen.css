@@ -67,6 +67,27 @@ a {
     text-decoration: none;
 }
 
+input,
+select {
+    padding: 8px;
+    background: #ffffff;
+
+    font-size: 14px;
+    color: #1a1a1a;
+    border: 1px solid #cacaca;
+    outline: none;
+}
+input:disabled,
+select:disabled {
+    color: #696969;
+    background: #f0f0f0;
+}
+
+::-webkit-input-placeholder { color: #ffffff; }
+::-moz-placeholder { color: #ffffff; }
+:-ms-input-placeholder { color: #ffffff; }
+input:-moz-placeholder { color: #ffffff; }
+
 hr.separator {
     width: 100%;
     height: 0px;
@@ -239,7 +260,7 @@ hr.separator {
     width: 222px;
     padding: 14px 0 14px 30px;
     margin: 14px 0 2px 0;
-    background: url(../images/denied-icon.png) no-repeat 180px center #5696b1;
+    background: url(../images/denied-icon.png) no-repeat 178px center #5696b1;
     border: none;
     border-radius: 10px;
     outline: none;
@@ -514,6 +535,7 @@ hr.separator {
 }
 .refuse-music-wrap > input {
     float: left;
+    padding: 0;
     margin-right: 6px;
 }
 .refuse-music-wrap > label {
@@ -662,8 +684,8 @@ hr.separator {
 }
 .order-form .form-item label {
     float: left;
-    width: 76px;
-    margin: 15px 0;
+    width: 78px;
+    margin: 12px 0;
 
     font-family: 'PT Sans', sans-serif;
     font-size: 13px;
@@ -673,23 +695,35 @@ hr.separator {
 .order-form .form-item .form-required {
     color: #fb4f4f;
 }
-.order-form input,
-.order-form select {
+.order-form input {
     width: 282px;
-    padding: 8px;
-    background: #ffffff;
-
-    font-size: 14px;
-    color: #1a1a1a;
-    border: 1px solid #cacaca;
 }
 .order-form select {
     width: 300px;
 }
-.order-form input:disabled {
-    color: #696969;
-    background: #f0f0f0;
+html.js .order-form input.form-autocomplete {
+    background: none;
 }
+html.js .order-form input.form-autocomplete.throbbing {
+    background: url(../images/ajax-loader-small.gif) no-repeat 278px center;
+}
+.order-form #autocomplete {
+    margin: -1px 0 0 1px;
+    border-color: #cccccc;
+    line-height: 20px;
+}
+.order-form #autocomplete ul li {
+    padding: 5px 10px;
+    background-color: #ffffff;
+}
+.order-form #autocomplete ul li:nth-child(odd) {
+    background-color: #f0f0f0;
+}
+.order-form #autocomplete ul li.selected {
+    background-color: #247B9F;
+    color: #ffffff;
+}
+
 .order-form .form-delimeter {
     clear: both;
     width: 100%;

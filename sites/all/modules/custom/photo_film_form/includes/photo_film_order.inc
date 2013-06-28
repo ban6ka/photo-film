@@ -14,10 +14,19 @@ function photo_film_form_order($form, &$form_state) {
   // get the form previous step info
   $cache = photo_film_form_cache_get(1);
 
+  drupal_add_js(libraries_get_path('jquery_maskedinput') . '/jquery.maskedinput.min.js');
+
   $form['#attributes'] = array();
   $form['#attributes']['class'] = array();
   $form['#attributes']['class'][] = 'photo-film-form';
   $form['#attributes']['class'][] = 'order-form';
+
+  $form['#attached'] = array(
+    'js' => array(
+      'type' => 'file',
+      'data' => drupal_get_path('module', 'photo_film_form') . '/js/photo_film_order_step.js',
+    ),
+  );
 
   $form['title'] = array(
     '#type' => 'markup',
@@ -68,7 +77,8 @@ function photo_film_form_order($form, &$form_state) {
   $form['name'] = array(
     '#type' => 'textfield',
     '#title' => t('Name') . ':',
-    '#weight' => -18
+    '#required' => TRUE,
+    '#weight' => -14
   );
 
   $form['country'] = array(
@@ -77,7 +87,8 @@ function photo_film_form_order($form, &$form_state) {
     '#rules' => array(
       'alpha',
     ),
-    '#weight' => -16
+    '#required' => TRUE,
+    '#weight' => -18
   );
 
   $form['city'] = array(
@@ -86,7 +97,9 @@ function photo_film_form_order($form, &$form_state) {
     '#rules' => array(
       'alpha',
     ),
-    '#weight' => -14
+    '#required' => TRUE,
+    '#autocomplete_path' => 'taxonomy/autocomplete/field_city',
+    '#weight' => -16
   );
 
   $form['email'] = array(
