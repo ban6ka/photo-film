@@ -34,7 +34,7 @@
     <h2><?php print t("I want to upload my music") ?></h2>
     <div class="user-file-upload">
       <div class="file-uploader-holder">
-        <span><?php print t("Or drag music file here") ?></span>
+        <span><?php print t("Or click here to upload music file") ?></span>
       </div>
       <div class="user-track-wrap" style="display: none;">
         <h5><?php print t("Uploaded") ?></h5>
