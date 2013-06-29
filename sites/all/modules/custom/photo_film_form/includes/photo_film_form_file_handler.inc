@@ -64,8 +64,10 @@ function photo_film_form_save_file_wrapper() {
   else {
     $results['ErrorMessage'] = t('We can\'t upload that, please, contact site administrator');
   }
+  
   // output json for js
-  drupal_json_output($results);
+  //drupal_json_output($results);
+  echo drupal_json_encode($results);
   exit;
 }
 

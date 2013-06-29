@@ -15,6 +15,7 @@
     }
     Drupal.controls = {
         uploader: null,
+        uploader_wrap: null,
         drop_zone: null,
         file_holder: null,
         file_input: null,
@@ -29,6 +30,7 @@
     }
     Drupal.initMusicStep = function () {
         this.controls.uploader =  $("#track-upload");
+        this.controls.uploader_wrap = $("div.form-type-file");
         this.controls.drop_zone = $("div.file-uploader-holder");
         this.controls.file_holder = $("div.user-track-info");
         this.controls.file_input = $("input[name=file_fid]");
@@ -62,10 +64,14 @@
         .bind('fileuploaddone', $.proxy(this.onTrackUploaded, this))
         .bind('fileuploadfail', function (e, data) { console.log('Processing ' + data.files[0].name + ' fail.'); });
 
-        this.controls.drop_zone.on("click", function () {
-            if (!($(this).hasClass(Drupal.control_classes.locked) || $(this).hasClass(Drupal.control_classes.loading)))
-                Drupal.controls.uploader.click()
-        });
+        if (!jQuery.browser.msie) {
+            this.controls.uploader_wrap.addClass("hidden");
+            this.controls.drop_zone.on("click", function (e) {
+                e.preventDefault();
+                if (!($(this).hasClass(Drupal.control_classes.locked) || $(this).hasClass(Drupal.control_classes.loading)))
+                    Drupal.controls.uploader.click()
+            });
+        }
     }
 
     Drupal.lockTracksList = function (lock) {
@@ -81,8 +87,10 @@
     Drupal.lockTracksUploader = function (lock) {
         if (lock) {
             this.controls.drop_zone.addClass(this.control_classes.locked);
+            this.controls.uploader_wrap.hide();
         } else {
             this.controls.drop_zone.removeClass(this.control_classes.locked);
+            this.controls.uploader_wrap.show();
         }
         this.enableSubmitButton();
     }
@@ -123,7 +131,7 @@
     //   Result: array of IDs
     // }
     Drupal.onTrackUploaded = function (e, data) {
-        var response = jQuery.parseJSON(data.jqXHR.responseText);
+        var response = data._response.result;
         if (response.Success) {
             for (var i = 0; i < response.Result.length; i ++) {
                 var id = response.Result[i].fid,
@@ -138,6 +146,7 @@
         }
         this.controls.drop_zone.removeClass(this.control_classes.loading)
                                .hide();
+        this.controls.uploader_wrap.hide();
     }
 
     Drupal.renderTrackFile = function (id, file) {
@@ -170,6 +179,7 @@
 
                     this.controls.file_holder.parent().hide();
                     this.controls.drop_zone.show();
+                    this.controls.uploader_wrap.show();
 
                     this.lockTracksList(this.controls.refuse_input.is(":checked"));
                 } else {

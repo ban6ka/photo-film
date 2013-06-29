@@ -57,10 +57,14 @@
         .bind('fileuploaddone', $.proxy(this.onPhotoUploaded, this))
         .bind('fileuploadfail', function (e, data) { console.log('Processing ' + data.files[0].name + ' fail.'); });
 
-        this.controls.drop_zone.on("click", function () {
-            if (!($(this).hasClass(Drupal.control_classes.locked) || $(this).hasClass(Drupal.control_classes.loading)))
-                Drupal.controls.uploader.click()
-        });
+        if (!jQuery.browser.msie) {
+            $("div.form-type-file").addClass("hidden");
+            this.controls.drop_zone.on("click", function (e) {
+                e.preventDefault();
+                if (!($(this).hasClass(Drupal.control_classes.locked) || $(this).hasClass(Drupal.control_classes.loading)))
+                    Drupal.controls.uploader.click()
+            });
+        }
     }
 
     Drupal.beforePhotoUploaded = function (e, data) {
@@ -84,7 +88,7 @@
     //   Result: array of objects { fid, image_preview }
     // }
     Drupal.onPhotoUploaded = function (e, data) {
-        var response = jQuery.parseJSON(data.jqXHR.responseText);
+        var response = data._response.result;
         if (response.Success) {
             for (var i = 0; i < response.Result.length; i ++) {
                 var id = response.Result[i].fid,

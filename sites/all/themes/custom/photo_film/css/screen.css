@@ -12,6 +12,7 @@ table, caption, tbody, tfoot, thead, tr, th, td {
     font-size: 100%;
     font-family: inherit;
     vertical-align: baseline;
+    outline: none;
 }
 
 body {
@@ -234,9 +235,10 @@ hr.separator {
 
 
 /* Main Form */
-.photo-film-form .form-type-radio,
-.photo-film-form .form-type-file,
-.photo-film-form .form-item-files-file {
+.photo-film-form {
+    position: relative;
+}
+.photo-film-form .form-type-radio {
     display: none;
 }
 .photo-film-form .form-button-container {
@@ -251,15 +253,16 @@ hr.separator {
 
 }
 .photo-film-form .form-button-container .form-button-wrap {
+    clear: both;
     width: 222px;
-    margin: 4px auto 0 auto;
+    margin: 18px auto 0 auto;
     border-bottom: 4px solid #b3b3b3;
     border-radius: 0 0 10px 10px;
 }
 .photo-film-form .form-button-wrap .form-submit {
     width: 222px;
     padding: 14px 0 14px 30px;
-    margin: 14px 0 2px 0;
+    margin: 0 0 2px 0;
     background: url(../images/denied-icon.png) no-repeat 178px center #5696b1;
     border: none;
     border-radius: 10px;
@@ -461,13 +464,17 @@ hr.separator {
     background: url(../images/download-icon.png) no-repeat center 88px;
     border: 3px dashed rgb(203, 203, 203);
     border-radius: 8px;
-
+    text-align: center;
+    cursor: pointer;
+}
+.user-file-upload .file-uploader-holder span {
     font-family: 'PT Sans', sans-serif;
     font-size: 14px;
-    text-align: center;
     text-transform: uppercase;
     color: #b7b7b7;
-    cursor: pointer;
+
+    position: relative;
+    z-index: -1;
 }
 .user-file-upload .file-uploader-holder.locked {
     color: transparent;
@@ -479,7 +486,7 @@ hr.separator {
 }
 .user-file-upload .file-uploader-holder.loading {
     color: transparent;
-    background: url(../images/ajax-loader.gif) no-repeat center center rgba(0, 0, 0, 0.3);
+    background: url(../images/ajax-loader.gif) no-repeat center center rgba(0, 0, 0, 0.25) !important;
     opacity: 0.3;
 }
 
@@ -563,6 +570,31 @@ hr.separator {
 .scrollbar-handle-up,
 .scrollbar-handle-down {
     height: 0;
+}
+
+/* File Upload */
+.photo-film-form .form-type-file input {
+    width: 0;
+    height: 0;
+    visibility: hidden;
+}
+/* Labels for input[file] */
+.photo-film-form .form-type-file label {
+    position: absolute;
+    width: 380px;
+    height: 155px;
+    color: transparent;
+    z-index: 20;
+    cursor: pointer;
+}
+
+.photo-film-form .form-type-file label {
+    top: 142px;
+    left: 560px;
+}
+.photo-film-form .form-item-photo-files- label {
+    top: 104px;
+    left: 0;
 }
 
 /* 'Photos' Step */
@@ -702,7 +734,7 @@ hr.separator {
     width: 300px;
 }
 html.js .order-form input.form-autocomplete {
-    background: none;
+    background: #ffffff;
 }
 html.js .order-form input.form-autocomplete.throbbing {
     background: url(../images/ajax-loader-small.gif) no-repeat 278px center;

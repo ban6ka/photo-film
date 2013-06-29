@@ -29,10 +29,6 @@
   </ul>
 
   <div id="comment-dialog" class="hidden" title="<?php print t("Comment photo") ?>">
-    <form>
-      <fieldset>
-        <textarea name="comment" id="comment" class="text ui-widget-content"></textarea>
-      </fieldset>
-    </form>
+    <textarea name="comment" id="comment" class="text ui-widget-content"></textarea>
   </div>
 </div>
