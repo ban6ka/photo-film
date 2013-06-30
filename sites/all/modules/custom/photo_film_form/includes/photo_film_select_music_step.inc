@@ -15,6 +15,7 @@ function photo_film_form_select_music_step($form, &$form_state) {
   drupal_add_js(libraries_get_path('jquery_file_upload') . '/js/jquery.fileupload.js');
   drupal_add_js(libraries_get_path('jquery_scroll_master') . '/jquery.scroll.min.js');
   drupal_add_css(libraries_get_path('jquery_scroll_master') . '/css/scrollbar.css');
+
   $form['#attributes'] = array();
   $form['#attributes']['class'] = array();
   $form['#attributes']['class'][] = 'photo-film-form';
@@ -31,11 +32,22 @@ function photo_film_form_select_music_step($form, &$form_state) {
     '#markup' => '<div class="user-track-list"></div>',
   );
 
-  $preselected_list = db_select('node', 'n')
-    ->fields('n', array('nid'))
+  $cache = photo_film_form_cache_get(1);
+
+  $query = db_select('node', 'n');
+
+  // join style that user selected
+  if (!empty($cache->style['style'])) {
+    $query->join('field_data_field_style', 'style', 'style.entity_id = n.nid');
+    $query->condition('style.field_style_tid', $cache->style['style']);
+  }  
+
+  $query->fields('n', array('nid'))
     ->condition('n.status', 1)
-    ->condition('n.type', 'music')
-    ->execute();
+    ->condition('n.type', 'music');
+
+  $preselected_list = $query->execute();
+  
   $track_list = array();
 
   if ($preselected_list->rowCount() > 0) {
