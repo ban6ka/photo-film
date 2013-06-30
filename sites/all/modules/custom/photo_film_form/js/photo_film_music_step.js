@@ -49,6 +49,7 @@
     Drupal.initTrackUploader = function () {
         this.controls.uploader.fileupload({
             url: '/admin/photo-film/file/save/file',
+            type: 'POST',
             dataType: 'json',
             autoUpload: true,
             singleFileUploads: true,
@@ -57,7 +58,8 @@
             maxFileSize: this.form_settings.max_weight,
             disableAudioPreview: true,
 
-            paramName: 'track-file',
+            fileInput: this.controls.uploader,
+            replaceFileInput: jQuery.browser.msie ? true : false,
             dropZone: this.controls.drop_zone
         })
         .bind('fileuploadsend', $.proxy(this.beforeTrackUploaded, this))
@@ -87,10 +89,11 @@
     Drupal.lockTracksUploader = function (lock) {
         if (lock) {
             this.controls.drop_zone.addClass(this.control_classes.locked);
-            this.controls.uploader_wrap.hide();
         } else {
             this.controls.drop_zone.removeClass(this.control_classes.locked);
-            this.controls.uploader_wrap.show();
+        }
+        if (jQuery.browser.msie) {
+            this.controls.uploader_wrap.css("display", lock ? "none" : "block");
         }
         this.enableSubmitButton();
     }
@@ -144,9 +147,12 @@
         } else {
             this.renderErrorMessage(response.ErrorMessage);
         }
+
         this.controls.drop_zone.removeClass(this.control_classes.loading)
                                .hide();
-        this.controls.uploader_wrap.hide();
+        if (jQuery.browser.msie) {
+            this.controls.uploader_wrap.hide();
+        }
     }
 
     Drupal.renderTrackFile = function (id, file) {
@@ -173,13 +179,17 @@
             success: function (response) {
                 this.controls.file_holder.parent().removeClass(Drupal.control_classes.loading);
                 if (response.Success) {
+                    this.controls.uploader[0].value = "";
+
                     this.controls.file_input.val("");
                     this.controls.file_holder.attr("fid", null);
                     this.form_settings.uploaded_files -= 1;
 
                     this.controls.file_holder.parent().hide();
                     this.controls.drop_zone.show();
-                    this.controls.uploader_wrap.show();
+                    if (jQuery.browser.msie) {
+                        this.controls.uploader_wrap.show();
+                    }
 
                     this.lockTracksList(this.controls.refuse_input.is(":checked"));
                 } else {
