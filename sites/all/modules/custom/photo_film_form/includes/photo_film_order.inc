@@ -28,6 +28,17 @@ function photo_film_form_order($form, &$form_state) {
     ),
   );
 
+  $info = variable_get('photo_film_form_order_info', '');
+  $form['info'] = array(
+    '#type' => 'markup',
+    '#markup' => '<div class="info-block-wrap">' .
+                    '<a class="close-info" href="#">' . t("close") . '&nbsp;&nbsp;&nbsp;x</a>' .
+                    '<div class="info-message">' . (!empty($info['value']) ? $info['value'] : '') . '</div>' .
+                    '<a class="open-info" href="#">' . t("Info") . '</a>' .
+                 '</div>',
+    '#weight' => -21,
+  );
+
   $form['title'] = array(
     '#type' => 'markup',
     '#markup' => '<h4>' . variable_get('photo_film_form_order_title', '') . '</h4>',
@@ -69,7 +80,7 @@ function photo_film_form_order($form, &$form_state) {
   // provide value that user picked up at third step
   if (!empty($cache->music['fid']) && $music = $cache->music['fid']) {
     $file = file_load($music);
-    $path_parts = pathinfo($file->uri);
+    $path_parts = isset($file->uri) ? pathinfo($file->uri) : '';
 
     $form['music']['#value'] = (!empty($path_parts['basename']) ? $path_parts['basename'] : '');
   }

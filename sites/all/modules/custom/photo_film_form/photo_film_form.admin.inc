@@ -166,6 +166,16 @@ function photo_film_form_settings_form($form_state) {
     '#required' => FALSE,
   );
 
+  $info = variable_get('photo_film_form_order_info', '');
+  $form['fifth_step']['photo_film_form_order_info'] = array(
+    '#title' => t('Enter info message for user'),
+    '#description' => t('Information about order form validation'),
+    '#type' => 'text_format',
+    '#format' => 'full_html',
+    '#default_value' => (!empty($info['value']) ? $info['value'] : ''),
+    '#required' => FALSE,
+  );
+
   $form['finish'] = array(
     '#type' => 'fieldset',
     '#title' => t('Finish message'),
