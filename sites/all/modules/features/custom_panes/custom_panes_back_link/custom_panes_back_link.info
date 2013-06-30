@@ -1,0 +1,11 @@
+name = Back To Home Link
+description = Back To Home Link
+core = 7.x
+package = Custom content panes
+version = 7.x-1.0
+project = custom_panes_back_link
+features[ctools][] = ctools_custom_content:ctools_content:1
+features[ctools_custom_content][] = back_link
+features[features_api][] = api:2
+features_exclude[dependencies][ctools] = ctools
+features_exclude[dependencies][ctools_custom_content] = ctools_custom_content

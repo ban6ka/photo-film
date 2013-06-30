@@ -1,0 +1,7 @@
+<?php
+/**
+ * @file
+ * Code for the Back To Home Link feature.
+ */
+
+include_once 'custom_panes_back_link.features.inc';
