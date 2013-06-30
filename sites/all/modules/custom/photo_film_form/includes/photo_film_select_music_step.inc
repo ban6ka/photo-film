@@ -100,11 +100,13 @@ function photo_film_form_select_music_step($form, &$form_state) {
  * Submit handler for photo_film_form_choose_theme_step form
  */
 function photo_film_form_select_music_step_submit(&$form, &$form_state) {
-  if (!empty($form_state['values']['file_fid']) && !empty($form_state['object'])) {
+  if (isset($form_state['input']['refuse_music'])) {
     $form_state['object']->current_step = $form_state['next'];
-    $form_state['object']->music = array(
-      'fid' => $form_state['values']['file_fid'],
-    );
+    $form_state['object']->music = array('fid' => 0);
+  }
+  elseif (!empty($form_state['values']['file_fid']) && !empty($form_state['object'])) {
+    $form_state['object']->current_step = $form_state['next'];
+    $form_state['object']->music = array('fid' => $form_state['values']['file_fid']);
   }
 }
 
@@ -112,7 +114,9 @@ function photo_film_form_select_music_step_submit(&$form, &$form_state) {
  * Validate function for a photo_film_form_choose_theme_step form
  */
 function photo_film_form_select_music_step_validate(&$form, &$form_state) {
-
+  if (empty($form_state['values']['file_fid']) && !isset($form_state['input']['refuse_music'])) {
+    form_set_error('refuse_music', t('You should choose music or at least refuse of choosing'));
+  }
 }
 
 /**

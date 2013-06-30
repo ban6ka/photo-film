@@ -82,5 +82,7 @@ function photo_film_select_picture_step_submit(&$form, &$form_state) {
  * Validate function for a photo_film_form_choose_theme_step form
  */
 function photo_film_select_picture_step_validate(&$form, &$form_state) {
-
+  if (empty($form_state['input']['photos_id'])) {
+    form_set_error('op', t('You should upload photos for the video'));
+  }
 }
