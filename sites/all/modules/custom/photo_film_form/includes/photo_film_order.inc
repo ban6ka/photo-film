@@ -95,9 +95,11 @@ function photo_film_form_order($form, &$form_state) {
   $form['country'] = array(
     '#type' => 'textfield',
     '#title' => t('Country') . ':',
+    '#value' => t('Ukraine'),
     '#rules' => array(
       'alpha',
     ),
+    '#disabled' => TRUE,
     '#required' => TRUE,
     '#weight' => -18
   );
