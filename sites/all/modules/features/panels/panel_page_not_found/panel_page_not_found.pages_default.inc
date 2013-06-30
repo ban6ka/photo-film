@@ -1,21 +1,21 @@
 <?php
 /**
  * @file
- * panel_access_denied.pages_default.inc
+ * panel_page_not_found.pages_default.inc
  */
 
 /**
  * Implements hook_default_page_manager_pages().
  */
-function panel_access_denied_default_page_manager_pages() {
+function panel_page_not_found_default_page_manager_pages() {
   $page = new stdClass();
   $page->disabled = FALSE; /* Edit this to true to make a default page disabled initially */
   $page->api_version = 1;
-  $page->name = 'access_denied';
+  $page->name = 'page_not_found';
   $page->task = 'page';
-  $page->admin_title = 'Access denied';
+  $page->admin_title = 'Page not found';
   $page->admin_description = '';
-  $page->path = 'access-denied';
+  $page->path = 'page-not-found';
   $page->access = array();
   $page->menu = array();
   $page->arguments = array();
@@ -26,9 +26,9 @@ function panel_access_denied_default_page_manager_pages() {
   $handler = new stdClass();
   $handler->disabled = FALSE; /* Edit this to true to make a default handler disabled initially */
   $handler->api_version = 1;
-  $handler->name = 'page_access_denied_panel_context';
+  $handler->name = 'page_page_not_found_panel_context';
   $handler->task = 'page';
-  $handler->subtask = 'access_denied';
+  $handler->subtask = 'page_not_found';
   $handler->handler = 'panel_context';
   $handler->weight = 0;
   $handler->conf = array(
@@ -101,7 +101,7 @@ function panel_access_denied_default_page_manager_pages() {
   $display->title_pane = '0';
   $handler->conf['display'] = $display;
   $page->default_handlers[$handler->name] = $handler;
-  $pages['access_denied'] = $page;
+  $pages['page_not_found'] = $page;
 
   return $pages;
 

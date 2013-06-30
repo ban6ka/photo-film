@@ -1,0 +1,7 @@
+<?php
+/**
+ * @file
+ * Code for the Page not found panel feature.
+ */
+
+include_once 'panel_page_not_found.features.inc';

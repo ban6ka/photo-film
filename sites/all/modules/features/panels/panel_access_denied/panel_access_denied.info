@@ -2,6 +2,7 @@ name = Access denied panel
 description = Access denied panel
 core = 7.x
 package = Panels
+php = 5.2.4
 version = 7.x-1.0
 project = panel_access_denied
 dependencies[] = ctools
