@@ -1,0 +1,11 @@
+name = Access denied panel
+description = Access denied panel
+core = 7.x
+package = Panels
+version = 7.x-1.0
+project = panel_access_denied
+dependencies[] = ctools
+dependencies[] = page_manager
+features[ctools][] = page_manager:pages_default:1
+features[features_api][] = api:2
+features[page_manager_pages][] = access_denied
