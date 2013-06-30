@@ -372,18 +372,21 @@ function photo_film_form_order_get_amount_element($amount) {
  * @param @add_text - text before button
  */
 function photo_film_form_render_submit_button($button, $add_text = 'Did you select?') {
-    $button['#prefix'] = '<hr class="separator" />' .
-                     '<div class="form-button-container">' .
-                       '<h1>' . t($add_text) . '</h1>' .
-                       '<div class="form-button-wrap">';
-    $button['#suffix'] = '</div></div>';
-    $button['#tree'] = TRUE;
+  $button['#prefix'] = '<hr class="separator" />' .
+    '<div class="form-button-container">' .
+    '<h1>' . t($add_text) . '</h1>' .
+    '<div class="form-button-wrap">';
+  $button['#suffix'] = '</div></div>';
+  $button['#tree'] = TRUE;
 
-    return $button;
+  return $button;
 }
 
+/**
+ * Return the next node id
+ */
 function photo_film_form_get_next_order_id() {
-  $query = db_query("SELECT MAX(nid) as nid from node where `type` = 'order'");
+  $query = db_query("SELECT MAX(nid) as nid from node where 1");
   $result = $query->fetchAssoc();
 
   return (!empty($result['nid']) ? $result['nid'] + 1 : 1);
