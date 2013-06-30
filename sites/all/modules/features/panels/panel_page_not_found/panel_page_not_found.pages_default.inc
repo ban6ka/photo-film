@@ -43,12 +43,14 @@ function panel_page_not_found_default_page_manager_pages() {
     'relationships' => array(),
   );
   $display = new panels_display();
-  $display->layout = 'flexible';
+  $display->layout = 'main_layout';
   $display->layout_settings = array();
   $display->panel_settings = array(
     'style_settings' => array(
       'default' => NULL,
       'center' => NULL,
+      'region-one' => NULL,
+      'region-two' => NULL,
     ),
   );
   $display->cache = array();
@@ -57,7 +59,7 @@ function panel_page_not_found_default_page_manager_pages() {
   $display->panels = array();
     $pane = new stdClass();
     $pane->pid = 'new-1';
-    $pane->panel = 'center';
+    $pane->panel = 'region-one';
     $pane->type = 'panels_mini';
     $pane->subtype = 'header_mini_panel';
     $pane->shown = TRUE;
@@ -75,10 +77,34 @@ function panel_page_not_found_default_page_manager_pages() {
     $pane->position = 0;
     $pane->locks = array();
     $display->content['new-1'] = $pane;
-    $display->panels['center'][0] = 'new-1';
+    $display->panels['region-one'][0] = 'new-1';
     $pane = new stdClass();
     $pane->pid = 'new-2';
-    $pane->panel = 'center';
+    $pane->panel = 'region-two';
+    $pane->type = 'custom';
+    $pane->subtype = 'custom';
+    $pane->shown = TRUE;
+    $pane->access = array();
+    $pane->configuration = array(
+      'admin_title' => 'Page not found message',
+      'title' => '',
+      'body' => '<h2 style="text-align: center;">&nbsp;</h2><h1 style="text-align: center; text-transform: none;">Запрашиваемая станица не найдена</h1><h5 style="text-align: center;">&nbsp;</h5><h5 style="text-align: center;"><u><a href="/">Вернуться на главную</a></u></h5><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p>',
+      'format' => 'full_html',
+      'substitute' => TRUE,
+    );
+    $pane->cache = array();
+    $pane->style = array(
+      'settings' => NULL,
+    );
+    $pane->css = array();
+    $pane->extras = array();
+    $pane->position = 0;
+    $pane->locks = array();
+    $display->content['new-2'] = $pane;
+    $display->panels['region-two'][0] = 'new-2';
+    $pane = new stdClass();
+    $pane->pid = 'new-3';
+    $pane->panel = 'region-two';
     $pane->type = 'panels_mini';
     $pane->subtype = 'footer_mini_panel';
     $pane->shown = TRUE;
@@ -95,8 +121,8 @@ function panel_page_not_found_default_page_manager_pages() {
     $pane->extras = array();
     $pane->position = 1;
     $pane->locks = array();
-    $display->content['new-2'] = $pane;
-    $display->panels['center'][1] = 'new-2';
+    $display->content['new-3'] = $pane;
+    $display->panels['region-two'][1] = 'new-3';
   $display->hide_title = PANELS_TITLE_FIXED;
   $display->title_pane = '0';
   $handler->conf['display'] = $display;
