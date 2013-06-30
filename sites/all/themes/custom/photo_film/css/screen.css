@@ -68,8 +68,7 @@ a {
     text-decoration: none;
 }
 
-input,
-select {
+input, textarea, select {
     padding: 8px;
     background: #ffffff;
 
@@ -78,8 +77,7 @@ select {
     border: 1px solid #cacaca;
     outline: none;
 }
-input:disabled,
-select:disabled {
+input:disabled, textarea:disabled, select:disabled {
     color: #696969;
     background: #f0f0f0;
 }
@@ -100,6 +98,9 @@ hr.separator {
     border-width: 1px 0px;
     border-style: solid;
     border-color: #e3e3e3 transparent #ffffff transparent;
+}
+.form-required {
+    color: #fb4f4f;
 }
 .hidden {
     display: none;
@@ -267,14 +268,16 @@ hr.separator {
     font-weight: 700;
 
 }
-.photo-film-form .form-button-container .form-button-wrap {
+.photo-film-form .form-button-container .form-button-wrap,
+.contact-us-form .form-actions {
     clear: both;
     width: 222px;
     margin: 18px auto 0 auto;
     border-bottom: 4px solid #b3b3b3;
     border-radius: 0 0 10px 10px;
 }
-.photo-film-form .form-button-wrap .form-submit {
+.photo-film-form .form-button-wrap .form-submit,
+.contact-us-form .form-actions .form-submit {
     width: 222px;
     padding: 14px 0 14px 30px;
     margin: 0 0 2px 0;
@@ -290,17 +293,20 @@ hr.separator {
     cursor: pointer;
 }
 .photo-film-form .form-button-wrap.active,
-.photo-film-form .form-button-wrap:hover {
+.photo-film-form .form-button-wrap:hover,
+.contact-us-form .form-actions {
     border-color: #949494;
 }
 .photo-film-form .form-button-wrap:hover .form-submit,
-.photo-film-form .form-button-wrap.active .form-submit {
+.photo-film-form .form-button-wrap.active .form-submit,
+.contact-us-form .form-actions .form-submit {
     background-color: #116e94;
 }
 .photo-film-form .form-button-wrap.active .form-submit {
     background-image: url(../images/accepted-icon.png);
 }
-.photo-film-form .form-button-wrap.active:hover .form-submit {
+.photo-film-form .form-button-wrap.active:hover .form-submit,
+.contact-us-form .form-actions:hover .form-submit {
     background-color: #116486;
 }
 
@@ -739,9 +745,6 @@ hr.separator {
     font-weight: 700;
     color: #3b3a3a;
 }
-.order-form .form-item .form-required {
-    color: #fb4f4f;
-}
 .order-form input {
     width: 282px;
 }
@@ -838,4 +841,76 @@ html.js .order-form input.form-autocomplete.throbbing {
 }
 .info-block-wrap .info-message p {
     margin-bottom: 12px;
+}
+
+/* Contact Us */
+.contact-us-form {
+    margin: 38px 0 60px 0;
+}
+.contact-us-form .pane-title {
+    font-size: 18px;
+    text-transform: none;
+    margin-bottom: 35px;
+}
+.contact-us-form h5 {
+    margin-bottom: 20px;
+}
+.contact-us-form .panel-col-first {
+    width: 392px;
+}
+.contact-us-form .panel-col-last {
+    width: 468px;
+}
+.contact-us-form .panel-col-last .form-item {
+    clear: both;
+}
+.contact-us-form .panel-col-last label {
+    float: left;
+    width: 95px;
+
+    font-family: 'PT Sans', sans-serif;
+    font-size: 14px;
+    text-align: right;
+    font-weight: 700;
+    padding: 12px 0 16px 0;
+}
+.contact-us-form .panel-col-last input[type=text],
+.contact-us-form .panel-col-last input[type=email]{
+    float: right;
+    width: 338px;
+}
+.contact-us-form .panel-col-last textarea {
+    float: right;
+    width: 356px;
+    height: 110px;
+}
+.contact-us-form .panel-col-last .captcha {
+    position: relative;
+    padding: 10px 0 12px 0;
+}
+.contact-us-form .panel-col-last .grippie,
+.contact-us-form .panel-col-last .captcha legend,
+.contact-us-form .panel-col-last .captcha .fieldset-description,
+.contact-us-form .panel-col-last .captcha .description {
+    display: none;
+}
+.contact-us-form .panel-col-last .captcha input {
+    width: 175px;
+}
+.contact-us-form .panel-col-last .captcha img {
+    position: absolute;
+    top: 11px;
+    left: 106px;
+    padding: 0 26px;
+    background: #ffffff;
+}
+.contact-us-form .form-actions {
+    margin: 0 0 0 108px;
+    width: 122px;
+}
+.contact-us-form .form-actions .form-submit {
+    width: 100%;
+    padding: 10px 0px 10px 25px;
+    font-size: 14px;
+    text-transform: none;
 }
