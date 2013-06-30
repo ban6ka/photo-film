@@ -914,3 +914,28 @@ html.js .order-form input.form-autocomplete.throbbing {
     font-size: 14px;
     text-transform: none;
 }
+
+/* Music & Order pages */
+.single-node-content .pane-node-title {
+    padding-bottom: 20px;
+}
+.single-node-content .pane-entity-field {
+    float: left;
+    width: 50%;
+}
+.single-node-content .pane-entity-field .pane-title {
+    float: left;
+    width: 133px;
+    margin: 5px 0px;
+    padding: 0 18px 0 0;
+    text-align: right;
+    text-transform: none;
+}
+.single-node-content .pane-entity-field .pane-content {
+    float: left;
+    margin: 5px 0;
+    line-height: 24px;
+}
+.single-node-content .pane-entity-field .pane-content ul {
+    list-style: none;
+}
