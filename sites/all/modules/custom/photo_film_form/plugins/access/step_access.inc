@@ -22,6 +22,7 @@ function photo_film_form_step_access_ctools_access() {
  */
 function photo_film_form_step_access_ctools_access_check($conf, $context, $plugin) {
   global $user;
+
   // if he is an admin then let him
   if ($user->uid == 1) {
     return TRUE;
@@ -39,7 +40,14 @@ function photo_film_form_step_access_ctools_access_check($conf, $context, $plugi
   if (empty($cache->current_step)) {
     return FALSE;
   }
+
   $form_info = photo_film_form_ctools_multi_step_form_info();
+  // if current step doesn't exists
+  if (!in_array($form_info['order'], $step)) {
+    die();
+    return FALSE;
+  }
+
   $steps_order = array_keys($form_info['order']);
 
   return array_search($cache->current_step, $steps_order) >= array_search($step, $steps_order);

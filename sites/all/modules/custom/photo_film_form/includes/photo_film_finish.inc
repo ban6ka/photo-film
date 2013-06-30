@@ -8,6 +8,7 @@ function photo_film_form_finish($form, $form_state) {
   $form['#attributes'] = array();
   $form['#attributes']['class'] = array();
   $form['#attributes']['class'][] = 'photo-film-form';
+  $order_id = photo_film_form_get_next_order_id();
 
   $success_message = variable_get('photo_film_form_success_message', '');
 

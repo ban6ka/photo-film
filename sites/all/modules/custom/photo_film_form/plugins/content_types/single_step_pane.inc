@@ -52,10 +52,8 @@ function photo_film_form_single_step_pane_render($subtype, $conf, $args, $contex
   }
 
   if (empty($output) || !empty($form_state['complete'])) {
-
-    $results = photo_film_form_finished($object);
-
-    $output = render($results) . "\n\r" . l(t('Back'), 'example-link');
+    //success callback should be here
+    $output = '';
   }
 
   $steps = array();
