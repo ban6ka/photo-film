@@ -1,0 +1,7 @@
+<?php
+/**
+ * @file
+ * Code for the Order panel feature.
+ */
+
+include_once 'panel_order.features.inc';

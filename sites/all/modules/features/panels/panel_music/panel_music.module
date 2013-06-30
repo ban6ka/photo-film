@@ -1,0 +1,7 @@
+<?php
+/**
+ * @file
+ * Code for the Music panel feature.
+ */
+
+include_once 'panel_music.features.inc';
