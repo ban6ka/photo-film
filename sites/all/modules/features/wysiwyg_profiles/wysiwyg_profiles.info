@@ -1,0 +1,16 @@
+name = Wysiwyg profiles
+core = 7.x
+package = Other
+version = 7.x-1.0
+project = wysiwyg_profiles
+dependencies[] = ctools
+dependencies[] = features
+dependencies[] = filter
+dependencies[] = media
+dependencies[] = strongarm
+dependencies[] = wysiwyg
+features[features_api][] = api:2
+features[filter][] = filtered_html
+features[filter][] = full_html
+features[wysiwyg][] = filtered_html
+features[wysiwyg][] = full_html
