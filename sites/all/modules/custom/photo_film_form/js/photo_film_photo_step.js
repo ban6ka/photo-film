@@ -42,6 +42,7 @@
 
         this.controls.uploader.fileupload({
             url: '/admin/photo-film/file/save/file',
+            type: 'POST',
             dataType: 'json',
             autoUpload: true,
             singleFileUploads: true,
@@ -50,7 +51,8 @@
             maxFileSize: this.form_settings.max_weight,
             disableImagePreview: true,
 
-            paramName: 'photo-files[]',
+            fileInput: this.controls.uploader,
+            replaceFileInput: jQuery.browser.msie ? true : false,
             dropZone: this.controls.drop_zone
         })
         .bind('fileuploadsend', $.proxy(this.beforePhotoUploaded, this))
@@ -100,6 +102,7 @@
         } else {
             this.renderErrorMessage(response.ErrorMessage);
         }
+        this.controls.uploader.value = "";
         this.controls.drop_zone.removeClass(this.control_classes.loading);
     }
 

@@ -44,7 +44,6 @@ function photo_film_form_step_access_ctools_access_check($conf, $context, $plugi
   $form_info = photo_film_form_ctools_multi_step_form_info();
   // if current step doesn't exists
   if (!in_array($form_info['order'], $step)) {
-    die();
     return FALSE;
   }
 
