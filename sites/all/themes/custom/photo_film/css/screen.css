@@ -465,13 +465,13 @@ hr.separator {
     border: 3px dashed rgb(203, 203, 203);
     border-radius: 8px;
     text-align: center;
+    color: #b7b7b7;
     cursor: pointer;
 }
 .user-file-upload .file-uploader-holder span {
     font-family: 'PT Sans', sans-serif;
     font-size: 14px;
     text-transform: uppercase;
-    color: #b7b7b7;
 
     position: relative;
     z-index: -1;
@@ -737,7 +737,7 @@ html.js .order-form input.form-autocomplete {
     background: #ffffff;
 }
 html.js .order-form input.form-autocomplete.throbbing {
-    background: url(../images/ajax-loader-small.gif) no-repeat 278px center;
+    background: url(../images/ajax-loader-small.gif) no-repeat 278px center #ffffff;
 }
 .order-form #autocomplete {
     margin: -1px 0 0 1px;

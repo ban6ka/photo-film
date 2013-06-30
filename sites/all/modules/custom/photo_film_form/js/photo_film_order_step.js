@@ -15,7 +15,7 @@
         this.controls.inputs = $("input.required, select.required", this.controls.form);
         this.controls.info_block = $("div.info-block-wrap", this.controls.form);
 
-        $("#edit-mobile").mask("(999) 999-99-99");
+        $("#edit-mobile").mask("+38(999) 999-99-99");
         this.controls.inputs.on("keyup change", $.proxy(this.enableSubmitButton, this));
 
         $("a.open-info", this.controls.info_block).on("click", $.proxy(this.openInfoBlock, this));

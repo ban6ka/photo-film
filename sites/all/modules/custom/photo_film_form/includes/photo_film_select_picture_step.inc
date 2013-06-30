@@ -28,13 +28,9 @@ function photo_film_select_picture_step($form, &$form_state) {
   $form['#attributes']['class'][] = 'photo-film-form';
 
   $form['#attached'] = array(
-    'css' => array(
-      'type' => 'file',
-      'data' => drupal_get_path('module', 'photo_film_form') . '/css/photo_film_form.css',
-    ),
     'js' => array(
       'type' => 'file',
-      'data' => drupal_get_path('module', 'photo_film_form') . '/js/photo_film_select_picture_step.js',
+      'data' => drupal_get_path('module', 'photo_film_form') . '/js/photo_film_photo_step.js',
     ),
   );
   $warning = variable_get('photo_film_select_picture_step_warning', '');

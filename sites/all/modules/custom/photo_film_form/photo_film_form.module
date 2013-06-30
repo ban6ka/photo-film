@@ -7,33 +7,33 @@ function photo_film_form_theme($existing, $type, $theme, $path) {
     'photo_film_form_select_theme_wrapper' => array(
       'render element' => 'form',
       'path' => drupal_get_path('module', 'photo_film_form'),
-      'file' => '/includes/photo_film_choose_theme_step.inc'
+      'file' => '/includes/photo_film_select_theme_step.inc'
     ),
     'photo_film_form_select_theme_content' => array(
       'variables' => array(
         'title' => NULL,
         'items' => array(),
       ),
-      'template' => '/templates/photo-film-form-select-theme-content',
+      'template' => '/templates/photo-film-form-theme-step-content',
       'path' => drupal_get_path('module', 'photo_film_form'),
     ),
     'photo_film_form_select_style_wrapper' => array(
       'render element' => 'form',
       'path' => drupal_get_path('module', 'photo_film_form'),
-      'file' => '/includes/photo_film_style_step.inc'
+      'file' => '/includes/photo_film_select_style_step.inc'
     ),
     'photo_film_form_select_style_content' => array(
       'variables' => array(
         'title' => NULL,
         'items' => array(),
       ),
-      'template' => '/templates/photo-film-form-select-style-content',
+      'template' => '/templates/photo-film-form-style-step-content',
       'path' => drupal_get_path('module', 'photo_film_form'),
     ),
     'photo_film_select_music_step_wrapper' => array(
       'render element' => 'form',
       'path' => drupal_get_path('module', 'photo_film_form'),
-      'file' => '/includes/photo_film_user_music_upload_step.inc'
+      'file' => '/includes/photo_film_select_music_step.inc'
     ),
     'photo_film_select_music_step_content' => array(
       'variables' => array(
@@ -265,33 +265,33 @@ function photo_film_form_ctools_multi_step_form_info() {
     'order' => array(
       'themes' => t('Select theme for your video'),
       'styles' => t('Select style for your video'),
-      'user_music_upload' => t('Select music for your video'),
-      'photo_film_select_picture_step' => t('Select photos for your video'),
-      'photo_film_form_order' => t('Order'),
-      'photo_film_form_finish' => t('Finish'),
+      'music' => t('Select music for your video'),
+      'photos' => t('Select photos for your video'),
+      'order' => t('Order'),
+      'finish' => t('Finish'),
     ),
     'forms' => array(
       'themes' => array(
-        'form id' => 'photo_film_form_choose_theme_step',
-        'include' => drupal_get_path('module', 'photo_film_form') . '/includes/photo_film_choose_theme_step.inc',
+        'form id' => 'photo_film_form_select_theme_step',
+        'include' => drupal_get_path('module', 'photo_film_form') . '/includes/photo_film_select_theme_step.inc',
       ),
       'styles' => array(
-        'form id' => 'photo_film_form_choose_style_step',
-        'include' => drupal_get_path('module', 'photo_film_form') . '/includes/photo_film_style_step.inc',
+        'form id' => 'photo_film_form_select_style_step',
+        'include' => drupal_get_path('module', 'photo_film_form') . '/includes/photo_film_select_style_step.inc',
       ),
-      'user_music_upload' => array(
-        'form id' => 'photo_film_form_user_music_upload_step',
-        'include' => drupal_get_path('module', 'photo_film_form') . '/includes/photo_film_user_music_upload_step.inc',
+      'music' => array(
+        'form id' => 'photo_film_form_select_music_step',
+        'include' => drupal_get_path('module', 'photo_film_form') . '/includes/photo_film_select_music_step.inc',
       ),
-      'photo_film_select_picture_step' => array(
+      'photos' => array(
         'form id' => 'photo_film_select_picture_step',
         'include' => drupal_get_path('module', 'photo_film_form') . '/includes/photo_film_select_picture_step.inc',
       ),
-      'photo_film_form_order' => array(
+      'order' => array(
         'form id' => 'photo_film_form_order',
         'include' => drupal_get_path('module', 'photo_film_form') . '/includes/photo_film_order.inc',
       ),
-      'photo_film_form_finish' => array(
+      'finish' => array(
         'form id' => 'photo_film_form_finish',
         'include' => drupal_get_path('module', 'photo_film_form') . '/includes/photo_film_finish.inc',
       ),
