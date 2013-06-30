@@ -95,9 +95,8 @@ function photo_film_form_order($form, &$form_state) {
   $form['country'] = array(
     '#type' => 'textfield',
     '#title' => t('Country') . ':',
-    '#rules' => array(
-      'alpha',
-    ),
+    '#value' => t('Ukraine'),
+    '#disabled' => TRUE,
     '#required' => TRUE,
     '#weight' => -18
   );
@@ -130,7 +129,7 @@ function photo_film_form_order($form, &$form_state) {
     '#weight' => -10
   );
 
-  $options = array();
+  $options = array('' => t('Select'));
   if ($themes_vocabulary_vid = variable_get('photo_film_form_video_formats_vid', FALSE)) {
     if ($terms = taxonomy_get_tree($themes_vocabulary_vid)) {
       foreach ($terms as $term) {
@@ -138,13 +137,13 @@ function photo_film_form_order($form, &$form_state) {
       }
     }
   }
-  // todo make it with default value which is unexceptable for validation
+
   $form['format'] = array(
     '#type' => 'select',
     '#title' => t('Format') . ':',
     '#required' => TRUE,
     '#options' => $options,
-    '#default_value' => 'key',
+    '#default_value' => '',
     '#ajax' => array(
       'callback' => 'photo_film_form_order_get_amount',
       'wrapper' => 'order-amount',
@@ -155,7 +154,7 @@ function photo_film_form_order($form, &$form_state) {
     '#prefix' => '<div class="form-delimeter">&nbsp;</div>'
   );
 
-  $options = array();
+  $options = array('' => t('Select'));
   if ($themes_vocabulary_vid = variable_get('photo_film_form_delivery_methods_vid', FALSE)) {
     if ($terms = taxonomy_get_tree($themes_vocabulary_vid)) {
       foreach ($terms as $term) {
@@ -168,7 +167,7 @@ function photo_film_form_order($form, &$form_state) {
     '#type' => 'select',
     '#title' => t('Delivery method') . ':',
     '#required' => TRUE,
-    '#default_value' => 'key',
+    '#default_value' => '',
     '#options' => $options,
     '#weight' => -11
   );
@@ -215,4 +214,19 @@ function photo_film_form_order_submit($form, &$form_state) {
       'discount' => !empty($form_state['values']['format']) ? $form_state['values']['format'] : '',
     );
   }
+}
+
+/**
+ * Validate function for photo_film_form_order form
+ */
+function photo_film_form_order_validate($form, &$form_state) {
+ if (!empty($form_state['values']['city'])) {
+   if ($terms = taxonomy_get_term_by_name($form_state['values']['city'], 'cities')) {
+     $term = array_pop($terms);
+     $form_state['values']['city'] = $term->tid;
+   }
+   else {
+     form_set_error('city', t('City doesn\'t exists'));
+   }
+ }
 }

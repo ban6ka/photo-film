@@ -64,7 +64,7 @@ function photo_film_form_save_file_wrapper() {
   else {
     $results['ErrorMessage'] = t('We can\'t upload that, please, contact site administrator');
   }
-  
+
   // output json for js
   //drupal_json_output($results);
   echo drupal_json_encode($results);
@@ -145,29 +145,34 @@ function photo_film_form_delete_file() {
  */
 function photo_film_form_create_info_file($cache_object) {
   $data = '';
-  if (!empty($cache_object->order_info)) {
+  /*if (!empty($cache_object->order_info)) {
     foreach ($cache_object->order_info as $key => $option) {
       $data .= $key . ' = ' . $option . ";\n";
     }
-  }
+  }*/
   if (!empty($cache_object->theme['theme'])) {
-    $data .= 'theme = ' . $cache_object->theme['theme'] . ";\n";
+    if ($term = taxonomy_term_load($cache_object->theme['theme'])) {
+      $data .= t('Theme') . ' = ' . $term->name . ";\n";
+    }
   }
 
   if (!empty($cache_object->style['style'])) {
-    $data .= 'style = ' . $cache_object->style['style'] . ";\n";
+    if ($term = taxonomy_term_load($cache_object->style['style'])) {
+      $data .= t('Style') . ' = ' . $term->name . ";\n";
+    }
   }
 
   if (!empty($cache_object->pictures)) {
-    $data .= 'picture_info;' . "\n";
+    $data .= T('Picture subtitles') . "\n";
     foreach ($cache_object->pictures as $file_info) {
 
       if (isset($file_info['serial_number'])) {
         $description = (!empty($file_info['description']) ? $file_info['description'] : '');
-        $data .= $file_info['serial_number'] . ':' . $description . "\n";
+        $data .= t('Picture') . ' ' . ($file_info['serial_number'] + 1) . ':' . $description . "\n";
       }
     }
   }
+
   $directory = variable_get('file_temporary_path', "/tmp");
   if (file_prepare_directory($directory)) {
     // Create temporary file
