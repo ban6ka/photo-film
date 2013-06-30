@@ -1,0 +1,7 @@
+<?php
+/**
+ * @file
+ * Code for the How it works panel feature.
+ */
+
+include_once 'panel_how_it_works.features.inc';
