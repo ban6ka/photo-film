@@ -1,21 +1,21 @@
 <?php
 /**
  * @file
- * panel_page_not_found.pages_default.inc
+ * panel_how_to_use.pages_default.inc
  */
 
 /**
  * Implements hook_default_page_manager_pages().
  */
-function panel_page_not_found_default_page_manager_pages() {
+function panel_how_to_use_default_page_manager_pages() {
   $page = new stdClass();
   $page->disabled = FALSE; /* Edit this to true to make a default page disabled initially */
   $page->api_version = 1;
-  $page->name = 'page_not_found';
+  $page->name = 'how_to_use';
   $page->task = 'page';
-  $page->admin_title = 'Page not found';
+  $page->admin_title = 'How to use';
   $page->admin_description = '';
-  $page->path = 'page-not-found';
+  $page->path = 'how-to-use';
   $page->access = array();
   $page->menu = array();
   $page->arguments = array();
@@ -26,13 +26,13 @@ function panel_page_not_found_default_page_manager_pages() {
   $handler = new stdClass();
   $handler->disabled = FALSE; /* Edit this to true to make a default handler disabled initially */
   $handler->api_version = 1;
-  $handler->name = 'page_page_not_found_panel_context';
+  $handler->name = 'page_how_to_use_panel_context';
   $handler->task = 'page';
-  $handler->subtask = 'page_not_found';
+  $handler->subtask = 'how_to_use';
   $handler->handler = 'panel_context';
   $handler->weight = 0;
   $handler->conf = array(
-    'title' => 'Panel',
+    'title' => 'How it works',
     'no_blocks' => 0,
     'pipeline' => 'standard',
     'body_classes_to_remove' => '',
@@ -48,7 +48,6 @@ function panel_page_not_found_default_page_manager_pages() {
   $display->panel_settings = array(
     'style_settings' => array(
       'default' => NULL,
-      'center' => NULL,
       'region-one' => NULL,
       'region-two' => NULL,
     ),
@@ -82,19 +81,20 @@ function panel_page_not_found_default_page_manager_pages() {
     $pane->pid = 'new-2';
     $pane->panel = 'region-two';
     $pane->type = 'custom';
-    $pane->subtype = 'custom';
+    $pane->subtype = 'back_link';
     $pane->shown = TRUE;
     $pane->access = array();
     $pane->configuration = array(
-      'admin_title' => 'Page not found message',
+      'admin_title' => '',
       'title' => '',
-      'body' => '<h2 style="text-align: center;">&nbsp;</h2><h1 style="text-align: center; text-transform: none;">Запрашиваемая станица не найдена</h1><h5 style="text-align: center;">&nbsp;</h5><h5 style="text-align: center;"><u><a href="/">Вернуться на главную</a></u></h5><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p>',
-      'format' => 'full_html',
+      'body' => '',
+      'format' => 'filtered_html',
       'substitute' => TRUE,
     );
     $pane->cache = array();
     $pane->style = array(
       'settings' => NULL,
+      'style' => 'default',
     );
     $pane->css = array();
     $pane->extras = array();
@@ -104,6 +104,30 @@ function panel_page_not_found_default_page_manager_pages() {
     $display->panels['region-two'][0] = 'new-2';
     $pane = new stdClass();
     $pane->pid = 'new-3';
+    $pane->panel = 'region-two';
+    $pane->type = 'custom';
+    $pane->subtype = 'custom';
+    $pane->shown = TRUE;
+    $pane->access = array();
+    $pane->configuration = array(
+      'admin_title' => 'How to use',
+      'title' => '',
+      'body' => '<h3>&nbsp;</h3><h5><span style="font-size:18px;"><strong>Как пользоваться?</strong></span></h5><div>&nbsp;</div>',
+      'format' => 'full_html',
+      'substitute' => TRUE,
+    );
+    $pane->cache = array();
+    $pane->style = array(
+      'settings' => NULL,
+    );
+    $pane->css = array();
+    $pane->extras = array();
+    $pane->position = 1;
+    $pane->locks = array();
+    $display->content['new-3'] = $pane;
+    $display->panels['region-two'][1] = 'new-3';
+    $pane = new stdClass();
+    $pane->pid = 'new-4';
     $pane->panel = 'region-two';
     $pane->type = 'panels_mini';
     $pane->subtype = 'footer_mini_panel';
@@ -119,15 +143,15 @@ function panel_page_not_found_default_page_manager_pages() {
     );
     $pane->css = array();
     $pane->extras = array();
-    $pane->position = 1;
+    $pane->position = 2;
     $pane->locks = array();
-    $display->content['new-3'] = $pane;
-    $display->panels['region-two'][1] = 'new-3';
-  $display->hide_title = PANELS_TITLE_FIXED;
-  $display->title_pane = '0';
+    $display->content['new-4'] = $pane;
+    $display->panels['region-two'][2] = 'new-4';
+  $display->hide_title = PANELS_TITLE_NONE;
+  $display->title_pane = 'new-1';
   $handler->conf['display'] = $display;
   $page->default_handlers[$handler->name] = $handler;
-  $pages['page_not_found'] = $page;
+  $pages['how_to_use'] = $page;
 
   return $pages;
 
