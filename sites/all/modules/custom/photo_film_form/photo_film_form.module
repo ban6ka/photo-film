@@ -307,7 +307,7 @@ function photo_film_form_ctools_multi_step_form_info() {
  */
 function photo_film_form_calculate_amount($cache) {
   $pictures_count = isset($cache->pictures) ? count($cache->pictures) : 0;
-  $music = !(empty($cache->music['fid']));
+  $music = !empty($cache->music['fid']);
   if (!empty($cache->style['style']) && $style = taxonomy_term_load($cache->style['style'])) {
     if ($style_price = field_get_items('taxonomy_term', $style, 'field_coefficient')) {
       $style_price = $style_price[0]['value'];
@@ -328,7 +328,7 @@ function photo_film_form_calculate_amount($cache) {
     $format_price = 0;
   }
 
-  return ($pictures_count * $style_price + $music * 30) * $format_price;
+  return ($pictures_count * $style_price) * $format_price + $music * 30;
 }
 
 /**
