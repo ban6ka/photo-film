@@ -391,3 +391,25 @@ function photo_film_form_get_next_order_id() {
 
   return (!empty($result['nid']) ? $result['nid'] + 1 : 1);
 }
+
+/**
+ * Implementation of hook_form_alter
+ */
+function photo_film_form_form_alter(&$form, &$form_state, $form_id) {
+  // ensure that this is music node edit form
+  if ($form_id == 'music_node_form' && !empty($form['field_style'][LANGUAGE_NONE]['#options'])) {
+    // load vocabulary from settings form 
+    if ($themes_vocabulary_vid = variable_get('photo_film_form_theme_vid', FALSE)) {
+      // load vocabulary tree
+      if ($terms = taxonomy_get_tree($themes_vocabulary_vid)) {
+        // unset all terms that are not in the first level
+        foreach ($terms as $value) {
+          if ($value->depth != 0) {
+            unset($form['field_style'][LANGUAGE_NONE]['#options'][$value->tid]);          
+          }
+        }
+      }
+    }
+  }
+}
+
