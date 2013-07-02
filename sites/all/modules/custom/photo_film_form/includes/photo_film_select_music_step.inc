@@ -40,14 +40,14 @@ function photo_film_form_select_music_step($form, &$form_state) {
   if (!empty($cache->style['style'])) {
     $query->join('field_data_field_style', 'style', 'style.entity_id = n.nid');
     $query->condition('style.field_style_tid', $cache->style['style']);
-  }  
+  }
 
   $query->fields('n', array('nid'))
     ->condition('n.status', 1)
     ->condition('n.type', 'music');
 
   $preselected_list = $query->execute();
-  
+
   $track_list = array();
 
   if ($preselected_list->rowCount() > 0) {
@@ -106,7 +106,15 @@ function photo_film_form_select_music_step_submit(&$form, &$form_state) {
   }
   elseif (!empty($form_state['values']['file_fid']) && !empty($form_state['object'])) {
     $form_state['object']->current_step = $form_state['next'];
-    $form_state['object']->music = array('fid' => $form_state['values']['file_fid']);
+    $form_state['object']->music['fid'] = $form_state['values']['file_fid'];
+    // load file from drupal db
+    $audio_file = file_load($form_state['values']['file_fid']);
+    // try to identify file playtime length
+    $audio_file = getid3_analyze(drupal_realpath($audio_file->uri));
+
+    if (!empty($audio_file['playtime_seconds'])) {
+      $form_state['object']->music['playtime'] = $audio_file['playtime_seconds'];
+    }
   }
 }
 
