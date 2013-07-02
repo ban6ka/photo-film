@@ -1,16 +1,17 @@
 (function ($) {
     Drupal.behaviors.photo_film_themes_step = {
         attach: function (context, settings) {
-
+            jQuery.each((Drupal.settings.music_settings), function(key, value) {
+                Drupal.form_settings[key] = value;
+            });
             Drupal.initMusicStep();
         }
     }
 
-    // TODO: all constant in to backend!
     Drupal.form_settings = {
-        max_files: 1,
-        max_weight: 10485760, // 10 MB
-        accept_types: /(\.|\/)(mp3|waw|flac)$/i,
+        max_files: null,
+        max_weight: null,
+        accept_types: null,
         uploaded_files: 0
     }
     Drupal.controls = {
@@ -115,7 +116,7 @@
     Drupal.beforeTrackUploaded = function (e, data) {
         var fileCount = data.files.length,
             maxAllowed = this.form_settings.max_files - this.form_settings.uploaded_files,
-            fileType = this.form_settings.accept_types,
+            fileType = new RegExp(this.form_settings.accept_types, "i"),
             fileSize = this.form_settings.max_weight,
             errorMessage = "";
 

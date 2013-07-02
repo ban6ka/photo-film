@@ -1,15 +1,18 @@
 (function ($) {
     Drupal.behaviors.photo_film_select_picture_step = {
         attach: function (context, settings) {
+            jQuery.each((Drupal.settings.photo_settings), function(key, value) {
+                Drupal.form_settings[key] = value;
+            });
             Drupal.initPhotosUploader();
         }
     }
 
     // TODO: all constant in to backend!
     Drupal.form_settings = {
-        max_files: 100,
-        max_weight: 10485760, // 10 MB
-        accept_types: /(\.|\/)(gif|jpe?g|png)$/i,
+        max_files: null,
+        max_weight: null,
+        accept_types: null,
         uploaded_files: 0
     }
     Drupal.controls = {
@@ -71,7 +74,7 @@
     Drupal.beforePhotoUploaded = function (e, data) {
         var fileCount = data.files.length,
             maxAllowed = this.form_settings.max_files - this.form_settings.uploaded_files,
-            fileType = this.form_settings.accept_types,
+            fileType = new RegExp(this.form_settings.accept_types, "i"),
             fileSize = this.form_settings.max_weight,
             errorMessage = "";
 
