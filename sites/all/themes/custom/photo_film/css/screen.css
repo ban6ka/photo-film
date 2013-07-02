@@ -340,6 +340,7 @@ hr.separator {
     padding: 10px 14px 10px 12px;
     background-color: rgba(241, 241, 241, 0.75);
     color: #3b3a3a;
+    cursor: pointer;
 }
 
 .photo-film-form .images-list .theme-toolbar .title {
@@ -355,7 +356,6 @@ hr.separator {
     width: 36px;
     height: 36px;
     background: url(../images/checked-icon.png) no-repeat 0 0;
-    cursor: pointer;
 }
 .photo-film-form .images-list .theme-toolbar:hover,
 .photo-film-form .images-list .theme-toolbar.selected {
@@ -375,6 +375,7 @@ hr.separator {
     padding: 10px 12px 10px 10px;
     background-color: #e5e6e6;
     color: #3b3a3a;
+    cursor: pointer;
 }
 .photo-film-form .images-list .style-toolbar .title {
     float: left;
@@ -387,7 +388,6 @@ hr.separator {
     height: 22px;
     margin: -2px 0;
     background: url(../images/checked-small-icon.png) no-repeat 0 0;
-    cursor: pointer;
 }
 .photo-film-form .images-list .style-toolbar:hover,
 .photo-film-form .images-list .style-toolbar.selected {
@@ -481,7 +481,7 @@ hr.separator {
 }
 .user-file-upload .file-uploader-holder {
     height: 48px;
-    padding: 42px 0 58px 0;
+    padding: 40px 0 60px 0;
     background: url(../images/download-icon.png) no-repeat center 88px;
     border: 3px dashed rgb(203, 203, 203);
     border-radius: 8px;
@@ -491,8 +491,9 @@ hr.separator {
 }
 .user-file-upload .file-uploader-holder span {
     font-family: 'PT Sans', sans-serif;
-    font-size: 14px;
+    font-size: 13px;
     text-transform: uppercase;
+    line-height: 20px;
 
     position: relative;
     z-index: -1;
@@ -630,9 +631,7 @@ hr.separator {
 .photos-step .form-warning-message {
     float: left;
     width: 372px;
-}
-.photos-step .user-file-upload .file-uploader-holder {
-    background-position: center 80px;
+    padding-top: 10px;
 }
 .photos-step .user-photos-wrap {
     float: left;
