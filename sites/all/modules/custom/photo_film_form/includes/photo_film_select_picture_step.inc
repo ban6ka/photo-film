@@ -37,7 +37,6 @@ function photo_film_select_picture_step($form, &$form_state) {
   );
   $warning = variable_get('photo_film_select_picture_step_warning', '');
   if (!empty($cache->music['playtime']) && !empty($warning['value'])) {
-    krumo($cache->music['playtime']);
     $warning['value'] = str_replace('[%min]', round($cache->music['playtime'] / 5), $warning['value']);
     $warning['value'] = str_replace('[%max]', round($cache->music['playtime'] / 3), $warning['value']);
   }
