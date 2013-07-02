@@ -405,7 +405,7 @@ function photo_film_form_form_alter(&$form, &$form_state, $form_id) {
         // unset all terms that are not in the first level
         foreach ($terms as $value) {
           if ($value->depth != 0) {
-            unset($form['field_style'][LANGUAGE_NONE]['#options'][$value->tid]);          
+            unset($form['field_style'][LANGUAGE_NONE]['#options'][$value->tid]);
           }
         }
       }
