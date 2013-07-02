@@ -21,6 +21,8 @@ function photo_film_select_picture_step($form, &$form_state) {
   drupal_add_css(drupal_get_path('module', 'jquery_update') . '/replace/ui/themes/base/jquery-ui.css');
   drupal_add_css(drupal_get_path('module', 'jquery_update') . '/replace/ui/themes/base/jquery.ui.dialog.css');
 
+  // get the form previous step info
+  $cache = photo_film_form_cache_get(1);
 
   $form['#theme'] = array('photo_film_form_choose_theme_step_theme');
   $form['#attributes'] = array();
@@ -34,6 +36,12 @@ function photo_film_select_picture_step($form, &$form_state) {
     ),
   );
   $warning = variable_get('photo_film_select_picture_step_warning', '');
+  if (!empty($cache->music['playtime']) && !empty($warning['value'])) {
+    krumo($cache->music['playtime']);
+    $warning['value'] = str_replace('[%min]', round($cache->music['playtime'] / 5), $warning['value']);
+    $warning['value'] = str_replace('[%max]', round($cache->music['playtime'] / 3), $warning['value']);
+  }
+
   $form['user_file_upload'] = array(
     '#type' => 'markup',
     '#markup' => theme('photo_film_select_picture_step_content', array(

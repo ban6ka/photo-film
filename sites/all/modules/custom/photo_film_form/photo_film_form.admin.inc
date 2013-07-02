@@ -155,7 +155,7 @@ function photo_film_form_settings_form($form_state) {
   $warning = variable_get('photo_film_select_picture_step_warning', '');
   $form['fourth_step']['photo_film_select_picture_step_warning'] = array(
     '#title' => t('Enter warning message for user'),
-    '#description' => t('Warning about quantity of user pictures items per video'),
+    '#description' => t('Warning message that appears on the "Music" page. You can place [%min] and [%max] placeholders that will be replaced by system with max and min photos count (depends on audio-track length).'),
     '#type' => 'text_format',
     '#format' => 'full_html',
     '#default_value' => (!empty($warning['value']) ? $warning['value'] : ''),
