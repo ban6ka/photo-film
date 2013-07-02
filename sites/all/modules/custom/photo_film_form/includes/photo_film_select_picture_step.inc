@@ -39,6 +39,7 @@ function photo_film_select_picture_step($form, &$form_state) {
     '#markup' => theme('photo_film_select_picture_step_content', array(
       'title' => variable_get('photo_film_select_picture_step_title', ''),
       'warning' => (!empty($warning['value']) ? $warning['value'] : ''),
+      'help_text' => variable_get('photo_film_select_picture_step_drop_zone_message', ''),
     ))
   );
 

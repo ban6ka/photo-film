@@ -481,7 +481,7 @@ hr.separator {
 }
 .user-file-upload .file-uploader-holder {
     height: 48px;
-    padding: 42px 0 58px 0;
+    padding: 40px 0 60px 0;
     background: url(../images/download-icon.png) no-repeat center 88px;
     border: 3px dashed rgb(203, 203, 203);
     border-radius: 8px;
@@ -491,8 +491,9 @@ hr.separator {
 }
 .user-file-upload .file-uploader-holder span {
     font-family: 'PT Sans', sans-serif;
-    font-size: 14px;
+    font-size: 13px;
     text-transform: uppercase;
+    line-height: 20px;
 
     position: relative;
     z-index: -1;

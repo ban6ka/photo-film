@@ -133,6 +133,14 @@ function photo_film_form_settings_form($form_state) {
     '#required' => FALSE,
   );
 
+  $form['third_step']['photo_film_music_upload_step_drop_zone_message'] = array(
+    '#title' => t('Enter message for drop zone (area that allows to drag&drop music into)'),
+    '#description' => t('Help text that appears in drop zone'),
+    '#type' => 'textarea',
+    '#default_value' => variable_get('photo_film_music_upload_step_drop_zone_message', ''),
+    '#required' => FALSE,
+  );
+
   $form['fourth_step'] = array(
     '#type' => 'fieldset',
     '#title' => t('Fourth step configuration'),
@@ -151,6 +159,13 @@ function photo_film_form_settings_form($form_state) {
     '#type' => 'text_format',
     '#format' => 'full_html',
     '#default_value' => (!empty($warning['value']) ? $warning['value'] : ''),
+    '#required' => FALSE,
+  );
+  $form['fourth_step']['photo_film_select_picture_step_drop_zone_message'] = array(
+    '#title' => t('Enter message for drop zone (area that allows to drag&drop photos into)'),
+    '#description' => t('Help text that appears in drop zone'),
+    '#type' => 'textarea',
+    '#default_value' => variable_get('photo_film_select_picture_step_drop_zone_message', ''),
     '#required' => FALSE,
   );
 

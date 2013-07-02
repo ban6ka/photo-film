@@ -145,7 +145,8 @@ function theme_photo_film_select_music_step_wrapper($variables) {
   $output .= theme('photo_film_select_music_step_content', array(
     'title' => variable_get('photo_film_user_music_upload_step_title', ''),
     'items' => $proposed_list,
-    'warning' => variable_get('photo_film_user_music_upload_step_user_warning', '')
+    'warning' => variable_get('photo_film_user_music_upload_step_user_warning', ''),
+    'help_text' => variable_get('photo_film_music_upload_step_drop_zone_message', ''),
   ));
   if (!empty($form['photo_film_compositions'])) {
     $output .= drupal_render($form['photo_film_compositions']);
