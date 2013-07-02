@@ -9,7 +9,7 @@
     // TODO: all constant in to backend!
     Drupal.form_settings = {
         max_files: 1,
-        max_weight: 10000000, // 10 MB
+        max_weight: 10485760, // 10 MB
         accept_types: /(\.|\/)(mp3|waw|flac)$/i,
         uploaded_files: 0
     }
@@ -52,7 +52,7 @@
             type: 'POST',
             dataType: 'json',
             autoUpload: true,
-            singleFileUploads: true,
+            singleFileUploads: false,
             acceptFileTypes: this.form_settings.accept_types,
             maxNumberOfFiles: this.form_settings.max_files,
             maxFileSize: this.form_settings.max_weight,
@@ -63,8 +63,7 @@
             dropZone: this.controls.drop_zone
         })
         .bind('fileuploadsend', $.proxy(this.beforeTrackUploaded, this))
-        .bind('fileuploaddone', $.proxy(this.onTrackUploaded, this))
-        .bind('fileuploadfail', function (e, data) { console.log('Processing ' + data.files[0].name + ' fail.'); });
+        .bind('fileuploaddone', $.proxy(this.onTrackUploaded, this));
 
         if (!jQuery.browser.msie) {
             this.controls.uploader_wrap.addClass("hidden");
@@ -115,16 +114,34 @@
 
     Drupal.beforeTrackUploaded = function (e, data) {
         var fileCount = data.files.length,
-            maxAllowed = this.form_settings.max_files - this.form_settings.uploaded_files;
+            maxAllowed = this.form_settings.max_files - this.form_settings.uploaded_files,
+            fileType = this.form_settings.accept_types,
+            fileSize = this.form_settings.max_weight,
+            errorMessage = "";
 
         if (maxAllowed <= 0)
             return false;
 
         if (fileCount > maxAllowed) {
             data.files = data.files.splice(0, fileCount - maxAllowed + 1);
+            errorMessage = "<p>Вы не можете загрузить больше " + maxAllowed + " файла</p>";
         }
-        this.form_settings.uploaded_files += data.files.length;
-        this.controls.drop_zone.addClass(this.control_classes.loading);
+
+        for (var index = 0; index < data.files.length; index ++) {
+            if (!fileType.test(data.files[index].name) || fileSize < data.files[index].size) {
+                data.files.splice(index, 1);
+                errorMessage = ("Разрешены только аудио файлы (mp3|waw|flac), не более " + Math.round(fileSize / 1024 / 1024) + "МБ.");
+                index -= 1;
+            }
+        }
+
+        if (data.files.length) {
+            this.form_settings.uploaded_files += data.files.length;
+            this.controls.drop_zone.addClass(this.control_classes.loading);
+        } else {
+            this.renderErrorMessage(errorMessage);
+            return false;
+        }
     }
 
     // RESPONSE Format:
@@ -209,9 +226,13 @@
         this.lockTracksList(is_checked);
     }
 
-    //TODO: refactor
     Drupal.renderErrorMessage = function (message) {
-        alert(message);
+        var error = $("#music-error");
+        error.html(message)
+             .fadeIn(250);
+        window.setTimeout(function () {
+            error.fadeOut(500);
+        }, 5000);
     }
 
     Drupal.enableSubmitButton = function () {

@@ -18,6 +18,7 @@
       <div class="file-uploader-holder">
         <span><?php print $help_text ?></span>
       </div>
+      <div class="messages error" id="photo-error" style="display: none;"></div>
     </div>
   </div>
 

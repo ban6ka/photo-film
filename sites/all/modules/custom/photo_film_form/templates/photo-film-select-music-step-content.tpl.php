@@ -44,6 +44,7 @@
           <div class="remove">&nbsp;</div>
         </div>
       </div>
+      <div class="messages error" id="music-error" style="display: none;"></div>
     </div>
 
     <?php if (!empty($warning)): ?>
