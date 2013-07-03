@@ -1,15 +1,18 @@
 (function ($) {
     Drupal.behaviors.photo_film_select_picture_step = {
         attach: function (context, settings) {
+            jQuery.each((Drupal.settings.photo_settings), function(key, value) {
+                Drupal.form_settings[key] = value;
+            });
             Drupal.initPhotosUploader();
         }
     }
 
     // TODO: all constant in to backend!
     Drupal.form_settings = {
-        max_files: 100,
-        max_weight: 10000000, // 10 MB
-        accept_types: /(\.|\/)(gif|jpe?g|png)$/i,
+        max_files: null,
+        max_weight: null,
+        accept_types: null,
         uploaded_files: 0
     }
     Drupal.controls = {
@@ -56,8 +59,7 @@
             dropZone: this.controls.drop_zone
         })
         .bind('fileuploadsend', $.proxy(this.beforePhotoUploaded, this))
-        .bind('fileuploaddone', $.proxy(this.onPhotoUploaded, this))
-        .bind('fileuploadfail', function (e, data) { console.log('Processing ' + data.files[0].name + ' fail.'); });
+        .bind('fileuploaddone', $.proxy(this.onPhotoUploaded, this));
 
         if (!jQuery.browser.msie) {
             $("div.form-type-file").addClass("hidden");
@@ -71,16 +73,34 @@
 
     Drupal.beforePhotoUploaded = function (e, data) {
         var fileCount = data.files.length,
-            maxAllowed = this.form_settings.max_files - this.form_settings.uploaded_files;
+            maxAllowed = this.form_settings.max_files - this.form_settings.uploaded_files,
+            fileType = new RegExp(this.form_settings.accept_types, "i"),
+            fileSize = this.form_settings.max_weight,
+            errorMessage = "";
 
         if (maxAllowed <= 0)
             return false;
 
         if (fileCount > maxAllowed) {
             data.files = data.files.splice(0, fileCount - maxAllowed + 1);
+            errorMessage = "<p>Вы не можете загрузить больше " + maxAllowed + " файлов</p>";
         }
-        this.form_settings.uploaded_files += data.files.length;
-        this.controls.drop_zone.addClass(this.control_classes.loading);
+
+        for (var index = 0; index < data.files.length; index ++) {
+            if (!fileType.test(data.files[index].name) || fileSize < data.files[index].size) {
+                data.files.splice(index, 1);
+                errorMessage = ("Разрешены только изображения (gif|jpeg|png), не более " + Math.round(fileSize / 1024 / 1024) + "МБ.");
+                index -= 1;
+            }
+        }
+
+        if (data.files.length) {
+            this.form_settings.uploaded_files += data.files.length;
+            this.controls.drop_zone.addClass(this.control_classes.loading);
+        } else {
+            this.renderErrorMessage(errorMessage);
+            return false;
+        }
     }
 
     // RESPONSE should be in next format:
@@ -196,9 +216,13 @@
         });
     }
 
-    //TODO: refactor
     Drupal.renderErrorMessage = function (message) {
-        alert(message);
+        var error = $("#photo-error");
+        error.html(message)
+            .fadeIn(250);
+        window.setTimeout(function () {
+            error.fadeOut(500);
+        }, 2500);
     }
 
     Drupal.enableSubmitButton = function () {

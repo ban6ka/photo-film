@@ -431,6 +431,7 @@ hr.separator {
 .tracks-list-wrap {
     float: left;
     width: 460px;
+    min-height: 1px;
     margin-right: 100px;
 }
 .track-uploader-wrap {

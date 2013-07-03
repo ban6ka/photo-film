@@ -16,6 +16,12 @@ function photo_film_form_select_music_step($form, &$form_state) {
   drupal_add_js(libraries_get_path('jquery_scroll_master') . '/jquery.scroll.min.js');
   drupal_add_css(libraries_get_path('jquery_scroll_master') . '/css/scrollbar.css');
 
+  drupal_add_js(array('music_settings' => array(
+    'max_files' => 1,
+    'max_weight' => 10485760, // 10 MB
+    'accept_types' => '(\.|\/)(mp3|waw|flac)$'
+  )), 'setting');
+
   $form['#attributes'] = array();
   $form['#attributes']['class'] = array();
   $form['#attributes']['class'][] = 'photo-film-form';

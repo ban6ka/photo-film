@@ -21,6 +21,12 @@ function photo_film_select_picture_step($form, &$form_state) {
   drupal_add_css(drupal_get_path('module', 'jquery_update') . '/replace/ui/themes/base/jquery-ui.css');
   drupal_add_css(drupal_get_path('module', 'jquery_update') . '/replace/ui/themes/base/jquery.ui.dialog.css');
 
+  drupal_add_js(array('photo_settings' => array(
+    'max_files' => 100,
+    'max_weight' => 10485760, // 10 MB
+    'accept_types' => '(\.|\/)(gif|jpe?g|png)$'
+  )), 'setting');
+
   // get the form previous step info
   $cache = photo_film_form_cache_get(1);
 
