@@ -48,7 +48,7 @@ function mini_panel_header_default_panels_mini() {
     $pane->configuration = array(
       'admin_title' => 'Logo',
       'title' => '',
-      'body' => '<p><a href="/"><img alt="" src="sites/all/themes/custom/photo_film/images/logo.png" /></a></p>',
+      'body' => '<p><a href="/"><img alt="" src="/sites/all/themes/custom/photo_film/images/logo.png" /></a></p>',
       'format' => 'full_html',
       'substitute' => TRUE,
     );
@@ -72,7 +72,7 @@ function mini_panel_header_default_panels_mini() {
     $pane->configuration = array(
       'admin_title' => '',
       'title' => '',
-      'body' => '<p><img alt="" src="sites/all/themes/custom/photo_film/images/help-mail.png" /></p>',
+      'body' => '<p><img alt="" src="/sites/all/themes/custom/photo_film/images/help-mail.png" /></p>',
       'format' => 'full_html',
       'substitute' => TRUE,
     );

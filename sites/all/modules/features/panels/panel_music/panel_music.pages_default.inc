@@ -23,7 +23,7 @@ function panel_music_default_page_manager_handlers() {
     'no_blocks' => 0,
     'pipeline' => 'standard',
     'body_classes_to_remove' => '',
-    'body_classes_to_add' => '',
+    'body_classes_to_add' => 'single-node-content',
     'css_id' => '',
     'css' => '',
     'contexts' => array(),
@@ -45,12 +45,14 @@ function panel_music_default_page_manager_handlers() {
     ),
   );
   $display = new panels_display();
-  $display->layout = 'flexible';
+  $display->layout = 'main_layout';
   $display->layout_settings = array();
   $display->panel_settings = array(
     'style_settings' => array(
       'default' => NULL,
       'center' => NULL,
+      'region-one' => NULL,
+      'region-two' => NULL,
     ),
   );
   $display->cache = array();
@@ -59,7 +61,7 @@ function panel_music_default_page_manager_handlers() {
   $display->panels = array();
     $pane = new stdClass();
     $pane->pid = 'new-1';
-    $pane->panel = 'center';
+    $pane->panel = 'region-one';
     $pane->type = 'panels_mini';
     $pane->subtype = 'header_mini_panel';
     $pane->shown = TRUE;
@@ -77,10 +79,10 @@ function panel_music_default_page_manager_handlers() {
     $pane->position = 0;
     $pane->locks = array();
     $display->content['new-1'] = $pane;
-    $display->panels['center'][0] = 'new-1';
+    $display->panels['region-one'][0] = 'new-1';
     $pane = new stdClass();
     $pane->pid = 'new-2';
-    $pane->panel = 'center';
+    $pane->panel = 'region-two';
     $pane->type = 'node_title';
     $pane->subtype = 'node_title';
     $pane->shown = TRUE;
@@ -91,7 +93,7 @@ function panel_music_default_page_manager_handlers() {
       'id' => '',
       'class' => '',
       'context' => 'argument_entity_id:node_1',
-      'override_title' => 0,
+      'override_title' => 1,
       'override_title_text' => '',
     );
     $pane->cache = array();
@@ -100,13 +102,13 @@ function panel_music_default_page_manager_handlers() {
     );
     $pane->css = array();
     $pane->extras = array();
-    $pane->position = 1;
+    $pane->position = 0;
     $pane->locks = array();
     $display->content['new-2'] = $pane;
-    $display->panels['center'][1] = 'new-2';
+    $display->panels['region-two'][0] = 'new-2';
     $pane = new stdClass();
     $pane->pid = 'new-3';
-    $pane->panel = 'center';
+    $pane->panel = 'region-two';
     $pane->type = 'entity_field';
     $pane->subtype = 'node:field_author';
     $pane->shown = TRUE;
@@ -128,13 +130,13 @@ function panel_music_default_page_manager_handlers() {
     );
     $pane->css = array();
     $pane->extras = array();
-    $pane->position = 2;
+    $pane->position = 1;
     $pane->locks = array();
     $display->content['new-3'] = $pane;
-    $display->panels['center'][2] = 'new-3';
+    $display->panels['region-two'][1] = 'new-3';
     $pane = new stdClass();
     $pane->pid = 'new-4';
-    $pane->panel = 'center';
+    $pane->panel = 'region-two';
     $pane->type = 'entity_field';
     $pane->subtype = 'node:field_composition';
     $pane->shown = TRUE;
@@ -156,13 +158,13 @@ function panel_music_default_page_manager_handlers() {
     );
     $pane->css = array();
     $pane->extras = array();
-    $pane->position = 3;
+    $pane->position = 2;
     $pane->locks = array();
     $display->content['new-4'] = $pane;
-    $display->panels['center'][3] = 'new-4';
+    $display->panels['region-two'][2] = 'new-4';
     $pane = new stdClass();
     $pane->pid = 'new-5';
-    $pane->panel = 'center';
+    $pane->panel = 'region-two';
     $pane->type = 'panels_mini';
     $pane->subtype = 'footer_mini_panel';
     $pane->shown = TRUE;
@@ -177,10 +179,10 @@ function panel_music_default_page_manager_handlers() {
     );
     $pane->css = array();
     $pane->extras = array();
-    $pane->position = 4;
+    $pane->position = 3;
     $pane->locks = array();
     $display->content['new-5'] = $pane;
-    $display->panels['center'][4] = 'new-5';
+    $display->panels['region-two'][3] = 'new-5';
   $display->hide_title = PANELS_TITLE_FIXED;
   $display->title_pane = '0';
   $handler->conf['display'] = $display;

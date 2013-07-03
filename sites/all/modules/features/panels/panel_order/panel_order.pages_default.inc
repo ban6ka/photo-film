@@ -23,7 +23,7 @@ function panel_order_default_page_manager_handlers() {
     'no_blocks' => 0,
     'pipeline' => 'standard',
     'body_classes_to_remove' => '',
-    'body_classes_to_add' => '',
+    'body_classes_to_add' => 'single-node-content',
     'css_id' => '',
     'css' => '',
     'contexts' => array(),
@@ -45,12 +45,14 @@ function panel_order_default_page_manager_handlers() {
     ),
   );
   $display = new panels_display();
-  $display->layout = 'flexible';
+  $display->layout = 'main_layout';
   $display->layout_settings = array();
   $display->panel_settings = array(
     'style_settings' => array(
       'default' => NULL,
       'center' => NULL,
+      'region-one' => NULL,
+      'region-two' => NULL,
     ),
   );
   $display->cache = array();
@@ -59,7 +61,7 @@ function panel_order_default_page_manager_handlers() {
   $display->panels = array();
     $pane = new stdClass();
     $pane->pid = 'new-1';
-    $pane->panel = 'center';
+    $pane->panel = 'region-one';
     $pane->type = 'panels_mini';
     $pane->subtype = 'header_mini_panel';
     $pane->shown = TRUE;
@@ -77,10 +79,10 @@ function panel_order_default_page_manager_handlers() {
     $pane->position = 0;
     $pane->locks = array();
     $display->content['new-1'] = $pane;
-    $display->panels['center'][0] = 'new-1';
+    $display->panels['region-one'][0] = 'new-1';
     $pane = new stdClass();
     $pane->pid = 'new-2';
-    $pane->panel = 'center';
+    $pane->panel = 'region-two';
     $pane->type = 'node_title';
     $pane->subtype = 'node_title';
     $pane->shown = TRUE;
@@ -100,13 +102,13 @@ function panel_order_default_page_manager_handlers() {
     );
     $pane->css = array();
     $pane->extras = array();
-    $pane->position = 1;
+    $pane->position = 0;
     $pane->locks = array();
     $display->content['new-2'] = $pane;
-    $display->panels['center'][1] = 'new-2';
+    $display->panels['region-two'][0] = 'new-2';
     $pane = new stdClass();
     $pane->pid = 'new-3';
-    $pane->panel = 'center';
+    $pane->panel = 'region-two';
     $pane->type = 'entity_field';
     $pane->subtype = 'node:field_archive';
     $pane->shown = TRUE;
@@ -128,13 +130,13 @@ function panel_order_default_page_manager_handlers() {
     );
     $pane->css = array();
     $pane->extras = array();
-    $pane->position = 2;
+    $pane->position = 1;
     $pane->locks = array();
     $display->content['new-3'] = $pane;
-    $display->panels['center'][2] = 'new-3';
+    $display->panels['region-two'][1] = 'new-3';
     $pane = new stdClass();
     $pane->pid = 'new-4';
-    $pane->panel = 'center';
+    $pane->panel = 'region-two';
     $pane->type = 'entity_field';
     $pane->subtype = 'node:field_city';
     $pane->shown = TRUE;
@@ -156,13 +158,13 @@ function panel_order_default_page_manager_handlers() {
     );
     $pane->css = array();
     $pane->extras = array();
-    $pane->position = 3;
+    $pane->position = 2;
     $pane->locks = array();
     $display->content['new-4'] = $pane;
-    $display->panels['center'][3] = 'new-4';
+    $display->panels['region-two'][2] = 'new-4';
     $pane = new stdClass();
     $pane->pid = 'new-5';
-    $pane->panel = 'center';
+    $pane->panel = 'region-two';
     $pane->type = 'entity_field';
     $pane->subtype = 'node:field_country';
     $pane->shown = TRUE;
@@ -184,13 +186,41 @@ function panel_order_default_page_manager_handlers() {
     );
     $pane->css = array();
     $pane->extras = array();
-    $pane->position = 4;
+    $pane->position = 3;
     $pane->locks = array();
     $display->content['new-5'] = $pane;
-    $display->panels['center'][4] = 'new-5';
+    $display->panels['region-two'][3] = 'new-5';
     $pane = new stdClass();
     $pane->pid = 'new-6';
-    $pane->panel = 'center';
+    $pane->panel = 'region-two';
+    $pane->type = 'entity_field';
+    $pane->subtype = 'node:field_delivery_method';
+    $pane->shown = TRUE;
+    $pane->access = array();
+    $pane->configuration = array(
+      'label' => 'title',
+      'formatter' => 'taxonomy_term_reference_link',
+      'delta_limit' => 0,
+      'delta_offset' => '0',
+      'delta_reversed' => FALSE,
+      'formatter_settings' => array(),
+      'context' => 'argument_entity_id:node_1',
+      'override_title' => 0,
+      'override_title_text' => '',
+    );
+    $pane->cache = array();
+    $pane->style = array(
+      'settings' => NULL,
+    );
+    $pane->css = array();
+    $pane->extras = array();
+    $pane->position = 4;
+    $pane->locks = array();
+    $display->content['new-6'] = $pane;
+    $display->panels['region-two'][4] = 'new-6';
+    $pane = new stdClass();
+    $pane->pid = 'new-7';
+    $pane->panel = 'region-two';
     $pane->type = 'entity_field';
     $pane->subtype = 'node:field_delivery_method';
     $pane->shown = TRUE;
@@ -214,39 +244,11 @@ function panel_order_default_page_manager_handlers() {
     $pane->extras = array();
     $pane->position = 5;
     $pane->locks = array();
-    $display->content['new-6'] = $pane;
-    $display->panels['center'][5] = 'new-6';
-    $pane = new stdClass();
-    $pane->pid = 'new-7';
-    $pane->panel = 'center';
-    $pane->type = 'entity_field';
-    $pane->subtype = 'node:field_delivery_method';
-    $pane->shown = TRUE;
-    $pane->access = array();
-    $pane->configuration = array(
-      'label' => 'title',
-      'formatter' => 'taxonomy_term_reference_link',
-      'delta_limit' => 0,
-      'delta_offset' => '0',
-      'delta_reversed' => FALSE,
-      'formatter_settings' => array(),
-      'context' => 'argument_entity_id:node_1',
-      'override_title' => 0,
-      'override_title_text' => '',
-    );
-    $pane->cache = array();
-    $pane->style = array(
-      'settings' => NULL,
-    );
-    $pane->css = array();
-    $pane->extras = array();
-    $pane->position = 6;
-    $pane->locks = array();
     $display->content['new-7'] = $pane;
-    $display->panels['center'][6] = 'new-7';
+    $display->panels['region-two'][5] = 'new-7';
     $pane = new stdClass();
     $pane->pid = 'new-8';
-    $pane->panel = 'center';
+    $pane->panel = 'region-two';
     $pane->type = 'entity_field';
     $pane->subtype = 'node:field_discount';
     $pane->shown = TRUE;
@@ -268,13 +270,13 @@ function panel_order_default_page_manager_handlers() {
     );
     $pane->css = array();
     $pane->extras = array();
-    $pane->position = 7;
+    $pane->position = 6;
     $pane->locks = array();
     $display->content['new-8'] = $pane;
-    $display->panels['center'][7] = 'new-8';
+    $display->panels['region-two'][6] = 'new-8';
     $pane = new stdClass();
     $pane->pid = 'new-9';
-    $pane->panel = 'center';
+    $pane->panel = 'region-two';
     $pane->type = 'entity_field';
     $pane->subtype = 'node:field_email';
     $pane->shown = TRUE;
@@ -296,13 +298,13 @@ function panel_order_default_page_manager_handlers() {
     );
     $pane->css = array();
     $pane->extras = array();
-    $pane->position = 8;
+    $pane->position = 7;
     $pane->locks = array();
     $display->content['new-9'] = $pane;
-    $display->panels['center'][8] = 'new-9';
+    $display->panels['region-two'][7] = 'new-9';
     $pane = new stdClass();
     $pane->pid = 'new-10';
-    $pane->panel = 'center';
+    $pane->panel = 'region-two';
     $pane->type = 'entity_field';
     $pane->subtype = 'node:field_mobile';
     $pane->shown = TRUE;
@@ -324,13 +326,13 @@ function panel_order_default_page_manager_handlers() {
     );
     $pane->css = array();
     $pane->extras = array();
-    $pane->position = 9;
+    $pane->position = 8;
     $pane->locks = array();
     $display->content['new-10'] = $pane;
-    $display->panels['center'][9] = 'new-10';
+    $display->panels['region-two'][8] = 'new-10';
     $pane = new stdClass();
     $pane->pid = 'new-11';
-    $pane->panel = 'center';
+    $pane->panel = 'region-two';
     $pane->type = 'entity_field';
     $pane->subtype = 'node:field_name';
     $pane->shown = TRUE;
@@ -352,13 +354,13 @@ function panel_order_default_page_manager_handlers() {
     );
     $pane->css = array();
     $pane->extras = array();
-    $pane->position = 10;
+    $pane->position = 9;
     $pane->locks = array();
     $display->content['new-11'] = $pane;
-    $display->panels['center'][10] = 'new-11';
+    $display->panels['region-two'][9] = 'new-11';
     $pane = new stdClass();
     $pane->pid = 'new-12';
-    $pane->panel = 'center';
+    $pane->panel = 'region-two';
     $pane->type = 'entity_field';
     $pane->subtype = 'node:field_style';
     $pane->shown = TRUE;
@@ -380,13 +382,13 @@ function panel_order_default_page_manager_handlers() {
     );
     $pane->css = array();
     $pane->extras = array();
-    $pane->position = 11;
+    $pane->position = 10;
     $pane->locks = array();
     $display->content['new-12'] = $pane;
-    $display->panels['center'][11] = 'new-12';
+    $display->panels['region-two'][10] = 'new-12';
     $pane = new stdClass();
     $pane->pid = 'new-13';
-    $pane->panel = 'center';
+    $pane->panel = 'region-two';
     $pane->type = 'entity_field';
     $pane->subtype = 'node:field_theme';
     $pane->shown = TRUE;
@@ -408,13 +410,13 @@ function panel_order_default_page_manager_handlers() {
     );
     $pane->css = array();
     $pane->extras = array();
-    $pane->position = 12;
+    $pane->position = 11;
     $pane->locks = array();
     $display->content['new-13'] = $pane;
-    $display->panels['center'][12] = 'new-13';
+    $display->panels['region-two'][11] = 'new-13';
     $pane = new stdClass();
     $pane->pid = 'new-14';
-    $pane->panel = 'center';
+    $pane->panel = 'region-two';
     $pane->type = 'entity_field';
     $pane->subtype = 'node:field_video_format';
     $pane->shown = TRUE;
@@ -436,13 +438,13 @@ function panel_order_default_page_manager_handlers() {
     );
     $pane->css = array();
     $pane->extras = array();
-    $pane->position = 13;
+    $pane->position = 12;
     $pane->locks = array();
     $display->content['new-14'] = $pane;
-    $display->panels['center'][13] = 'new-14';
+    $display->panels['region-two'][12] = 'new-14';
     $pane = new stdClass();
     $pane->pid = 'new-15';
-    $pane->panel = 'center';
+    $pane->panel = 'region-two';
     $pane->type = 'panels_mini';
     $pane->subtype = 'footer_mini_panel';
     $pane->shown = TRUE;
@@ -457,10 +459,10 @@ function panel_order_default_page_manager_handlers() {
     );
     $pane->css = array();
     $pane->extras = array();
-    $pane->position = 14;
+    $pane->position = 13;
     $pane->locks = array();
     $display->content['new-15'] = $pane;
-    $display->panels['center'][14] = 'new-15';
+    $display->panels['region-two'][13] = 'new-15';
   $display->hide_title = PANELS_TITLE_FIXED;
   $display->title_pane = '0';
   $handler->conf['display'] = $display;
