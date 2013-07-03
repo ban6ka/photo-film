@@ -9,6 +9,7 @@ dependencies[] = ctools
 dependencies[] = features
 dependencies[] = file
 dependencies[] = media
+dependencies[] = node_reference
 dependencies[] = number
 dependencies[] = options
 dependencies[] = strongarm

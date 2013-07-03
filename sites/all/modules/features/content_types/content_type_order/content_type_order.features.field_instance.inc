@@ -57,7 +57,7 @@ function content_type_order_field_default_field_instances() {
         'progress_indicator' => 'throbber',
       ),
       'type' => 'media_generic',
-      'weight' => 9,
+      'weight' => 11,
     ),
   );
 
@@ -97,7 +97,7 @@ function content_type_order_field_default_field_instances() {
         'size' => 60,
       ),
       'type' => 'taxonomy_autocomplete',
-      'weight' => 4,
+      'weight' => 6,
     ),
   );
 
@@ -137,7 +137,7 @@ function content_type_order_field_default_field_instances() {
         'size' => 60,
       ),
       'type' => 'text_textfield',
-      'weight' => 3,
+      'weight' => 5,
     ),
   );
 
@@ -174,7 +174,7 @@ function content_type_order_field_default_field_instances() {
       'module' => 'options',
       'settings' => array(),
       'type' => 'options_select',
-      'weight' => 11,
+      'weight' => 3,
     ),
   );
 
@@ -187,10 +187,10 @@ function content_type_order_field_default_field_instances() {
     'display' => array(
       'default' => array(
         'label' => 'above',
-        'module' => 'text',
+        'module' => 'node_reference',
         'settings' => array(),
-        'type' => 'text_default',
-        'weight' => 12,
+        'type' => 'node_reference_default',
+        'weight' => 16,
       ),
       'teaser' => array(
         'label' => 'above',
@@ -204,17 +204,14 @@ function content_type_order_field_default_field_instances() {
     'label' => 'Discount',
     'required' => 0,
     'settings' => array(
-      'text_processing' => 0,
       'user_register_form' => FALSE,
     ),
     'widget' => array(
       'active' => 1,
-      'module' => 'text',
-      'settings' => array(
-        'size' => 60,
-      ),
-      'type' => 'text_textfield',
-      'weight' => 8,
+      'module' => 'options',
+      'settings' => array(),
+      'type' => 'options_select',
+      'weight' => 10,
     ),
   );
 
@@ -254,7 +251,7 @@ function content_type_order_field_default_field_instances() {
         'size' => 60,
       ),
       'type' => 'text_textfield',
-      'weight' => 6,
+      'weight' => 8,
     ),
   );
 
@@ -294,7 +291,7 @@ function content_type_order_field_default_field_instances() {
         'size' => 60,
       ),
       'type' => 'text_textfield',
-      'weight' => 7,
+      'weight' => 9,
     ),
   );
 
@@ -334,7 +331,7 @@ function content_type_order_field_default_field_instances() {
         'size' => 60,
       ),
       'type' => 'text_textfield',
-      'weight' => 5,
+      'weight' => 7,
     ),
   );
 
@@ -451,7 +448,7 @@ function content_type_order_field_default_field_instances() {
       'module' => 'options',
       'settings' => array(),
       'type' => 'options_select',
-      'weight' => 10,
+      'weight' => 4,
     ),
   );
 

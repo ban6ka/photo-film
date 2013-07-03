@@ -146,25 +146,38 @@ function content_type_order_field_default_field_bases() {
     'entity_types' => array(),
     'field_name' => 'field_discount',
     'foreign keys' => array(
-      'format' => array(
+      'nid' => array(
         'columns' => array(
-          'format' => 'format',
+          'nid' => 'nid',
         ),
-        'table' => 'filter_format',
+        'table' => 'node',
       ),
     ),
     'indexes' => array(
-      'format' => array(
-        0 => 'format',
+      'nid' => array(
+        0 => 'nid',
       ),
     ),
     'locked' => 0,
-    'module' => 'text',
+    'module' => 'node_reference',
     'settings' => array(
-      'max_length' => 255,
+      'referenceable_types' => array(
+        'article' => 0,
+        'discount' => 'discount',
+        'music' => 0,
+        'order' => 0,
+        'page' => 0,
+        'panel' => 0,
+        'webform' => 0,
+      ),
+      'view' => array(
+        'args' => array(),
+        'display_name' => '',
+        'view_name' => '',
+      ),
     ),
     'translatable' => 0,
-    'type' => 'text',
+    'type' => 'node_reference',
   );
 
   // Exported field_base: 'field_email'
