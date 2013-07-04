@@ -61,6 +61,8 @@
         .bind('fileuploadsend', $.proxy(this.beforePhotoUploaded, this))
         .bind('fileuploaddone', $.proxy(this.onPhotoUploaded, this));
 
+        $("a.subtitles-button").on("click", $.proxy(this.toggleSubtitlesBlock, this));
+
         if (!jQuery.browser.msie) {
             $("div.form-type-file").addClass("hidden");
             this.controls.drop_zone.on("click", function (e) {
@@ -219,6 +221,13 @@
         });
     }
 
+    Drupal.toggleSubtitlesBlock = function (e) {
+        e.preventDefault();
+
+        $(e.currentTarget).parent()
+                          .children("div.subtitles-body").slideToggle(150);
+    }
+
     Drupal.renderErrorMessage = function (message) {
         var error = $("#photo-error");
         error.html(message)
@@ -229,11 +238,14 @@
     }
 
     Drupal.enableSubmitButton = function () {
-        var wrap = $("div.form-button-wrap");
+        var wrap = $("div.form-button-wrap"),
+            title = this.controls.files_holder.children("h2");
         if (this.form_settings.uploaded_files > 0) {
             wrap.addClass("active");
+            title.hide();
         } else {
             wrap.removeClass("active");
+            title.show();
         }
     }
 })(jQuery)

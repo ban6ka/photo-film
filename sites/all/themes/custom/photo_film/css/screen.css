@@ -269,7 +269,8 @@ hr.separator {
 
 }
 .photo-film-form .form-button-container .form-button-wrap,
-.contact-us-form .form-actions {
+.contact-us-form .form-actions,
+.order-form .form-item-apply-btn {
     clear: both;
     width: 222px;
     margin: 18px auto 0 auto;
@@ -277,8 +278,9 @@ hr.separator {
     border-radius: 0 0 10px 10px;
 }
 .photo-film-form .form-button-wrap .form-submit,
-.contact-us-form .form-actions .form-submit {
-    width: 222px;
+.contact-us-form .form-actions .form-submit,
+.order-form .form-item-apply-btn .form-submit {
+    width: 100%;
     padding: 14px 0 14px 30px;
     margin: 0 0 2px 0;
     background: url(../images/denied-icon.png) no-repeat 178px center #5696b1;
@@ -637,8 +639,14 @@ hr.separator {
 .photos-step .user-photos-wrap {
     float: left;
     width: 960px;
-    margin: -18px 0 0 0;
+    margin: 0 0 20px 0;
     list-style: none;
+}
+.photos-step .user-photos-wrap h2 {
+    margin: 60px 0;
+    text-align: center;
+    font-size: 18px;
+    line-height: 20px;
 }
 .photos-step .user-photos-wrap li {
     position: relative;
@@ -727,6 +735,82 @@ hr.separator {
     margin-top: 5px;
 }
 
+/* Subtitles */
+.subtitles-block {
+    clear: both;
+    color: #808080;
+    line-height: 18px;
+}
+.subtitles-block .subtitles-button {
+    float: left;
+    width: 220px;
+    padding: 12px 0;
+    font-size: 14px;
+    font-family: 'PT Sans', sans-serif;
+    color: #ffffff;
+    text-align: center;
+    text-transform: uppercase;
+    line-height: 15px;
+
+    background: rgb(187,187,187);
+    background: -moz-linear-gradient(top,  rgba(187,187,187,1) 0%, rgba(168,168,168,1) 100%);
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(187,187,187,1)), color-stop(100%,rgba(168,168,168,1)));
+    background: -webkit-linear-gradient(top,  rgba(187,187,187,1) 0%,rgba(168,168,168,1) 100%);
+    background: -o-linear-gradient(top,  rgba(187,187,187,1) 0%,rgba(168,168,168,1) 100%);
+    background: -ms-linear-gradient(top,  rgba(187,187,187,1) 0%,rgba(168,168,168,1) 100%);
+    background: linear-gradient(to bottom,  rgba(187,187,187,1) 0%,rgba(168,168,168,1) 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#bbbbbb', endColorstr='#a8a8a8',GradientType=0 );
+    cursor: pointer;
+}
+.subtitles-block .subtitles-button:hover {
+    background: rgb(177,177,177);
+    background: -moz-linear-gradient(top,  rgba(177,177,177,1) 0%, rgba(158,158,158,1) 100%);
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(177,177,177,1)), color-stop(100%,rgba(158,158,158,1)));
+    background: -webkit-linear-gradient(top,  rgba(177,177,177,1) 0%,rgba(158,158,158,1) 100%);
+    background: -o-linear-gradient(top,  rgba(177,177,177,1) 0%,rgba(158,158,158,1) 100%);
+    background: -ms-linear-gradient(top,  rgba(177,177,177,1) 0%,rgba(158,158,158,1) 100%);
+    background: linear-gradient(to bottom,  rgba(177,177,177,1) 0%,rgba(158,158,158,1) 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#b1b1b1', endColorstr='#9e9e9e',GradientType=0 );
+}
+.subtitles-block.initial-subtitles .subtitles-button {
+    border-radius: 10px 10px 0 0;
+}
+.subtitles-block.final-subtitles .subtitles-button {
+    border-radius: 0 0 10px 10px;
+    margin-top: -1px;
+}
+.subtitles-block .subtitles-desc {
+    float: left;
+    margin: 12px 0 0 20px;
+    text-shadow: 1px 1px #FFFFFF;
+}
+.subtitles-block .subtitles-body {
+    float: left;
+    width: 100%;
+}
+.subtitles-block.initial-subtitles .subtitles-body {
+    border-radius: 10px 10px 0 0;
+    padding-top: 20px;
+}
+.subtitles-block.final-subtitles .subtitles-body {
+    border-radius: 0 0 10px 10px;
+    margin-top: -1px;
+    padding-bottom: 20px;
+}
+.subtitles-block .subtitles-body textarea {
+    float: left;
+    width: 444px;
+    height: 122px;
+}
+.subtitles-block .subtitles-body  span {
+    float: left;
+    width: 448px;
+    padding: 52px 0 0 18px;
+    text-shadow: 1px 1px #FFFFFF;
+
+}
+
+
 /* 'Order' step */
 .order-form {
 }
@@ -784,12 +868,27 @@ html.js .order-form input.form-autocomplete.throbbing {
     width: 100%;
     margin: 40px 0 32px 0;
 }
+.order-form .form-item-discount {
+    width: 235px;
+}
 .order-form .form-item-discount label {
     width: 105px;
-    margin-left: 155px;
+    /*margin-left: 155px;*/
 }
 .order-form .form-item-discount input {
     width: 96px;
+}
+.order-form .form-item-apply-btn {
+    clear: none;
+    width: 142px;
+    margin: 0 82px 0 0;
+    height: 34px;
+}
+.order-form .form-item-apply-btn .form-submit {
+    padding: 7px 0;
+    font-size: 14px;
+    background-image: none;
+    text-align: center;
 }
 .order-form .payment-item label {
     margin-left: 10px;
@@ -799,6 +898,9 @@ html.js .order-form input.form-autocomplete.throbbing {
     font-size: 30px;
     color: #25bae4;
     line-height: 40px;
+}
+.order-form .payment-item .messages.error {
+    display: none;
 }
 
 /* Order Info block */

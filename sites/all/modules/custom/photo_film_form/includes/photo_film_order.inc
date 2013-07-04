@@ -194,7 +194,8 @@ function photo_film_form_order($form, &$form_state) {
 
   $form['apply_discount'] = array(
     '#type' => 'submit',
-    '#value' => t('Apply discount'),
+    '#value' => t('Apply'),
+    '#prefix' => '<div class="form-item form-item-apply-btn">',
     '#ajax' => array(
       'callback' => 'photo_film_form_order_apply_discount',
       'wrapper' => 'order-amount',
@@ -202,8 +203,9 @@ function photo_film_form_order($form, &$form_state) {
       'effect' => 'none',
     ),
     '#tree' => 'TRUE',
+    '#suffix' => '</div>',
    // '#validate' => array('photo_film_form_order_apply_discount_validate'),
-    '#weight' => -9
+    '#weight' => -7
   );
 
   // next step submit button
