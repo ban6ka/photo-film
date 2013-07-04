@@ -269,7 +269,8 @@ hr.separator {
 
 }
 .photo-film-form .form-button-container .form-button-wrap,
-.contact-us-form .form-actions {
+.contact-us-form .form-actions,
+.order-form .form-item-apply-btn {
     clear: both;
     width: 222px;
     margin: 18px auto 0 auto;
@@ -277,8 +278,9 @@ hr.separator {
     border-radius: 0 0 10px 10px;
 }
 .photo-film-form .form-button-wrap .form-submit,
-.contact-us-form .form-actions .form-submit {
-    width: 222px;
+.contact-us-form .form-actions .form-submit,
+.order-form .form-item-apply-btn .form-submit {
+    width: 100%;
     padding: 14px 0 14px 30px;
     margin: 0 0 2px 0;
     background: url(../images/denied-icon.png) no-repeat 178px center #5696b1;
@@ -866,12 +868,27 @@ html.js .order-form input.form-autocomplete.throbbing {
     width: 100%;
     margin: 40px 0 32px 0;
 }
+.order-form .form-item-discount {
+    width: 235px;
+}
 .order-form .form-item-discount label {
     width: 105px;
-    margin-left: 155px;
+    /*margin-left: 155px;*/
 }
 .order-form .form-item-discount input {
     width: 96px;
+}
+.order-form .form-item-apply-btn {
+    clear: none;
+    width: 142px;
+    margin: 0 82px 0 0;
+    height: 34px;
+}
+.order-form .form-item-apply-btn .form-submit {
+    padding: 7px 0;
+    font-size: 14px;
+    background-image: none;
+    text-align: center;
 }
 .order-form .payment-item label {
     margin-left: 10px;
@@ -881,6 +898,9 @@ html.js .order-form input.form-autocomplete.throbbing {
     font-size: 30px;
     color: #25bae4;
     line-height: 40px;
+}
+.order-form .payment-item .messages.error {
+    display: none;
 }
 
 /* Order Info block */
