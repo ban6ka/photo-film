@@ -316,6 +316,8 @@ function photo_film_form_calculate_amount($cache) {
   else {
     $style_price = 1;
   }
+  
+  $discount = (!empty($cache->order_info['discount']['value']) ? 1 - $cache->order_info['discount']['value'] / 100 : 1);
 
   if (!empty($cache->order_info['format']) && $format = $cache->order_info['format']) {
     $format = taxonomy_term_load($format);
@@ -328,24 +330,56 @@ function photo_film_form_calculate_amount($cache) {
     $format_price = 0;
   }
 
-  return ($pictures_count * $style_price) * $format_price + $music * 30;
+  return (($pictures_count * $style_price) * $format_price + $music * 30) * $discount; 
 }
 
 /**
- * Callback for ajax on the last step on our form
+ * Callback for ajax on the last step on our form to get the total amount of the order
  * returns recalculated amount of order
  */
-function photo_film_form_order_get_amount($form, $form_state) {
-  $cache = photo_film_form_cache_get(1);
+function photo_film_form_order_get_amount(&$form, &$form_state) {
+  $cache = $form_state['object'];
+
   // try to add new property to the object
   if (!empty($form_state['values']['format'])) {
-    $cache->order_info = array();
+    $cache->order_info = ((!empty($cache->order_info)) ? $cache->order_info : array());
     $cache->order_info['format'] = $form_state['values']['format'];
   }
 
   $amount = photo_film_form_calculate_amount($cache);
 
   return photo_film_form_order_get_amount_element($amount);
+}
+
+/**
+ * Callback for ajax on the last step on our form to verify an apply discount
+ * returns recalculated amount of order
+ */
+function photo_film_form_order_apply_discount($form, &$form_state) {
+  $form_state['object']->order_info['discount'] = array();
+
+  if (!empty($form_state['values']['discount'])) {
+    // try to verify discount key
+    $query = db_select('node', 'n');
+    $query -> join('field_data_field_discount_key', 'd', 'd.entity_id=n.nid');
+    $query -> fields('n', array('nid'));
+    $query -> condition('n.type', 'discount');
+    $query -> condition('n.status', 1);
+    $query -> condition('d.field_discount_key_value', $form_state['values']['discount']);
+    $result = $query-> execute();
+
+    // fetch and proceed results
+    if ($discount_node_id = $result->fetchAssoc()) {
+      $discount_node_id = array_pop($discount_node_id);
+      if ($discount_node = node_load($discount_node_id)) {
+        if ($discount_value = field_get_items('node', $discount_node, 'field_discount_value', $discount_node->language)) {
+          $form_state['object']->order_info['discount']['value'] = $discount_value[0]['value'];
+        }
+      }
+    }
+  }
+
+  return photo_film_form_order_get_amount($form, $form_state);
 }
 
 /**

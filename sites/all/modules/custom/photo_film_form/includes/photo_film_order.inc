@@ -184,6 +184,21 @@ function photo_film_form_order($form, &$form_state) {
     '#weight' => -8
   );
 
+  $form['apply_discount'] = array(
+    '#type' => 'submit',
+    '#value' => t('Apply discount'),
+    //'#button_type' => 'button',
+    '#ajax' => array(
+      'callback' => 'photo_film_form_order_apply_discount',
+      'wrapper' => 'order-amount',
+      'method' => 'replace',
+      'effect' => 'none',
+    ),
+    '#tree' => 'TRUE',
+   // '#validate' => array('photo_film_form_order_apply_discount_validate'),
+    '#weight' => -9
+  );
+
   // next step submit button
   if (!empty($form['buttons']['next'])) {
     $form['buttons']['next'] = photo_film_form_render_submit_button($form['buttons']['next'], "");
@@ -220,13 +235,17 @@ function photo_film_form_order_submit($form, &$form_state) {
  * Validate function for photo_film_form_order form
  */
 function photo_film_form_order_validate($form, &$form_state) {
- if (!empty($form_state['values']['city'])) {
-   if ($terms = taxonomy_get_term_by_name($form_state['values']['city'], 'cities')) {
+  if (!empty($form_state['values']['city'])) {
+    if ($terms = taxonomy_get_term_by_name($form_state['values']['city'], 'cities')) {
      $term = array_pop($terms);
      $form_state['values']['city'] = $term->tid;
-   }
-   else {
+    }
+    else {
      form_set_error('city', t('City doesn\'t exists'));
-   }
- }
+    }
+  }
+}
+
+function photo_film_form_order_apply_discount_validate($form, &$form_state) {
+  form_set_error('hi', 'hi');
 }
