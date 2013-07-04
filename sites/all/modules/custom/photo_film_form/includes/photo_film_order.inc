@@ -89,6 +89,7 @@ function photo_film_form_order($form, &$form_state) {
     '#type' => 'textfield',
     '#title' => t('Name') . ':',
     '#required' => TRUE,
+    '#default_value' => (!empty($cache->order_info['name']) ? $cache->order_info['name'] : ''),
     '#weight' => -14
   );
 
@@ -112,12 +113,17 @@ function photo_film_form_order($form, &$form_state) {
     '#weight' => -16
   );
 
+  if (!empty($cache->order_info['city']) && $city = taxonomy_term_load($cache->order_info['city'])) {
+    $form['city']['#default_value'] = $city->name; 
+  }
+
   $form['email'] = array(
     '#type' => 'textfield',
     '#title' => t('Email') . ':',
     '#rules' => array(
       'email',
     ),
+    '#default_value' => (!empty($cache->order_info['email']) ? $cache->order_info['email'] : ''),
     '#required' => TRUE,
     '#weight' => -12
   );
@@ -125,6 +131,7 @@ function photo_film_form_order($form, &$form_state) {
   $form['mobile'] = array(
     '#type' => 'textfield',
     '#title' => t('Mobile') . ':',
+    '#default_value' => (!empty($cache->order_info['mobile']) ? $cache->order_info['mobile'] : ''),
     '#required' => TRUE,
     '#weight' => -10
   );
@@ -143,7 +150,7 @@ function photo_film_form_order($form, &$form_state) {
     '#title' => t('Format') . ':',
     '#required' => TRUE,
     '#options' => $options,
-    '#default_value' => '',
+    '#default_value' => (!empty($cache->order_info['format']) ? $cache->order_info['format'] : ''),
     '#ajax' => array(
       'callback' => 'photo_film_form_order_get_amount',
       'wrapper' => 'order-amount',
@@ -167,7 +174,7 @@ function photo_film_form_order($form, &$form_state) {
     '#type' => 'select',
     '#title' => t('Delivery method') . ':',
     '#required' => TRUE,
-    '#default_value' => '',
+    '#default_value' => (!empty($cache->order_info['delivery']) ? $cache->order_info['delivery'] : ''),
     '#options' => $options,
     '#weight' => -11
   );
@@ -181,13 +188,13 @@ function photo_film_form_order($form, &$form_state) {
   $form['discount'] = array(
     '#type' => 'textfield',
     '#title' => t('Discount') . ':',
+  //  '#default_value' => (!empty($cache->order_info['discount']['value']) ? $cache->order_info['discount']['value'] : ''),
     '#weight' => -8
   );
 
   $form['apply_discount'] = array(
     '#type' => 'submit',
     '#value' => t('Apply discount'),
-    //'#button_type' => 'button',
     '#ajax' => array(
       'callback' => 'photo_film_form_order_apply_discount',
       'wrapper' => 'order-amount',
@@ -226,8 +233,10 @@ function photo_film_form_order_submit($form, &$form_state) {
       'mobile' => !empty($form_state['values']['mobile']) ? $form_state['values']['mobile'] : '',
       'format' => !empty($form_state['values']['format']) ? $form_state['values']['format'] : '',
       'delivery' => !empty($form_state['values']['delivery']) ? $form_state['values']['delivery'] : '',
-      'discount' => !empty($form_state['values']['format']) ? $form_state['values']['format'] : '',
+      'discount' => array(),
     );
+
+ //   $form_state['object']->order_info['discount']['value'] = !empty($form_state['values']['discount']) ? $form_state['values']['discount'] : '';
   }
 }
 

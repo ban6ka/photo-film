@@ -36,24 +36,25 @@ function photo_film_create_order_node($cache, $archive = NULL, $name = 'test') {
   if (!empty($cache->style['style'])) {
     $node->field_style[$node->language][]['tid'] = $cache->style['style'];
   }
-
+  $restricted = array();
   if (!empty($cache->order_info['format'])) {
     $node->field_video_format[$node->language][]['tid'] = $cache->order_info['format'];
-    unset($cache->order_info['format']);
+    $restricted[] = 'format';
   }
 
   if (!empty($cache->order_info['delivery'])) {
     $node->field_delivery_method[$node->language][]['tid'] = $cache->order_info['delivery'];
-    unset($cache->order_info['delivery']);
+    $restricted[] = 'delivery';
   }
 
   if (!empty($cache->order_info['city'])) {
     $node->field_city[$node->language][]['tid'] = $cache->order_info['city'];
-    unset($cache->order_info['city']);
+    $restricted[] = 'city';
+
   }
 
   foreach ($cache->order_info as $key => $field) {
-    if (!empty($field)) {
+    if (!empty($field) && !in_array($key, $restricted)) {
       $node->{'field_' . $key}[$node->language][]['value'] = $field;
     }
   }
