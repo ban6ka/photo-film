@@ -56,6 +56,46 @@ function content_type_discount_field_default_field_instances() {
       'module' => 'number',
       'settings' => array(),
       'type' => 'number',
+      'weight' => 3,
+    ),
+  );
+
+  // Exported field_instance: 'node-discount-field_discount_key'
+  $field_instances['node-discount-field_discount_key'] = array(
+    'bundle' => 'discount',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'text',
+        'settings' => array(),
+        'type' => 'text_default',
+        'weight' => 2,
+      ),
+      'teaser' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'entity_type' => 'node',
+    'field_name' => 'field_discount_key',
+    'label' => 'Discount key',
+    'required' => 0,
+    'settings' => array(
+      'text_processing' => 0,
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'text',
+      'settings' => array(
+        'size' => 60,
+      ),
+      'type' => 'text_textfield',
       'weight' => 2,
     ),
   );
@@ -83,7 +123,7 @@ function content_type_discount_field_default_field_instances() {
     ),
     'entity_type' => 'node',
     'field_name' => 'field_discount_value',
-    'label' => 'Value',
+    'label' => 'Discount value',
     'required' => 0,
     'settings' => array(
       'text_processing' => 0,
@@ -103,7 +143,8 @@ function content_type_discount_field_default_field_instances() {
   // Translatables
   // Included for use with string extractors like potx.
   t('Can be used count');
-  t('Value');
+  t('Discount key');
+  t('Discount value');
 
   return $field_instances;
 }
