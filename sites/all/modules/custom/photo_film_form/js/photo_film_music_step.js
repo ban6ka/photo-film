@@ -73,6 +73,9 @@
                 if (!($(this).hasClass(Drupal.control_classes.locked) || $(this).hasClass(Drupal.control_classes.loading)))
                     Drupal.controls.uploader.click()
             });
+        } else {
+            var txt = this.controls.drop_zone.children("span");
+            txt.text(txt.text().substring(0, txt.text().indexOf(" или перетащите")));
         }
     }
 
