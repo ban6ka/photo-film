@@ -42,10 +42,10 @@ function photo_film_form_select_music_step($form, &$form_state) {
 
   $query = db_select('node', 'n');
 
-  // join style that user selected
-  if (!empty($cache->style['style'])) {
-    $query->join('field_data_field_style', 'style', 'style.entity_id = n.nid');
-    $query->condition('style.field_style_tid', $cache->style['style']);
+  // join theme that user selected
+  if (!empty($cache->theme['theme'])) {
+    $query->join('field_data_field_style', 'theme', 'theme.entity_id = n.nid');
+    $query->condition('theme.field_style_tid', $cache->theme['theme']);
   }
 
   $query->fields('n', array('nid'))
