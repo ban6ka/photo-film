@@ -292,8 +292,8 @@ function photo_film_form_ctools_multi_step_form_info() {
         'include' => drupal_get_path('module', 'photo_film_form') . '/includes/photo_film_order.inc',
       ),
       'finish' => array(
-        'form id' => 'photo_film_form_finish',
-        'include' => drupal_get_path('module', 'photo_film_form') . '/includes/photo_film_finish.inc',
+        'form id' => 'commerce_ua_privat_bank_form',
+        'include' => drupal_get_path('module', 'commerce_ua') . '/commerce_ua.module',
       ),
     ),
   );
