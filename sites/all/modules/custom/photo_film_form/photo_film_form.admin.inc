@@ -161,6 +161,15 @@ function photo_film_form_settings_form($form_state) {
     '#default_value' => (!empty($warning['value']) ? $warning['value'] : ''),
     '#required' => FALSE,
   );
+
+  $warning = variable_get('photo_film_select_picture_step_music_reject_warning', '');
+  $form['fourth_step']['photo_film_select_picture_step_music_reject_warning'] = array(
+    '#title' => t('Enter warning message for user that rejected from music'),
+    '#type' => 'text_format',
+    '#format' => 'full_html',
+    '#default_value' => (!empty($warning['value']) ? $warning['value'] : ''),
+    '#required' => FALSE,
+  );
   $form['fourth_step']['photo_film_select_picture_step_drop_zone_message'] = array(
     '#title' => t('Enter message for drop zone (area that allows to drag&drop photos into)'),
     '#description' => t('Help text that appears in drop zone'),

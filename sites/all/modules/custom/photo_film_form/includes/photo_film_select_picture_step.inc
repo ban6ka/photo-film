@@ -43,14 +43,17 @@ function photo_film_select_picture_step($form, &$form_state) {
   );
 
   $warning = variable_get('photo_film_select_picture_step_warning', '');
-  if (!empty($cache->music['playtime']) && !empty($warning['value'])) {
+  if (!empty($cache->music['playtime']) && !empty($warning['value']) && !empty($cache->music['fid'])) {
     // make token replacement
     $warning['value'] = str_replace('[%min]', round($cache->music['playtime'] / 5), $warning['value']);
     $warning['value'] = str_replace('[%max]', round($cache->music['playtime'] / 3), $warning['value']);
   }
-  else {
+  elseif (!empty($cache->music['fid'])) {
     $warning['value'] = str_replace('[%min]', '25', $warning['value']);
     $warning['value'] = str_replace('[%max]', '30', $warning['value']);
+  }
+  else {
+    $warning = variable_get('photo_film_select_picture_step_music_reject_warning', '');
   }
 
   $form['user_file_upload'] = array(
