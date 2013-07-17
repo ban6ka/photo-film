@@ -162,8 +162,15 @@ function photo_film_form_create_info_file($cache_object) {
     }
   }
 
+
   if (!empty($cache_object->pictures)) {
-    $data .= T('Picture subtitles') . "\n";
+    $data .= t('Picture subtitles') . "\n";
+    $subtitles_initial = !empty($cache_object->pictures[0]['subtitles_initial']) ? $cache_object->pictures[0]['subtitles_initial'] : '';
+    $subtitles_final = !empty($cache_object->pictures[0]['subtitles_final']) ? $cache_object->pictures[0]['subtitles_final'] : '';
+
+    $data .= t('Initial subtitles') . ' : ' . $subtitles_initial . "\n";
+    $data .= t('Final subtitles') . ' : ' . $subtitles_final . "\n";
+
     foreach ($cache_object->pictures as $file_info) {
 
       if (isset($file_info['serial_number'])) {

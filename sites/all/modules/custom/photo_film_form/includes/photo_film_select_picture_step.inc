@@ -83,16 +83,22 @@ function photo_film_select_picture_step_submit(&$form, &$form_state) {
   if (!empty($form_state['input']['photos_id']) && !empty($form_state['object'])) {
     $form_state['object']->current_step = $form_state['next'];
     $form_state['object']->pictures = array();
+    $subtitles_initial = (!empty($form_state['input']['subtitles_initial']) ? $form_state['input']['subtitles_initial'] : '');
+    $subtitles_final = (!empty($form_state['input']['subtitles_final']) ? $form_state['input']['subtitles_final'] : '');
 
     foreach ($form_state['input']['photos_id'] as $key => $fid) {
       $serial_number =(!empty($form_state['input']['photos_order'][$key]) ? $form_state['input']['photos_order'][$key] : 0);
       $description = (!empty($form_state['input']['photos_comment'][$key]) ? $form_state['input']['photos_comment'][$key] : '');
+      
       $form_state['object']->pictures[] = array(
         'fid' => $fid,
+        'subtitles_initial' => $subtitles_initial,
+        'subtitles_final' => $subtitles_final,
         'serial_number' => $serial_number,
         'description' => $description,
       );
     }
+
   }
 }
 
