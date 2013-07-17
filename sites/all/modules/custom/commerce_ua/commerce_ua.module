@@ -1,0 +1,162 @@
+<?php
+/**
+ * Implements hook_menu().
+ */
+function commerce_ua_menu() {
+  $items = array();
+
+  $items['admin/config/system/commerce-ua'] = array(
+    'title' => t('Commerce settings form'),
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('commerce_ua_settings_form'),
+    'access callback' => TRUE,
+   // 'access arguments' => array('administer photo film form'),
+    'type' => MENU_NORMAL_ITEM,
+    'file path' => drupal_get_path('module', 'commerce_ua'),
+    'file' => 'commerce_ua.admin.inc'
+  );
+
+  $items['commerce-ua/return-url'] = array(
+    'title' => t('Return url'),
+    'page callback' => 'commerce_ua_return_url',
+    'access callback' => TRUE,
+    'type' => MENU_NORMAL_ITEM,
+  );
+
+  
+  $items['commerce-ua/server-url'] = array(
+    'title' => t('Server url'),
+    'page callback' => 'commerce_ua_server_url',
+    'access callback' => TRUE,
+    'type' => MENU_NORMAL_ITEM,
+  );
+  return $items;
+}
+
+/**
+ * Return url for privat 24 api 
+ */
+function commerce_ua_return_url() {
+  $fail = FALSE;
+  $_POST = (!empty($_POST) ? $_POST : array());
+  $_POST['payment'] = (!empty($_POST['payment']) ? $_POST['payment'] : '');
+
+  $signature = sha1(md5($_POST['payment'] . variable_get('commerce_ua_privat24_merchant_signature', '')));
+
+  if (empty($_POST['payment']) || empty($_POST['signature']) || $signature != $_POST['signature']) {
+    $fail = TRUE;
+  }
+  else {
+    // parce post parameter;
+    $options = drupal_parse_url('?' . $_POST['payment']);
+    // check for the status of the payment
+    if (empty($options['query']['state']) || $options['query']['state'] != 'ok' || empty($options['query']['order'])) {
+      $fail = TRUE;   
+    }
+    else {
+      // try to parce order key and retrieve node id and load that node 
+      $nid = str_replace('fotofilm_', '', $options['query']['order']);
+      if ($node = node_load($nid)) {
+        $node->status = 1;
+        node_save($node);
+      }
+    }
+  }
+  
+  if ($fail) {
+    $redirect_path = variable_get('commerce_ua_privat24_fail_url', 'commerce-ua/server-url');
+  } 
+  else {
+    $redirect_path = variable_get('commerce_ua_privat24_success_url', 'commerce-ua/return-url');
+  };
+
+  drupal_goto($redirect_path);
+}
+
+/**
+ * Sserver url for privat 24 api 
+ */
+function commerce_ua_server_url() {
+  watchdog('server_url', var_export($_POST, TRUE));
+  commerce_ua_return_url();
+}
+
+/**
+ * Privat 24 checkout form
+ */
+function commerce_ua_privat_bank_form($form, $form_state) {
+  unset($form['ctools_trail']);
+  unset($form['buttons']['cancel']);
+  unset($form['buttons']['previous']);
+
+  $form['#attributes'] = array();
+  $form['#attributes']['class'] = array();
+  $form['#attributes']['class'][] = 'photo-film-form';
+
+  $order = photo_film_form_cache_get(1);
+
+  $success_message = variable_get('photo_film_form_success_message', '');
+
+  $form['success_message'] = array(
+      '#type' => 'markup',
+      '#markup' => (!empty($success_message['value']) ? $success_message['value'] : '')
+  );
+
+  // finish submit button
+  if (!empty($form['buttons']['return'])) {
+    $form['buttons']['return']['#value'] = t("Order");
+    $form['buttons']['return'] = photo_film_form_render_submit_button($form['buttons']['return'], "");
+  }
+  
+  $form['#action'] = 'https://api.privatbank.ua/p24api/ishop';
+  
+  $form['amt'] = array(
+    '#type' => 'hidden',
+    '#value' => photo_film_form_calculate_amount($order),
+  );
+
+  $form['ccy'] = array(
+    '#type' => 'hidden',
+    '#value' => 'UAH',
+  );
+
+  $form['merchant'] = array(
+    '#type' => 'hidden',
+    '#value' => variable_get('commerce_ua_privat24_merchant_id', ''),
+  );
+
+  $form['order'] = array(
+    '#type' => 'hidden',
+    '#value' => 'fotofilm_' . (!empty($order->order_info['id']) ? $order->order_info['id'] : ''),
+  );
+  
+  $form['details'] = array(
+    '#type' => 'hidden',
+    '#value' => t('Film purchase'),
+  );
+
+  $form['ext_details'] = array(
+    '#type' => 'hidden',
+    '#value' => t('Film purchase'),
+  );
+  
+  $form['pay_way'] = array(
+    '#type' => 'hidden',
+    '#value' => 'privat24',
+  );
+
+  global $base_url;
+
+
+  $form['return_url'] = array(
+    '#type' => 'hidden',
+    '#value' => $base_url . '/commerce-ua/return-url',
+  );
+
+  $form['server_url'] = array(
+    '#type' => 'hidden',
+    '#value' => $base_url . '/commerce-ua/server-url',
+  );
+
+  return $form;
+}
