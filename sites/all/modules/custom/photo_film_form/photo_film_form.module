@@ -404,7 +404,7 @@ function photo_film_form_order_get_amount_element($amount) {
     '#prefix' => '<div class="form-item payment-item" id="order-amount">',
     '#title' => t('Pay amount') . ':',
     '#type' => 'markup',
-    '#markup' => $title . '<span>' . $amount . '</span>',
+    '#markup' => $title . '<span>' . $amount . ' UAH</span>',
     '#suffix' => '</div>',
     '#weight' => -7,
     '#amount' => $amount,
