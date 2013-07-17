@@ -334,8 +334,6 @@ function photo_film_form_calculate_amount($cache) {
       $format_price = $format_price[0]['value'];
     }
   }
-  else {
-  }
 
   return ($pictures_count * $style_price * $theme_price * $format_price + $music * 30) * $discount; 
 }
