@@ -357,15 +357,27 @@ function photo_film_form_order_get_amount(&$form, &$form_state) {
  */
 function photo_film_form_order_apply_discount($form, &$form_state) {
   $form_state['object']->order_info['discount'] = array();
-
+  
   if (!empty($form_state['values']['discount'])) {
+    $form_state['object']->order_info['discount']['value'] = photo_film_form_order_get_discount($form_state['values']['discount']);
+  }
+
+  return photo_film_form_order_get_amount($form, $form_state);
+}
+
+/**
+ * Helper function to get discount value by it's code
+ */
+function photo_film_form_order_get_discount($code = '') {
+  $value = FALSE;
+  if (!empty($code)) {
     // try to verify discount key
     $query = db_select('node', 'n');
     $query -> join('field_data_field_discount_key', 'd', 'd.entity_id=n.nid');
     $query -> fields('n', array('nid'));
     $query -> condition('n.type', 'discount');
     $query -> condition('n.status', 1);
-    $query -> condition('d.field_discount_key_value', $form_state['values']['discount']);
+    $query -> condition('d.field_discount_key_value', $code);
     $result = $query-> execute();
 
     // fetch and proceed results
@@ -373,15 +385,14 @@ function photo_film_form_order_apply_discount($form, &$form_state) {
       $discount_node_id = array_pop($discount_node_id);
       if ($discount_node = node_load($discount_node_id)) {
         if ($discount_value = field_get_items('node', $discount_node, 'field_discount_value', $discount_node->language)) {
-          $form_state['object']->order_info['discount']['value'] = $discount_value[0]['value'];
+          $value = $discount_value[0]['value'];
         }
       }
     }
   }
 
-  return photo_film_form_order_get_amount($form, $form_state);
+  return $value;
 }
-
 /**
  * Total amount element of the last step
  * @param $amount

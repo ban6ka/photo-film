@@ -204,7 +204,6 @@ function photo_film_form_order($form, &$form_state) {
     ),
     '#tree' => 'TRUE',
     '#suffix' => '</div>',
-   // '#validate' => array('photo_film_form_order_apply_discount_validate'),
     '#weight' => -7
   );
 
@@ -236,7 +235,10 @@ function photo_film_form_order_submit($form, &$form_state) {
       'mobile' => !empty($form_state['values']['mobile']) ? $form_state['values']['mobile'] : '',
       'format' => !empty($form_state['values']['format']) ? $form_state['values']['format'] : '',
       'delivery' => !empty($form_state['values']['delivery']) ? $form_state['values']['delivery'] : '',
-      'discount' => array(),
+      'discount' => array(
+        'code' => !empty($form_state['values']['discount']) ? $form_state['values']['discount'] : '',
+        'value' => photo_film_form_order_get_discount($form_state['values']['discount']),
+      )
     );
 
  //   $form_state['object']->order_info['discount']['value'] = !empty($form_state['values']['discount']) ? $form_state['values']['discount'] : '';
@@ -256,8 +258,4 @@ function photo_film_form_order_validate($form, &$form_state) {
      form_set_error('city', t('City doesn\'t exists'));
     }
   }
-}
-
-function photo_film_form_order_apply_discount_validate($form, &$form_state) {
-  form_set_error('hi', 'hi');
 }
