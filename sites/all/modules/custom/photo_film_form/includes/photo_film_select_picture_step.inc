@@ -30,7 +30,7 @@ function photo_film_select_picture_step($form, &$form_state) {
   // get the form previous step info
   $cache = photo_film_form_cache_get(1);
 
-  $form['#theme'] = array('photo_film_form_choose_theme_step_theme');
+ // $form['#theme'] = array('photo_film_form_choose_theme_step_theme');
   $form['#attributes'] = array();
   $form['#attributes']['class'] = array();
   $form['#attributes']['class'][] = 'photo-film-form';
@@ -41,24 +41,26 @@ function photo_film_select_picture_step($form, &$form_state) {
       'data' => drupal_get_path('module', 'photo_film_form') . '/js/photo_film_photo_step.js',
     ),
   );
-     
+
+  $warning = variable_get('photo_film_select_picture_step_warning', '');
+  if (!empty($cache->music['playtime']) && !empty($warning['value'])) {
+    // make token replacement
+    $warning['value'] = str_replace('[%min]', round($cache->music['playtime'] / 5), $warning['value']);
+    $warning['value'] = str_replace('[%max]', round($cache->music['playtime'] / 3), $warning['value']);
+  }
+  else {
+    $warning['value'] = str_replace('[%min]', '25', $warning['value']);
+    $warning['value'] = str_replace('[%max]', '30', $warning['value']);
+  }
+
   $form['user_file_upload'] = array(
     '#type' => 'markup',
     '#markup' => theme('photo_film_select_picture_step_content', array(
       'title' => variable_get('photo_film_select_picture_step_title', ''),
       'help_text' => variable_get('photo_film_select_picture_step_drop_zone_message', ''),
+      'warning' => $warning['value'],
     ))
   );
-
-  $warning = variable_get('photo_film_select_picture_step_warning', '');
-  
-  if (!empty($cache->music['playtime']) && !empty($warning['value'])) {
-    // make token replacement
-    $warning['value'] = str_replace('[%min]', round($cache->music['playtime'] / 5), $warning['value']);
-    $warning['value'] = str_replace('[%max]', round($cache->music['playtime'] / 3), $warning['value']);
-    // add warning on the form user man and min file upload
-    $form['user_file_upload']['#markup']['warning'] = $warning['value'];
-  }
 
   $form['file'] = array(
     '#name' => 'photo-files[]',
