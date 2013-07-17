@@ -188,7 +188,7 @@ function photo_film_form_order($form, &$form_state) {
   $form['discount'] = array(
     '#type' => 'textfield',
     '#title' => t('Discount') . ':',
-  //  '#default_value' => (!empty($cache->order_info['discount']['value']) ? $cache->order_info['discount']['value'] : ''),
+    '#default_value' => (!empty($cache->order_info['discount']['code']) ? $cache->order_info['discount']['code'] : ''),
     '#weight' => -8
   );
 

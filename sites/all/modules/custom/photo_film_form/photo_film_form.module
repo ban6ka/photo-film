@@ -308,16 +308,24 @@ function photo_film_form_ctools_multi_step_form_info() {
 function photo_film_form_calculate_amount($cache) {
   $pictures_count = isset($cache->pictures) ? count($cache->pictures) : 0;
   $music = !empty($cache->music['fid']);
+
+  $style_price = 1;
+
   if (!empty($cache->style['style']) && $style = taxonomy_term_load($cache->style['style'])) {
     if ($style_price = field_get_items('taxonomy_term', $style, 'field_coefficient')) {
       $style_price = $style_price[0]['value'];
     }
   }
-  else {
-    $style_price = 1;
+
+  $theme_price = 1;
+  if (!empty($cache->theme['theme']) && $theme = taxonomy_term_load($cache->theme['theme'])) {
+    if ($theme_price = field_get_items('taxonomy_term', $theme, 'field_coefficient')) {
+      $theme_price = $theme_price[0]['value'];
+    }
   }
   
   $discount = (!empty($cache->order_info['discount']['value']) ? 1 - $cache->order_info['discount']['value'] / 100 : 1);
+  $format_price = 1;
 
   if (!empty($cache->order_info['format']) && $format = $cache->order_info['format']) {
     $format = taxonomy_term_load($format);
@@ -327,10 +335,9 @@ function photo_film_form_calculate_amount($cache) {
     }
   }
   else {
-    $format_price = 0;
   }
 
-  return (($pictures_count * $style_price) * $format_price + $music * 30) * $discount; 
+  return ($pictures_count * $style_price * $theme_price * $format_price + $music * 30) * $discount; 
 }
 
 /**
