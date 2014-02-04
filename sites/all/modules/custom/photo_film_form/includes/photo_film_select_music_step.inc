@@ -92,12 +92,12 @@ function photo_film_form_select_music_step($form, &$form_state) {
 
   $form['file_fid'] = array(
     '#type' => 'hidden',
-    '#default_value' => '',
+    '#default_value' => !empty($cache->music['fid']) ? $cache->music['fid'] : '',
   );
-  
+
   $form['audio_length'] = array(
     '#type' => 'hidden',
-    '#default_value' => '',
+    '#default_value' => !empty($cache->music['playtime']) ? $cache->music['playtime'] : '',
   );
 
   $form['file'] = array(
@@ -171,6 +171,7 @@ function theme_photo_film_select_music_step_wrapper($variables) {
     'items' => $proposed_list,
     'warning' => variable_get('photo_film_user_music_upload_step_user_warning', ''),
     'help_text' => variable_get('photo_film_music_upload_step_drop_zone_message', ''),
+    'default_value' => !empty($form['file_fid']['#default_value']) ? $form['file_fid']['#default_value'] : FALSE,
   ));
   if (!empty($form['photo_film_compositions'])) {
     $output .= drupal_render($form['photo_film_compositions']);
@@ -185,6 +186,7 @@ function theme_photo_film_select_music_step_wrapper($variables) {
   if (!empty($form['file_fid'])) {
     $output .= drupal_render($form['file_fid']);
   }
+
   if (!empty($form['audio_length'])) {
     $output .= drupal_render($form['audio_length']);
   }

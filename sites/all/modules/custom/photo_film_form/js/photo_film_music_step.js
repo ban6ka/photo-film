@@ -56,6 +56,10 @@
         this.controls.drop_zone = $("div.file-uploader-holder");
         this.controls.file_holder = $("div.user-track-info");
         this.controls.file_input = $("input[name=file_fid]");
+        if (this.controls.file_input.val().length != 0) {
+            $("div.form-button-wrap").addClass('active');
+        }
+        
         this.controls.tracks_list = $("ul.tracks-list");
         this.controls.tracks_items = this.controls.tracks_list.find("li.track-item");
         this.controls.refuse_input = $("#refuse-music-checkbox");

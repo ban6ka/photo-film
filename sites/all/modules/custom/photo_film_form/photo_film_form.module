@@ -40,6 +40,7 @@ function photo_film_form_theme($existing, $type, $theme, $path) {
         'title' => NULL,
         'items' => array(),
         'warning' => NULL,
+        'default_value' => NULL,
       ),
       'template' => '/templates/photo-film-select-music-step-content',
       'path' => drupal_get_path('module', 'photo_film_form'),
