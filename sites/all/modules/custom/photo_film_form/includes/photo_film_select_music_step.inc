@@ -10,11 +10,14 @@
 function photo_film_form_select_music_step($form, &$form_state) {
   $form['#theme'] = array('photo_film_select_music_step_wrapper');
   // Attach the CSS and JS to the form
+  drupal_add_js(libraries_get_path('mediaelementjs') . '/build/mediaelement-and-player.min.js');
   drupal_add_js(libraries_get_path('jquery_file_upload') . '/js/vendor/jquery.ui.widget.js');
   drupal_add_js(libraries_get_path('jquery_file_upload') . '/js/jquery.iframe-transport.js');
   drupal_add_js(libraries_get_path('jquery_file_upload') . '/js/jquery.fileupload.js');
   drupal_add_js(libraries_get_path('jquery_scroll_master') . '/jquery.scroll.min.js');
+
   drupal_add_css(libraries_get_path('jquery_scroll_master') . '/css/scrollbar.css');
+  drupal_add_css(libraries_get_path('mediaelementjs') . '/build/mediaelementplayer.min.css');
 
   drupal_add_js(array('music_settings' => array(
     'max_files' => 1,
@@ -68,6 +71,7 @@ function photo_film_form_select_music_step($form, &$form_state) {
             '#title' => t('Track'),
             '#type' => 'markup',
             '#markup' => $music_item->title,
+            '#value' => file_create_url($composition[0]['uri']),
           );
         }
         if ($author = field_get_items('node', $music_item, 'field_author', $music_item->language)) {
@@ -87,6 +91,11 @@ function photo_film_form_select_music_step($form, &$form_state) {
   );
 
   $form['file_fid'] = array(
+    '#type' => 'hidden',
+    '#default_value' => '',
+  );
+  
+  $form['audio_length'] = array(
     '#type' => 'hidden',
     '#default_value' => '',
   );
@@ -116,10 +125,10 @@ function photo_film_form_select_music_step_submit(&$form, &$form_state) {
     // load file from drupal db
     $audio_file = file_load($form_state['values']['file_fid']);
     // try to identify file playtime length
-    $audio_file = getid3_analyze(drupal_realpath($audio_file->uri));
-
-    if (!empty($audio_file['playtime_seconds'])) {
-      $form_state['object']->music['playtime'] = $audio_file['playtime_seconds'];
+    if (!empty($form_state['values']['audio_length'])) {
+      $length = explode(':', $form_state['values']['audio_length']);
+      $form_state['values']['audio_length'] = $length[0] * 60 + $length[1];
+      $form_state['object']->music['playtime'] = $form_state['values']['audio_length'];
     }
   }
 }
@@ -150,6 +159,7 @@ function theme_photo_film_select_music_step_wrapper($variables) {
         $proposed_list[$key] = array(
           'fid' => $form['photo_film_compositions']['#options'][$key],
           'title' => $form['tracks_list']['track_' . $key]['#markup'],
+          'path' => $form['tracks_list']['track_' . $key]['#value'],
           'author' => $form['tracks_list']['author_' . $key]['#markup']
         );
       }
@@ -174,6 +184,9 @@ function theme_photo_film_select_music_step_wrapper($variables) {
 
   if (!empty($form['file_fid'])) {
     $output .= drupal_render($form['file_fid']);
+  }
+  if (!empty($form['audio_length'])) {
+    $output .= drupal_render($form['audio_length']);
   }
   // next step submit button
   if (!empty($form['buttons']['next'])) {

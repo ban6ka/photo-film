@@ -1,9 +1,30 @@
 (function ($) {
     Drupal.behaviors.photo_film_themes_step = {
         attach: function (context, settings) {
+            $('audio').mediaelementplayer();
+            
             jQuery.each((Drupal.settings.music_settings), function(key, value) {
                 Drupal.form_settings[key] = value;
             });
+            // try to fetch duration of the audio track
+            $('#photo-film-form-select-music-step').submit(function() {
+                var fid = $('input[name="file_fid"]').val();
+                if (fid != undefined) {
+                    var $musicItem = $('li[track_id="' + fid + '"]');
+                    if ($musicItem.length ==0) {
+                        $musicItem = $('div.user-track-wrap');
+                    }
+                }
+
+                if ($musicItem != undefined && $musicItem.length > 0) {
+                    var duration = $musicItem.find('span.mejs-duration');
+                    if (duration.length != 0) {
+                        $('input[name="audio_length"]').val(duration.text());                        
+                    }
+                }
+
+            })
+            
             Drupal.initMusicStep();
         }
     }
@@ -160,8 +181,8 @@
             for (var i = 0; i < response.Result.length; i ++) {
                 var id = response.Result[i].fid,
                     file = data.files[i];
-
-                this.renderTrackFile(id, file);
+                    path = response.Result[i].path;
+                this.renderTrackFile(id, file, path);
             }
             data.files.length = 0;
             this.lockTracksList(true);
@@ -176,12 +197,13 @@
         }
     }
 
-    Drupal.renderTrackFile = function (id, file) {
+    Drupal.renderTrackFile = function (id, file, path) {
         this.controls.file_input.val(id);
         this.controls.file_holder.attr("fid", id)
-                                 .children("div.title").text(file.name)
+                                 .children("div.title").html(file.name + '<audio type="audio/mpeg" src="' + path + '"></audio>')
                                  .end()
                                  .parent().show();
+         $('audio').mediaelementplayer();
     }
 
     Drupal.removeUploadedFile = function (event) {
@@ -244,7 +266,9 @@
         if (this.controls.refuse_input.is(":checked")
             || this.form_settings.uploaded_files > 0
             || this.controls.tracks_items.filter("." + this.control_classes.checked).length) {
+            
             wrap.addClass("active");
+
         } else {
             wrap.removeClass("active");
         }

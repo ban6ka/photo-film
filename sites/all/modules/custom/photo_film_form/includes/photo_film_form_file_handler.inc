@@ -48,10 +48,13 @@ function photo_film_form_save_file_wrapper() {
         if (!empty($destination) && $saved = photo_film_form_save_file($file_to_save, $destination)) {
           $result = new stdClass();
           $result->fid = $saved->fid;
-          // if it was an image give an url for preview
+          $result->path = file_create_url($saved->uri);
+          
+          // if it was an image give an url for preview          
           if ($is_image) {
             $result->image_preview = image_style_url('photo_film_style_thumb', $saved->uri);
           }
+
           $results['Result'][] = $result;
         }
       }

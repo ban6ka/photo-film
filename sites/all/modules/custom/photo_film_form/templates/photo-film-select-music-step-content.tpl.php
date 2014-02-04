@@ -19,14 +19,15 @@
   <div class="tracks-list-wrap">
     <?php if (!empty($items)): ?>
       <h2><?php print t("We propose") ?></h2>
-      <ul class="tracks-list">
-        <?php foreach ($items as $key => $item): ?>
-          <li class="track-item <?php print $key %2 == 0 ? "even" : "odd" ?>" track_id="<?php print $item['fid'] ?>">
-            <div class="title"><?php print $item['title'] ?></div>
-            <div class="author"><?php print $item['author'] ?></div>
-          </li>
-        <?php endforeach ?>
-      </ul>
+        <ul class="tracks-list">
+          <?php foreach ($items as $key => $item): ?>
+            <li class="track-item <?php print $key %2 == 0 ? "even" : "odd" ?>" track_id="<?php print $item['fid'] ?>">
+              <div class="title"><?php print $item['title'] ?></div>
+              <div class="author"><?php print $item['author'] ?></div>
+              <audio src="<?php print $item['path'] ?>" type="audio/mpeg"> </audio>
+            </li>
+          <?php endforeach ?>
+        </ul>
     <?php endif; ?>
   </div>
 
