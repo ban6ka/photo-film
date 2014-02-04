@@ -29,8 +29,8 @@ function photo_film_select_picture_step($form, &$form_state) {
 
   // get the form previous step info
   $cache = photo_film_form_cache_get(1);
-
- // $form['#theme'] = array('photo_film_form_choose_theme_step_theme');
+  // photo_film_form_cache_clear(1);
+  // $form['#theme'] = array('photo_film_form_choose_theme_step_theme');
   $form['#attributes'] = array();
   $form['#attributes']['class'] = array();
   $form['#attributes']['class'][] = 'photo-film-form';
@@ -55,6 +55,12 @@ function photo_film_select_picture_step($form, &$form_state) {
   else {
     $warning = variable_get('photo_film_select_picture_step_music_reject_warning', '');
   }
+  
+  if (!empty($cache->pictures)) {
+    foreach($cache->pictures as &$file) {
+      $file['original'] = file_load($file['fid']);
+    }
+  }
 
   $form['user_file_upload'] = array(
     '#type' => 'markup',
@@ -62,6 +68,7 @@ function photo_film_select_picture_step($form, &$form_state) {
       'title' => variable_get('photo_film_select_picture_step_title', ''),
       'help_text' => variable_get('photo_film_select_picture_step_drop_zone_message', ''),
       'warning' => $warning['value'],
+      'items' => (!empty($cache->pictures) ? $cache->pictures : array())
     ))
   );
 

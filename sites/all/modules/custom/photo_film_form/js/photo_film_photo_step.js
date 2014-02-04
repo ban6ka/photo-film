@@ -42,7 +42,13 @@
         this.controls.drop_zone = $("div.file-uploader-holder");
         this.controls.files_holder = $("ul.user-photos-wrap");
         this.controls.comment_dialog = $("#comment-dialog");
-
+        if (this.controls.files_holder.find('li').length != 0) {
+            $("div.photo-comment").on("click", $.proxy(this.commentUploadedFile, this))
+            $("div.photo-remove").on("click", $.proxy(this.removeUploadedFile, this));
+            this.initPhotosSorting();
+            this.form_settings.uploaded_files = this.controls.files_holder.find('li').length;
+            this.enableSubmitButton();
+        }
         this.controls.uploader.fileupload({
             url: '/admin/photo-film/file/save/file',
             type: 'POST',
@@ -149,6 +155,7 @@
             .find("div.photo-remove").on("click", $.proxy(this.removeUploadedFile, this));
 
         this.controls.files_holder.append(item);
+        
         this.initPhotosSorting();
         this.enableSubmitButton();
     }
