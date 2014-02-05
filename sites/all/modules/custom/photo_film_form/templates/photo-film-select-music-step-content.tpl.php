@@ -20,12 +20,16 @@
     <?php if (!empty($items)): ?>
       <h2><?php print t("We propose") ?></h2>
         <ul class="tracks-list">
+          <?php $pos = 0; ?>
           <?php foreach ($items as $key => $item): ?>
-            <li class="track-item <?php print $key %2 == 0 ? "even " : "odd "; print ($item['fid'] == $default_value ? 'checked' : '') ?>" track_id="<?php print $item['fid'] ?>">
-              <div class="title"><?php print $item['title'] ?></div>
-              <div class="author"><?php print $item['author'] ?></div>
-              <audio src="<?php print $item['path'] ?>" type="audio/mpeg"> </audio>
+            <li class="track-item <?php print ($pos %2 == 0 ? 'even' : 'odd') . ($item['fid'] == $default_value ? ' checked' : '') ?>" track_id="<?php print $item['fid'] ?>">
+              <div class="title clearfix">
+                <span><?php print $item['title'] ?></span>
+                <strong class="author">(<?php print $item['author'] ?>)</strong>
+              </div>
+              <audio src="<?php print $item['path'] ?>" type="audio/mpeg" width="400"></audio>
             </li>
+            <?php $pos++; ?>
           <?php endforeach ?>
         </ul>
     <?php endif; ?>

@@ -477,12 +477,15 @@ hr.separator {
 }
 .tracks-list li.checked {
     color: #ffffff;
-    background: url(../images/checked-small-icon.png) no-repeat 410px 12px #247b9f;
+    background: url(../images/checked-small-icon.png) no-repeat 424px 24px #247b9f;
 }
-.tracks-list li .author {
-    font-weight: bold;
+.tracks-list li .title > span {
+    float: left;
+}
+.tracks-list li .title .author {
+    float: left;
     font-size: 10px;
-    margin-top: 1px;
+    margin: 2px 0 0 5px;
 }
 
 .user-file-upload {
@@ -580,6 +583,47 @@ hr.separator {
     display: inline-block;
     font-size: 15px;
     line-height: 16px;
+}
+
+/* Audio-player Style */
+.mejs-container .mejs-controls {
+    background: transparent;
+}
+.mejs-container .mejs-controls .mejs-time span {
+    color: initial;
+}
+.mejs-controls .mejs-button button {
+    background-image: url(../images/player-controls-dark.png);
+}
+.mejs-controls .mejs-button button:focus {
+    outline: solid 1px transparent;
+}
+.mejs-controls .mejs-play button,
+.mejs-controls .mejs-pause button {
+    margin: 6px 4px 6px 0px;
+    width: 17px;
+    height: 18px;
+}
+
+.track-item .mejs-mediaelement {
+    background: #ffffff;
+    color: #3b3b3b;
+}
+.track-item.even .mejs-mediaelement {
+    background-color: #f0f0f0;
+}
+.track-item.checked .mejs-mediaelement,
+.user-track-info .mejs-mediaelement {
+    background: #247b9f;
+    color: #ffffff;
+}
+.track-item.checked .mejs-controls .mejs-button button,
+.user-track-info .mejs-controls .mejs-button button {
+    background-image: url(../images/player-controls.png);
+}
+.track-item.checked .mejs-controls .mejs-time span,
+.user-track-info .mejs-controls .mejs-time span {
+    color: #fff;
 }
 
 /* Custom Scrollbar Style */

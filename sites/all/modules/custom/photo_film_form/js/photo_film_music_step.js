@@ -127,6 +127,9 @@
     }
 
     Drupal.onTrackSelected = function (e) {
+        if ($(e.target).parents("div.mejs-container").length)
+            return;
+
         var track = $(e.currentTarget),
             is_selected = track.hasClass(this.control_classes.checked);
 
@@ -204,9 +207,9 @@
     Drupal.renderTrackFile = function (id, file, path) {
         this.controls.file_input.val(id);
         this.controls.file_holder.attr("fid", id)
-                                 .children("div.title").html(file.name + '<audio type="audio/mpeg" src="' + path + '"></audio>')
-                                 .end()
-                                 .parent().show();
+                                 .children("div.title").html(file.name)
+                                 .next("div.remove").after('<audio type="audio/mpeg" src="' + path + '" width="350"></audio>')
+                                 .parents("div.user-track-wrap").show();
          $('audio').mediaelementplayer();
     }
 
