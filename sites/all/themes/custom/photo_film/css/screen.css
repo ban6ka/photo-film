@@ -372,6 +372,12 @@ hr.separator {
 .photo-film-form .images-list .style-image-wrap {
     position: relative;
 }
+.photo-film-form .images-list .style-image-price {
+    padding: 4px 10px;
+    background-color: #e5e6e6;
+    color: #3b3a3a;
+    font-weight: bold;
+}
 .photo-film-form .images-list .style-toolbar {
     width: 198px;
     padding: 10px 12px 10px 10px;
