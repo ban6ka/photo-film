@@ -215,7 +215,24 @@
 
     Drupal.removeUploadedFile = function (event) {
         event.preventDefault();
-        $.ajax({
+        
+        this.controls.file_holder.parent().removeClass(Drupal.control_classes.loading);
+        this.controls.uploader[0].value = "";
+
+        this.controls.file_input.val("");
+        this.controls.file_holder.attr("fid", null);
+        this.controls.file_holder.find("div.mejs-container").remove();
+        this.form_settings.uploaded_files -= 1;
+
+        this.controls.file_holder.parent().hide();
+        this.controls.drop_zone.show();
+        if (jQuery.browser.msie) {
+            this.controls.uploader_wrap.show();
+        }
+
+        this.lockTracksList(this.controls.refuse_input.is(":checked"));
+
+        /*$.ajax({
             url: "/admin/photo-film/file/remove/file",
             type: "POST",
             dataType: "json",
@@ -247,7 +264,7 @@
                 }
 
             }
-        });
+        });*/
     }
 
     Drupal.onRefuseClicked = function () {
