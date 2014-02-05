@@ -28,6 +28,7 @@
     <?php foreach ($items as $item): ?>
       <li>
         <div class="style-image-wrap clearfix">
+          <div class="price"><?php print $item['coefficient'] . ' UAH' ?></div>
           <?php print theme('image_style', array(
             'style_name' => 'photo_film_style_thumb',
             'path' => $item['image_path'],

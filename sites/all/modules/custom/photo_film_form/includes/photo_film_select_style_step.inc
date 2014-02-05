@@ -36,6 +36,7 @@ function photo_film_form_select_style_step($form, &$form_state) {
         $options[$value->tid] = $value->tid;
         $image = field_get_items('taxonomy_term', $term, 'field_image');
         $video = field_get_items('taxonomy_term', $term, 'field_video_url');
+        $coefficient = field_get_items('taxonomy_term', $term, 'field_coefficient');
 
         $form['image_' . $value->tid] = array(
           '#type' => 'value',
@@ -50,6 +51,11 @@ function photo_film_form_select_style_step($form, &$form_state) {
         $form['title_' . $value->tid] = array(
           '#type' => 'value',
           '#value' => $term->name
+        );
+
+        $form['price_' . $value->tid] = array(
+          '#type' => 'value',
+          '#value' => (float) $coefficient[0]['value']
         );
       }
 
@@ -115,6 +121,7 @@ function theme_photo_film_form_select_style_wrapper($variables) {
           'image_path' => $form['image_' . $id]['#value'],
           'title' => $form['title_' . $id]['#value'],
           'video_url' => $form['video_' . $id]['#value'],
+          'coefficient' => $form['price_' . $id]['#value'],
         );
       }
     }
