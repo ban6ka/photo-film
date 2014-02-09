@@ -31,7 +31,7 @@ function photo_film_form_step_access_ctools_access_check($conf, $context, $plugi
   $args = arg();
   $step = array_pop($args);
   // if this is a first step
-  if ($step == 'themes') {
+  if ($step == 'themes' || $step == 'finish') {
     return TRUE;
   }
 
