@@ -38,22 +38,25 @@ function commerce_ua_menu() {
  */
 function commerce_ua_return_url() {
   $fail = FALSE;
+
   $_POST = (!empty($_POST) ? $_POST : array());
-  $signature = variable_get('commerce_ua_privat24_merchant_signature', '');
-  // basic POST info
+
   watchdog('server_url', var_export($_POST, TRUE));
 
-  $xml=base64_decode($_POST['operation_xml']); 
-  $sign=base64_encode(sha1($signature.$xml.$signature,1)); 
-
-  if (empty($_POST['payment']) || empty($_POST['signature']) || $sign != $_POST['signature']) {
+  $xml = base64_decode($_POST['operation_xml']); 
+  
+  $signature = variable_get('commerce_ua_privat24_merchant_signature', '');
+  $sign = base64_encode(sha1($signature . $xml . $signature, 1));
+  
+  if (empty($_POST['signature']) || $sign != $_POST['signature']) {
     $fail = TRUE;
   }
   else {
     // parce post parameter;
-    $options = xml2array($xml);
-    watchdog('server_url_options', var_export($options, TRUE));
-    
+    $response = xml2array($xml);
+    $options = $response['response'][0];
+
+    watchdog('server_url_options', var_export($options, TRUE));  
     // check for the status of the payment
     if (empty($options['status'][0]) || $options['status'][0] != 'success' || empty($options['order_id'][0])) {
       $fail = TRUE;   
