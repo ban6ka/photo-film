@@ -60,7 +60,7 @@ function commerce_ua_return_url() {
     }
     else {
       // try to parce order key and retrieve node id and load that node 
-      $nid = str_replace('fotofilm_', '', $options['order_id'][0]);
+      $nid = str_replace('fotofilm1_', '', $options['order_id'][0]);
       if ($node = node_load($nid)) {
         $node->status = 1;
         node_save($node);
@@ -159,9 +159,10 @@ function commerce_ua_privat_bank_form($form, $form_state) {
           <merchant_id>' . $merch_id . '</merchant_id>
           <result_url>' . $base_url . '/commerce-ua/return-url' . '</result_url>
           <server_url>' . $base_url . '/commerce-ua/server-url' . '</server_url>
-          <order_id>fotofilm_' .  $order->order_info['id'] . '</order_id>
+          <order_id>fotofilm1_' .  $order->order_info['id'] . '</order_id>
           <amount>' . photo_film_form_calculate_amount($order) . '</amount>
           <currency>UAH</currency>
+          <pay_way>card, liqpay, delayed</pay_way>
           <description>Film purchase</description>
           <default_phone>' . str_replace(array(' ', '(', ')', '-', '+'), '', $order->order_info['mobile']) . '</default_phone> 
         </request>';
