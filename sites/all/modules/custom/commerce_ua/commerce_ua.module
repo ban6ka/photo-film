@@ -39,26 +39,34 @@ function commerce_ua_menu() {
 function commerce_ua_return_url() {
   $fail = FALSE;
   $_POST = (!empty($_POST) ? $_POST : array());
-  $_POST['payment'] = (!empty($_POST['payment']) ? $_POST['payment'] : '');
+  $signature = variable_get('commerce_ua_privat24_merchant_signature', '');
+  // basic POST info
+  watchdog('server_url', var_export($_POST, TRUE));
 
-  $signature = sha1(md5($_POST['payment'] . variable_get('commerce_ua_privat24_merchant_signature', '')));
+  $xml=base64_decode($_POST['operation_xml']); 
+  $sign=base64_encode(sha1($signature.$xml.$signature,1)); 
 
-  if (empty($_POST['payment']) || empty($_POST['signature']) || $signature != $_POST['signature']) {
+  if (empty($_POST['payment']) || empty($_POST['signature']) || $sign != $_POST['signature']) {
     $fail = TRUE;
   }
   else {
     // parce post parameter;
-    $options = drupal_parse_url('?' . $_POST['payment']);
+    $options = xml2array($xml);
+    watchdog('server_url_options', var_export($options, TRUE));
+    
     // check for the status of the payment
-    if (empty($options['query']['state']) || $options['query']['state'] != 'ok' || empty($options['query']['order'])) {
+    if (empty($options['status'][0]) || $options['status'][0] != 'success' || empty($options['order_id'][0])) {
       $fail = TRUE;   
     }
     else {
       // try to parce order key and retrieve node id and load that node 
-      $nid = str_replace('fotofilm_', '', $options['query']['order']);
+      $nid = str_replace('fotofilm_', '', $options['order_id'][0]);
       if ($node = node_load($nid)) {
         $node->status = 1;
         node_save($node);
+      }
+      else {
+        $fail = TRUE;
       }
     }
   }
@@ -74,10 +82,35 @@ function commerce_ua_return_url() {
 }
 
 /**
+ * Helper function to convert xml in to array
+ */
+function xml2array($originalXML, $attributes=true) {
+  $xmlArray = array();
+  $search = $attributes ? '|<((\S+)(.*))\s*>(.*)</\2>|Ums' : '|<((\S+)()).*>(.*)</\2>|Ums';
+ 
+  // normalize data
+  $xml = preg_replace('|>\s*<|', ">\n<", $originalXML); // one tag per line
+  $xml = preg_replace('|<\?.*\?>|', '', $xml);            // remove XML declarations
+  $xml = preg_replace('|<(\S+?)(.*)/>|U', '<$1$2></$1>', $xml); //Expand singletons
+ 
+  if (!preg_match_all($search, $xml, $xmlMatches)) {
+    return trim($originalXML);      // bail out - no XML found     
+  }
+         
+  foreach ($xmlMatches[1] as $index => $key) {
+    if (!isset($xmlArray[$key])) {
+      $xmlArray[$key] = array();
+    }  
+    $xmlArray[$key][] = xml2array($xmlMatches[4][$index], $attributes);  
+  }
+
+  return $xmlArray;
+}
+
+/**
  * Sserver url for privat 24 api 
  */
 function commerce_ua_server_url() {
-  watchdog('server_url', var_export($_POST, TRUE));
   commerce_ua_return_url();
 }
 
@@ -106,56 +139,46 @@ function commerce_ua_privat_bank_form($form, $form_state) {
   if (!empty($form['buttons']['return'])) {
     $form['buttons']['return']['#value'] = t("Order");
     $form['buttons']['return'] = photo_film_form_render_submit_button($form['buttons']['return'], "");
+    $form['buttons']['return']['#prefix'] = '<hr class="separator" /><div class="form-button-container"><h1></h1><div class="form-button-wrap active">';
   }
+
+  $form['#action'] = 'https://www.liqpay.com/?do=clickNbuy';
   
-  $form['#action'] = 'https://api.privatbank.ua/p24api/ishop';
-  
-  $form['amt'] = array(
+  $form['signature'] = array(
     '#type' => 'hidden',
-    '#value' => photo_film_form_calculate_amount($order),
-  );
-
-  $form['ccy'] = array(
-    '#type' => 'hidden',
-    '#value' => 'UAH',
-  );
-
-  $form['merchant'] = array(
-    '#type' => 'hidden',
-    '#value' => variable_get('commerce_ua_privat24_merchant_id', ''),
-  );
-
-  $form['order'] = array(
-    '#type' => 'hidden',
-    '#value' => 'fotofilm_' . (!empty($order->order_info['id']) ? $order->order_info['id'] : ''),
+    '#name' => 'signature',
+    '#value' => '',
   );
   
-  $form['details'] = array(
-    '#type' => 'hidden',
-    '#value' => t('Film purchase'),
-  );
-
-  $form['ext_details'] = array(
-    '#type' => 'hidden',
-    '#value' => t('Film purchase'),
-  );
-  
-  $form['pay_way'] = array(
-    '#type' => 'hidden',
-    '#value' => 'privat24',
-  );
-
   global $base_url;
 
+  $merch_id = variable_get('commerce_ua_privat24_merchant_id', '');
 
-  $form['return_url'] = array(
+  $xml='<request>
+          <version>1.2</version>
+          <merchant_id>' . $merch_id . '</merchant_id>
+          <result_url>' . $base_url . '/commerce-ua/return-url' . '</result_url>
+          <server_url>' . $base_url . '/commerce-ua/server-url' . '</server_url>
+          <order_id>fotofilm_' .  $order->order_info['id'] . '</order_id>
+          <amount>' . photo_film_form_calculate_amount($order) . '</amount>
+          <currency>UAH</currency>
+          <description>Film purchase</description>
+          <default_phone>' . str_replace(array(' ', '(', ')', '-', '+'), '', $order->order_info['mobile']) . '</default_phone> 
+        </request>';
+  
+  $form['operation_xml'] = array(
     '#type' => 'hidden',
-    '#value' => $base_url . '/commerce-ua/return-url',
+    '#name' => 'operation_xml',
+    '#value' => base64_encode($xml),
   );
 
-  $form['server_url'] = array(
+  $merchant_sign = variable_get('commerce_ua_privat24_merchant_signature', '');
+  $sign = base64_encode(sha1($merchant_sign . $xml . $merchant_sign, 1));
+
+  $form['signature'] = array(
     '#type' => 'hidden',
-    '#value' => $base_url . '/commerce-ua/server-url',
+    '#name' => 'signature',
+    '#value' => $sign,
   );
 
   return $form;
