@@ -122,6 +122,13 @@ function photo_film_form_select_music_step_submit(&$form, &$form_state) {
   elseif (!empty($form_state['values']['file_fid']) && !empty($form_state['object'])) {
     $form_state['object']->current_step = $form_state['next'];
     $form_state['object']->music['fid'] = $form_state['values']['file_fid'];
+    if (!empty($form['photo_film_compositions']['#options']) && in_array($form_state['values']['file_fid'], $form['photo_film_compositions']['#options'])) {
+      $form_state['object']->music['nid'] = array_keys($form['photo_film_compositions']['#options'], $form_state['values']['file_fid']);
+      $form_state['object']->music['nid'] = current($form_state['object']->music['nid']);
+    }
+    else {
+      unset($form_state['object']->music['nid']);
+    }
     // load file from drupal db
     $audio_file = file_load($form_state['values']['file_fid']);
     // try to identify file playtime length

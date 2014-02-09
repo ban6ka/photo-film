@@ -79,10 +79,18 @@ function photo_film_form_order($form, &$form_state) {
 
   // provide value that user picked up at third step
   if (!empty($cache->music['fid']) && $music = $cache->music['fid']) {
-    $file = file_load($music);
-    $path_parts = isset($file->uri) ? pathinfo($file->uri) : '';
+    $file_name = '';
+    if (!empty($cache->music['nid']) && $node = node_load($cache->music['nid'])) {
+      $author = field_get_items('node', $node, 'field_author');
+      $file_name = $node->title . (!empty($author[0]['value']) ? ' (' . $author[0]['value'] . ')' : '');
+    }
+    else {
+      $file = file_load($music);
+      $file_name = isset($file->uri) ? pathinfo($file->uri) : '';
+      $file_name = !empty($file_name['basename']) ? $file_name['basename'] : '';
+    }
 
-    $form['music']['#value'] = (!empty($path_parts['basename']) ? $path_parts['basename'] : '');
+    $form['music']['#value'] = (!empty($file_name) ? $file_name : '');
   }
 
   $form['name'] = array(
