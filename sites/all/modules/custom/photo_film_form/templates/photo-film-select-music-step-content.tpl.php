@@ -27,7 +27,7 @@
                 <span><?php print $item['title'] ?></span>
                 <strong class="author">(<?php print $item['author'] ?>)</strong>
               </div>
-              <audio src="<?php print $item['path'] ?>" type="audio/mpeg" width="400"></audio>
+              <audio preload="none" src="<?php print $item['path'] ?>" type="audio/mpeg" width="400"></audio>
             </li>
             <?php $pos++; ?>
           <?php endforeach ?>
