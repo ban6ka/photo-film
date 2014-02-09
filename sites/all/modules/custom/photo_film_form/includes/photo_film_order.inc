@@ -73,7 +73,7 @@ function photo_film_form_order($form, &$form_state) {
     '#type' => 'textfield',
     '#title' => t('Music') . ':',
     '#disabled' => TRUE,
-    '#value' => 'picked music track',
+    '#value' => t('Nothing'),
     '#weight' => -15
   );
 
