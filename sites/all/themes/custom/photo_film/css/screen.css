@@ -449,7 +449,7 @@ hr.separator {
 
 .tracks-list {
     display: block;
-    height: 395px;
+    height: 420px;
     background-color: #ffffff;
     border-top: 1px solid #e3e3e3;
     border-bottom: 1px solid #e3e3e3;
@@ -471,13 +471,14 @@ hr.separator {
 }
 .tracks-list li {
     padding: 6px 0px 7px 10px;
+    background: url(../images/checked-light-icon.png) no-repeat 420px 24px #ffffff;
 }
 .tracks-list li.even {
-    background-color: #f0f0f0;
+    background: url(../images/checked-gray-icon.png) no-repeat 420px 24px #f0f0f0;
 }
 .tracks-list li.checked {
     color: #ffffff;
-    background: url(../images/checked-small-icon.png) no-repeat 424px 24px #247b9f;
+    background: url(../images/checked-small-icon.png) no-repeat 420px 24px #247b9f;
 }
 .tracks-list li .title > span {
     float: left;
