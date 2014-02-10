@@ -14,8 +14,6 @@ function photo_film_form_order($form, &$form_state) {
   // get the form previous step info
   $cache = photo_film_form_cache_get(1);
 
-  drupal_add_js(libraries_get_path('jquery_maskedinput') . '/jquery.maskedinput.min.js');
-
   $form['#attributes'] = array();
   $form['#attributes']['class'] = array();
   $form['#attributes']['class'][] = 'photo-film-form';
@@ -23,9 +21,15 @@ function photo_film_form_order($form, &$form_state) {
 
   $form['#attached'] = array(
     'js' => array(
-      'type' => 'file',
-      'data' => drupal_get_path('module', 'photo_film_form') . '/js/photo_film_order_step.js',
-    ),
+      array(
+        'type' => 'file',
+        'data' => drupal_get_path('module', 'photo_film_form') . '/js/photo_film_order_step.js',
+      ),
+      array(
+        'type' => 'file',
+        'data' => libraries_get_path('jquery_maskedinput') . '/jquery.maskedinput.min.js',
+      ),
+    )
   );
 
   $info = variable_get('photo_film_form_order_info', '');
