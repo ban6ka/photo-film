@@ -390,14 +390,18 @@ function photo_film_form_order_apply_discount($form, &$form_state) {
  */
 function photo_film_form_order_get_discount($code = '') {
   $value = FALSE;
-  if (!empty($code)) {
+  $cache = photo_film_form_cache_get(1);
+
+  if (!empty($code) && !empty($cache->theme['theme'])) {
     // try to verify discount key
     $query = db_select('node', 'n');
     $query -> join('field_data_field_discount_key', 'd', 'd.entity_id=n.nid');
+    $query -> join('field_data_field_themes', 't', 't.entity_id=n.nid');
     $query -> fields('n', array('nid'));
     $query -> condition('n.type', 'discount');
     $query -> condition('n.status', 1);
     $query -> condition('d.field_discount_key_value', $code);
+    $query -> condition('t.field_themes_tid', $cache->theme['theme']);
     $result = $query-> execute();
 
     // fetch and proceed results
