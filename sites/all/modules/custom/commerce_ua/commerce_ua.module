@@ -65,7 +65,12 @@ function commerce_ua_return_url() {
       // try to parce order key and retrieve node id and load that node 
       $nid = str_replace('fotofilm1_', '', $options['order_id'][0]);
       if ($node = node_load($nid)) {
+        global $language;
+
         $node->status = 1;
+        // save transaction id
+        $node->field_transaction_id[$language->language][]['value'] = (!empty($options['transaction_id'][0]) ? $options['transaction_id'][0] : '');
+        // save node object
         node_save($node);
       }
       else {

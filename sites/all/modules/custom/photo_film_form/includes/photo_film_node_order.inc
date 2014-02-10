@@ -50,14 +50,17 @@ function photo_film_create_order_node($cache, $archive = NULL, $name = 'test') {
   if (!empty($cache->order_info['city'])) {
     $node->field_city[$node->language][]['tid'] = $cache->order_info['city'];
     $restricted[] = 'city';
-
   }
-
+  
+  $node->field_price[$node->language][]['value'] = photo_film_form_calculate_amount($cache);
+  $restricted[] = 'price';
+  
   foreach ($cache->order_info as $key => $field) {
     if (!empty($field) && !in_array($key, $restricted)) {
       $node->{'field_' . $key}[$node->language][]['value'] = $field;
     }
   }
+  
   // Prepare node for saving
   $node = node_submit($node);
 
