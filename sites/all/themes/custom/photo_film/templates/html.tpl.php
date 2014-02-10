@@ -71,7 +71,9 @@ $html_attributes = "lang=\"{$language->language}\" dir=\"{$language->dir}\" {$rd
     <?php if (!$zentropy_scripts_footer): ?>
       <?php print $scripts; ?>
     <?php endif; ?>
-
+    <script type='text/javascript'>
+(function(){ var widget_id = '124253';
+var s = document.createElement('script'); s.type = 'text/javascript'; s.async = true; s.src = '//code.jivosite.com/script/widget/'+widget_id; var ss = document.getElementsByTagName('script')[0]; ss.parentNode.insertBefore(s, ss);})();</script>
     <?php print $zentropy_scripts_head; ?>
     <?php print $zentropy_polyfills; ?>
 
