@@ -69,7 +69,7 @@ function commerce_ua_return_url() {
 
         $node->status = 1;
         // save transaction id
-        $node->field_transaction_id[$language->language][]['value'] = (!empty($options['transaction_id'][0]) ? $options['transaction_id'][0] : '');
+        $node->field_transaction_id[LANGUAGE_NONE][]['value'] = (!empty($options['transaction_id'][0]) ? $options['transaction_id'][0] : '');
         // save node object
         node_save($node);
       }
